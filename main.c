@@ -1,6 +1,7 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -53,7 +54,18 @@ int main(int argc, char const* argv[])
 	
 	char buffer[131] = { 0 };
 	valread = read(new_socket, buffer, sizeof(buffer) - 1);
-	printf("%s\n", buffer);
+
+	uint8_t packet_id = buffer[0];
+	uint8_t protocol_version = buffer[1];
+	char username[64] = { 0 };
+	char verification_key[64] = { 0 };
+	memcpy(username, buffer + 2, 63);
+	memcpy(verification_key, buffer + 66, 63);
+	uint8_t unused = buffer[130];
+
+	printf("New client connected");
+	printf("Their username is %s", username);
+	printf("They are identifying with %s", verification_key);
 
 	return 0;
 }

@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <zlib.h>
+#include <time.h>
 
 #include "network_utils.h"
 
@@ -91,6 +92,8 @@ void sendLevel(int socket, struct Level* level){
 
 int main()
 {
+	srand(time(NULL));
+
 	int server_fd, new_socket;
 	ssize_t valread;
 	struct sockaddr_in address;
@@ -125,41 +128,48 @@ int main()
 		exit(EXIT_FAILURE);
 	}
 
-	if ((new_socket = accept(server_fd, (struct sockaddr*)&address, &addrlen)) < 0)
-	{
-		perror("accept");
-		exit(EXIT_FAILURE);
+	printf("Server ready\n");
+
+	while (true) {
+		if ((new_socket = accept(server_fd, (struct sockaddr*)&address, &addrlen)) < 0)
+		{
+			perror("accept");
+			exit(EXIT_FAILURE);
+		}
+
+		// From here we handle client
+
+		char buffer[131] = { 0 };
+		valread = read(new_socket, buffer, sizeof(buffer) - 1);
+
+		uint8_t packet_id = buffer[0];
+		uint8_t protocol_version = buffer[1];
+		char username[64] = { 0 };
+		char verification_key[64] = { 0 };
+		memcpy(username, buffer + 2, 63);
+		memcpy(verification_key, buffer + 66, 63);
+		uint8_t unused = buffer[130];
+
+		printf("New client connected\n");
+		printf("Their username is %s\n", username);
+		printf("They are identifying with %s\n", verification_key);
+
+		struct Level level;
+		level.sizeX = 256;
+		level.sizeY = 64;
+		level.sizeZ = 256;
+
+		int total = level.sizeX * level.sizeY * level.sizeZ;
+		level.blocks = malloc(total);
+
+		for(int i = 0; i < total; i++) {
+			level.blocks[i] = rand() % 2;
+		}
+
+		// memset(level.blocks, rand() % 65, total);
+		sendLevel(new_socket, &level);
+		free(level.blocks);
 	}
-
-	// From here we handle client
-
-	char buffer[131] = { 0 };
-	valread = read(new_socket, buffer, sizeof(buffer) - 1);
-
-	uint8_t packet_id = buffer[0];
-	uint8_t protocol_version = buffer[1];
-	char username[64] = { 0 };
-	char verification_key[64] = { 0 };
-	memcpy(username, buffer + 2, 63);
-	memcpy(verification_key, buffer + 66, 63);
-	uint8_t unused = buffer[130];
-
-	printf("New client connected\n");
-	printf("Their username is %s\n", username);
-	printf("They are identifying with %s\n", verification_key);
-
-	struct Level level;
-	level.sizeX = 16;
-	level.sizeY = 16;
-	level.sizeZ = 16;
-
-	int total = level.sizeX * level.sizeY * level.sizeZ;
-	level.blocks = malloc(total);
-	memset(level.blocks, 1, total);
-	sendLevel(new_socket, &level);
-	free(level.blocks);
-
-	while(true){}
 
 	return 0;
 }

@@ -10,6 +10,7 @@
 #include <time.h>
 
 #include "network_utils.h"
+#include "socket.h"
 
 #define	PORT	25565
 

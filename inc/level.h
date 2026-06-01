@@ -1,17 +1,5 @@
-#include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <zlib.h>
-#include <time.h>
-
-#include "network_utils.h"
-
-#define	PORT	25565
+#ifndef LEVEL_H
+#define LEVEL_H
 
 struct Level {
   short sizeX, sizeY, sizeZ;
@@ -89,56 +77,4 @@ void sendLevel(int socket, struct Level* level){
   free(compressed);
 }
 
-
-int main() {
-  srand(time(NULL));
-
-  int server_fd = setup_server_socket(PORT);
-  if (server_fd < 0) {
-    exit(EXIT_FAILURE);
-  }
-
-  printf("Server ready\n");
-
-  while (true) {
-    int new_socket = accept_client(server_fd);
-    if (new_socket < 0) {
-      exit(EXIT_FAILURE);
-    }
-
-    // From here we handle client
-    char buffer[131] = { 0 };
-    ssize_t valread = read(new_socket, buffer, sizeof(buffer) - 1);
-
-    uint8_t packet_id = buffer[0];
-    uint8_t protocol_version = buffer[1];
-    char username[64] = { 0 };
-    char verification_key[64] = { 0 };
-    memcpy(username, buffer + 2, 63);
-    memcpy(verification_key, buffer + 66, 63);
-    uint8_t unused = buffer[130];
-
-    printf("New client connected\n");
-    printf("Their username is %s\n", username);
-    printf("They are identifying with %s\n", verification_key);
-
-    struct Level level;
-    level.sizeX = 256;
-    level.sizeY = 64;
-    level.sizeZ = 256;
-
-    int total = level.sizeX * level.sizeY * level.sizeZ;
-    level.blocks = malloc(total);
-
-    for(int i = 0; i < total; i++) {
-      level.blocks[i] = rand() % 2;
-    }
-
-    sendLevel(new_socket, &level);
-    free(level.blocks);
-    close(new_socket);
-  }
-
-  close(server_fd);
-  return 0;
-}
+#endif

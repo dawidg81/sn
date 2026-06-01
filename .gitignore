@@ -2,3 +2,4 @@ sn
 *.exe
 *~
 obj/
+*.swp

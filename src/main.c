@@ -43,9 +43,9 @@ int main() {
 		printf("They are identifying with %s\n", verification_key);
 
 		struct Level level;
-		level.sizeX = 16000;
-		level.sizeY = 1;
-		level.sizeZ = 16000;
+		level.sizeX = 256;
+		level.sizeY = 64;
+		level.sizeZ = 256;
 
 		int total = level.sizeX * level.sizeY * level.sizeZ;
 		level.blocks = malloc(total);

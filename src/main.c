@@ -87,11 +87,10 @@ int main()
 		int total = level.sizeX * level.sizeY * level.sizeZ;
 		level.blocks = malloc(total);
 
-		for(int i = 0; i < total; i++) {
+		/*for(int i = 0; i < total; i++) {
 			level.blocks[i] = rand() % 49;
-		}
+		}*/
 
-		// memset(level.blocks, rand() % 65, total);
 		sendLevel(new_socket, &level);
 		free(level.blocks);
 	}

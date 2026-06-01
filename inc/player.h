@@ -2,14 +2,10 @@
 #define PLAYER_H
 
 struct Player {
-	char *username = "Player";
-	uint8_t id = 0;
+	char *username;
+	uint8_t id;
 
-	float x = 0;
-	float y = 0;
-	float z = 0;
-	float yaw = 0;
-	float pitch = 0;
+	float x, y, z, yaw, pitch;
 };
 
 void read_id(int new_socket){

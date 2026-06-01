@@ -9,9 +9,9 @@
 #include <zlib.h>
 #include <time.h>
 
-#include "network_utils.h"
-#include "socket.h"
-#include "level.h"
+#include "../inc/network_utils.h"
+#include "../inc/socket.h"
+#include "../inc/level.h"
 
 #define	PORT	25565
 
@@ -88,7 +88,7 @@ int main()
 		level.blocks = malloc(total);
 
 		for(int i = 0; i < total; i++) {
-			level.blocks[i] = rand() % 2;
+			level.blocks[i] = rand() % 49;
 		}
 
 		// memset(level.blocks, rand() % 65, total);

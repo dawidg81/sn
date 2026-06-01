@@ -13,7 +13,7 @@ OBJECTS := $(patsubst src%,obj%, $(patsubst %.c,%.o, $(patsubst %.cpp,%.o,$(SOUR
 
 INCLUDE := -I.
 LIBPATH :=
-LIBS :=
+LIBS := -lz
 
 FLAGS := -Wall
 CCFLAGS := $(FLAGS) -std=c99

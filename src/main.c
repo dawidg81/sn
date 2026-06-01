@@ -15,8 +15,7 @@
 
 #define	PORT	25565
 
-int main()
-{
+int main() {
 	srand(time(NULL));
 
 	int server_fd = setup_server_socket(PORT);	
@@ -44,16 +43,16 @@ int main()
 		printf("They are identifying with %s\n", verification_key);
 
 		struct Level level;
-		level.sizeX = 256;
-		level.sizeY = 64;
-		level.sizeZ = 256;
+		level.sizeX = 16000;
+		level.sizeY = 1;
+		level.sizeZ = 16000;
 
 		int total = level.sizeX * level.sizeY * level.sizeZ;
 		level.blocks = malloc(total);
 
 		/*for(int i = 0; i < total; i++) {
-			level.blocks[i] = rand() % 49;
-		}*/
+		  level.blocks[i] = rand() % 49;
+		  }*/
 
 		sendLevel(new_socket, &level);
 		free(level.blocks);

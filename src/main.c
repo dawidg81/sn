@@ -28,7 +28,7 @@ int main() {
 		// From here we handle client
 
 		char buffer[131] = { 0 };
-		valread = read(new_socket, buffer, sizeof(buffer) - 1);
+		ssize_t valread = read(new_socket, buffer, sizeof(buffer) - 1);
 
 		uint8_t packet_id = buffer[0];
 		uint8_t protocol_version = buffer[1];

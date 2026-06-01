@@ -17,7 +17,7 @@ int setup_server_socket(int port) {
     return -1;
   }
 
-  if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, 
+  if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, 
 		 &opt, sizeof(opt)) < 0) {
     perror("setsockopt");
     close(server_fd);

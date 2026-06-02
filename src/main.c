@@ -28,7 +28,7 @@ int main() {
 
 		// From here we handle client
 		read_id(new_socket);
-		new_level();
+		new_level(new_socket);
 	}
 
 	return 0;

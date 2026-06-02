@@ -77,7 +77,7 @@ void sendLevel(int socket, struct Level* level){
 	free(compressed);
 }
 
-void new_level() {
+void new_level(int new_socket) {
 	struct Level level;
 	level.sizeX = 256;
 	level.sizeY = 64;

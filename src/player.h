@@ -8,7 +8,7 @@ struct Player {
 	float x, y, z, yaw, pitch;
 };
 
-void read_id(int new_socket){
+char read_id(int new_socket){
 	char buffer[131] = { 0 };
 	ssize_t valread = read(new_socket, buffer, sizeof(buffer) - 1);
 
@@ -23,6 +23,8 @@ void read_id(int new_socket){
 	printf("New client connected\n");
 	printf("Their username is %s\n", username);
 	printf("They are identifying with %s\n", verification_key);
+
+	return username;
 }
 
 #endif

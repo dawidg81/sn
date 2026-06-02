@@ -28,21 +28,7 @@ int main() {
 
 		// From here we handle client
 		read_id(new_socket);
-
-		struct Level level;
-		level.sizeX = 256;
-		level.sizeY = 64;
-		level.sizeZ = 256;
-
-		int total = level.sizeX * level.sizeY * level.sizeZ;
-		level.blocks = malloc(total);
-
-		/*for(int i = 0; i < total; i++) {
-		  level.blocks[i] = rand() % 49;
-		  }*/
-
-		sendLevel(new_socket, &level);
-		free(level.blocks);
+		new_level();
 	}
 
 	return 0;

@@ -8,7 +8,7 @@ int freeid = 0;
 
 typedef struct {
 	char *username;
-	uint8_t id;
+	int8_t id;
 
 	float x, y, z, yaw, pitch;
 } Player;

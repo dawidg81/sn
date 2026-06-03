@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <errno.h>
+#include "server.h"
 
 int freeid = 0;
 
@@ -28,6 +29,10 @@ int read_id(int new_socket, char *username, char *verification_key){
 	uint8_t protocol_version = buffer[1];
 	/*char username[64] = { 0 };
 	  char verification_key[64] = { 0 };*/
+
+	if (protocol_version != 0x07){
+		send_disconnect(new_socket, "Invalid client version!");
+	}
 
 	memcpy(username, buffer + 2, 63);
 	username[63] = '\0';

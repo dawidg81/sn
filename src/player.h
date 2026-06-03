@@ -30,7 +30,7 @@ int read_id(int new_socket, char *username, char *verification_key){
 	/*char username[64] = { 0 };
 	  char verification_key[64] = { 0 };*/
 
-	if (protocol_version != 0x10){
+	if (protocol_version != 0x07){
 		send_disconnect(new_socket, "Invalid client version!");
 		return -1;
 	}
@@ -71,8 +71,8 @@ int init_player(int new_socket) {
 }
 
 void recv_block(int socket, Player player) {
-	char buffer[9] = { 0 }
-	ssize_t valread = read(new_socket, buffer, sizeof(buffer));
+	char buffer[9] = { 0 };
+	ssize_t valread = read(socket, buffer, sizeof(buffer));
 
 	uint8_t pid = buffer[0];
 

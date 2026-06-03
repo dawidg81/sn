@@ -14,7 +14,7 @@
 #include "level.h"
 #include "player.h"
 
-#define	PORT	25565
+#define	PORT	25567
 
 int main() {
 	srand(time(NULL));
@@ -33,6 +33,7 @@ int main() {
 			continue;
 		}
 
+		// read_id(new_socket);
 		new_level(new_socket);
 	}
 

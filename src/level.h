@@ -104,7 +104,7 @@ int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 		return -1;
 	}
 
-	int index = y * (level->sizeX * level->sizeZ) + z * levelSizeX + x;
+	int index = y * (level->sizeX * level->sizeZ) + z * level->sizeX + x;
 
 	level->blocks[index] = id;
 

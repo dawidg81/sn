@@ -15,12 +15,12 @@ typedef struct {
 
 int read_id(int new_socket, char *username, char *verification_key){
 	char buffer[131] = { 0 };
-	ssize_t valread = read(new_socket, buffer, sizeof(buffer) - 1);
+	ssize_t valread = read(new_socket, buffer, sizeof(buffer));
 
 	printf("DEBUG: new_socket = %d\n", new_socket);
 	printf("DEBUG: valread = %zd, errno = %d\n", valread, errno);
 
-	if (valread < 130) {
+	if (valread < 131) {
 		perror("read");
 		return -1;
 	}
@@ -68,6 +68,17 @@ int init_player(int new_socket) {
 	new_player.x = new_player.y = new_player.z = 0;
 
 	return 0;
+}
+
+void recv_block(int socket, Player player) {
+	char buffer[9] = { 0 }
+	ssize_t valread = read(new_socket, buffer, sizeof(buffer));
+
+	uint8_t pid = buffer[0];
+
+	if (pid != 0x05) {
+		printf("Did not receive proper packet ID for Set Block packet (expected 0x05 but got %d)\n", pid);
+	}
 }
 
 #endif

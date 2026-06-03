@@ -94,4 +94,33 @@ void new_level(int new_socket) {
 	free(level.blocks);
 }
 
+int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
+	if (
+			x < 0 || x >= level->sizeX ||
+			y < 0 || y >= level->sizeY ||
+			z < 0 || z >= level->sizeZ
+	   ) {
+		printf("Tried to modify level out of bounds (%d, %d, %d)\n", x, y, z);
+		return -1;
+	}
+
+	int index = y * (level->sizeX * level->sizeZ) + z * levelSizeX + x;
+
+	level->blocks[index] = id;
+
+	return 0;
+}
+
+uint8_t getBlock(struct Level* level, int x, int y, int z) {
+	if (x < 0 || x >= level->sizeX ||
+			y < 0 || y >= level->sizeY ||
+			z < 0 || z >= level->sizeZ) {
+		printf("Tried to check level block out of bounds (%d, %d, %d)\n", x, y, z);
+		return 0; // air
+	}
+
+	int index = y * (level->sizeX * level->sizeZ) + z * level->sizeX + x;
+	return level->blocks[index];
+}
+
 #endif

@@ -30,8 +30,9 @@ int read_id(int new_socket, char *username, char *verification_key){
 	/*char username[64] = { 0 };
 	  char verification_key[64] = { 0 };*/
 
-	if (protocol_version != 0x07){
+	if (protocol_version != 0x10){
 		send_disconnect(new_socket, "Invalid client version!");
+		return -1;
 	}
 
 	memcpy(username, buffer + 2, 63);

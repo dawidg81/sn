@@ -27,7 +27,12 @@ int main() {
 		int new_socket = accept_client(server_fd);
 
 		// From here we handle client
-		init_player(new_socket);
+		
+		if (init_player(new_socket) != 0) {
+			printf("Player initialization failed\n");
+			continue;
+		}
+
 		new_level(new_socket);
 	}
 

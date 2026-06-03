@@ -23,4 +23,4 @@ software.
 
 # Project structure
 
-![Project diagram](assets/struct.svg)
+Can be found in assets/ folder.

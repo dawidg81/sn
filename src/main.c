@@ -16,8 +16,6 @@
 
 #define	PORT	25565
 
-int freeid = 0;
-
 int main() {
 	srand(time(NULL));
 
@@ -29,22 +27,7 @@ int main() {
 		int new_socket = accept_client(server_fd);
 
 		// From here we handle client
-		Player new_player;
-
-        char username[64] = { 0 };
-        char verification_key[64] = { 0 };
-
-        if (read_id(new_socket, username, verification_key) == 0) {
-            new_player.username = malloc(64);
-            strcpy(new_player.username, username);
-        } else {
-            continue;
-        }
-
-		new_player.id = freeid++;
-
-		new_player.x = new_player.y = new_player.z = 0;
-
+		init_player(new_socket);
 		new_level(new_socket);
 	}
 

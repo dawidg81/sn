@@ -16,6 +16,8 @@
 
 #define	PORT	25567
 
+Player players[256];
+
 int main() {
 	srand(time(NULL));
 
@@ -28,13 +30,21 @@ int main() {
 
 		// From here we handle client
 		
-		if (init_player(new_socket) != 0) {
-			printf("Player initialization failed\n");
-			continue;
-		}
+		unsigned char buffer[1024] = { 0 };
+
+		ssize_t valread = read(new_socket, buffer, sizeof(buffer));
 
 		// read_id(new_socket);
 		new_level(new_socket);
+
+		switch (buffer[0]) {
+			case 0x00:
+				if (init_player(buffer) != 0) {
+					printf("Player initialization failed\n");
+				}
+			case 0x05:
+				recv_block(buffer, new_player);
+		}
 	}
 
 	return 0;

@@ -6,6 +6,8 @@ struct Level {
 	uint8_t* blocks;
 };
 
+struct Level level;
+
 void sendLevel(int socket, struct Level* level){
 	int x = level->sizeX, y = level->sizeY, z = level->sizeZ;
 	int totalBlocks = x * y * z;
@@ -78,7 +80,6 @@ void sendLevel(int socket, struct Level* level){
 }
 
 void new_level(int new_socket) {
-	struct Level level;
 	level.sizeX = 256;
 	level.sizeY = 64;
 	level.sizeZ = 256;

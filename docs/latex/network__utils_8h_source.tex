@@ -1,41 +1,41 @@
-\doxysection{network\+\_\+utils.\+h}
-\hypertarget{network__utils_8h_source}{}\label{network__utils_8h_source}\index{src/network\_utils.h@{src/network\_utils.h}}
-\doxymbox{\hyperlink{network__utils_8h}{Go to the documentation of this file.}}
+\hypertarget{network__utils_8h_source}{}\doxysection{network\+\_\+utils.\+h}
+\label{network__utils_8h_source}\index{src/network\_utils.h@{src/network\_utils.h}}
+\mbox{\hyperlink{network__utils_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ }
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00006\ }
-\DoxyCodeLine{00014\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(}
-\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ uint8\_t\ *buf,}
-\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset,}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ uint16\_t\ value)}
-\DoxyCodeLine{00018\ \{}
-\DoxyCodeLine{00019\ \ \ \ \ buf[offset]\ =\ (value\ >>\ 8)\ \&\ 0xFF;}
-\DoxyCodeLine{00020\ \ \ \ \ buf[offset\ +\ 1]\ =\ value\ \&\ 0xFF;}
-\DoxyCodeLine{00021\ \}}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00030\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ uint16\_t\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}(}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t\ *buf,}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ )}
-\DoxyCodeLine{00034\ \{}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint16\_t)buf[offset]\ <<\ 8)}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ |\ buf[offset\ +\ 1];}
-\DoxyCodeLine{00037\ \}}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00046\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{network__utils_8h_aacd40a3cb6e26e1696a371aa7e929ab4}{write\_str64}}(}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ uint8\_t\ *buf,}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset,}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *str)}
-\DoxyCodeLine{00050\ \{}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ len\ =\ 0;}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{while}\ (len\ <\ 64\ \&\&\ str[len]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'})\ \{}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ buf[offset\ +\ len]\ =\ (uint8\_t)str[len];}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ len++;}
-\DoxyCodeLine{00055\ \ \ \ \ \}}
-\DoxyCodeLine{00056\ \ \ \ \ buf[offset\ +\ len]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};\ \ \textcolor{comment}{//\ Null\ terminate}}
-\DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{return}\ len;}
-\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{14 \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(}
+\DoxyCodeLine{15         uint8\_t *buf,}
+\DoxyCodeLine{16         \textcolor{keywordtype}{size\_t} offset,}
+\DoxyCodeLine{17         uint16\_t value)}
+\DoxyCodeLine{18 \{}
+\DoxyCodeLine{19     buf[offset] = (value >> 8) \& 0xFF;}
+\DoxyCodeLine{20     buf[offset + 1] = value \& 0xFF;}
+\DoxyCodeLine{21 \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{30 \textcolor{keyword}{static} \textcolor{keyword}{inline} uint16\_t \mbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}(}
+\DoxyCodeLine{31         \textcolor{keyword}{const} uint8\_t *buf,}
+\DoxyCodeLine{32         \textcolor{keywordtype}{size\_t} offset}
+\DoxyCodeLine{33         )}
+\DoxyCodeLine{34 \{}
+\DoxyCodeLine{35     \textcolor{keywordflow}{return} ((uint16\_t)buf[offset] << 8)}
+\DoxyCodeLine{36         | buf[offset + 1];}
+\DoxyCodeLine{37 \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{46 \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{network__utils_8h_aacd40a3cb6e26e1696a371aa7e929ab4}{write\_str64}}(}
+\DoxyCodeLine{47         uint8\_t *buf,}
+\DoxyCodeLine{48         \textcolor{keywordtype}{size\_t} offset,}
+\DoxyCodeLine{49         \textcolor{keyword}{const} \textcolor{keywordtype}{char} *str)}
+\DoxyCodeLine{50 \{}
+\DoxyCodeLine{51     \textcolor{keywordtype}{size\_t} len = 0;}
+\DoxyCodeLine{52     \textcolor{keywordflow}{while} (len < 64 \&\& str[len] != \textcolor{charliteral}{'\(\backslash\)0'}) \{}
+\DoxyCodeLine{53         buf[offset + len] = (uint8\_t)str[len];}
+\DoxyCodeLine{54         len++;}
+\DoxyCodeLine{55     \}}
+\DoxyCodeLine{56     buf[offset + len] = \textcolor{charliteral}{'\(\backslash\)0'};  \textcolor{comment}{// Null terminate}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{keywordflow}{return} len;}
+\DoxyCodeLine{59 \}}
 
 \end{DoxyCode}

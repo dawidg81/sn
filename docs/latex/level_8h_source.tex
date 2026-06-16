@@ -1,133 +1,133 @@
-\doxysection{level.\+h}
-\hypertarget{level_8h_source}{}\label{level_8h_source}\index{src/level.h@{src/level.h}}
-
+\hypertarget{level_8h_source}{}\doxysection{level.\+h}
+\label{level_8h_source}\index{src/level.h@{src/level.h}}
+\mbox{\hyperlink{level_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ LEVEL\_H}}
-\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ LEVEL\_H}}
-\DoxyCodeLine{00003\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structLevel}{Level}}\ \{}
-\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{short}\ sizeX,\ sizeY,\ sizeZ;}
-\DoxyCodeLine{00013\ \ \ \ \ uint8\_t*\ blocks;}
-\DoxyCodeLine{00014\ \};}
-\DoxyCodeLine{00015\ }
-\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structLevel}{Level}}\ level;}
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ sendLevel(\textcolor{keywordtype}{int}\ socket,\ \textcolor{keyword}{struct}\ \doxymbox{\hyperlink{structLevel}{Level}}*\ level)\{}
-\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ x\ =\ level-\/>sizeX,\ y\ =\ level-\/>sizeY,\ z\ =\ level-\/>sizeZ;}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ totalBlocks\ =\ x\ *\ y\ *\ z;}
-\DoxyCodeLine{00053\ \ \ \ \ uint8\_t*\ levelData\ =\ malloc(4\ +\ totalBlocks);}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \ \ \ \ levelData[0]\ =\ (totalBlocks\ >>\ 24)\ \&\ 0xFF;}
-\DoxyCodeLine{00056\ \ \ \ \ levelData[1]\ =\ (totalBlocks\ >>\ 16)\ \&\ 0xFF;}
-\DoxyCodeLine{00057\ \ \ \ \ levelData[2]\ =\ (totalBlocks\ >>\ 8)\ \&\ 0xFF;}
-\DoxyCodeLine{00058\ \ \ \ \ levelData[3]\ =\ totalBlocks\ \&\ 0xFF;}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \ \ \ \ memcpy(levelData\ +\ 4,\ level-\/>blocks,\ totalBlocks);}
-\DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \ \ \ \ uLongf\ compressedSize\ =\ compressBound(4\ +\ totalBlocks)\ +\ 18;}
-\DoxyCodeLine{00063\ \ \ \ \ uint8\_t*\ compressed\ =\ malloc(compressedSize);}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ z\_stream\ zs\ =\ \{\};}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\ =\ deflateInit2(\&zs,\ Z\_DEFAULT\_COMPRESSION,\ Z\_DEFLATED,\ 15\ +\ 16,\ 8,\ Z\_DEFAULT\_STRATEGY);}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{if}(ret\ !=\ Z\_OK)\{\ printf(\textcolor{stringliteral}{"{}Deflating\ failed:\ \%d\(\backslash\)n"{}},\ ret);\ \textcolor{keywordflow}{return};\ \}}
-\DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \ \ \ \ zs.next\_in\ =\ levelData;}
-\DoxyCodeLine{00070\ \ \ \ \ zs.avail\_in\ =\ (uInt)(4\ +\ totalBlocks);}
-\DoxyCodeLine{00071\ \ \ \ \ zs.next\_out\ =\ compressed;}
-\DoxyCodeLine{00072\ \ \ \ \ zs.avail\_out\ =\ (uInt)compressedSize;}
-\DoxyCodeLine{00073\ }
-\DoxyCodeLine{00074\ \ \ \ \ ret\ =\ deflate(\&zs,\ Z\_FINISH);}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{if}(ret\ !=\ Z\_STREAM\_END)\{}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Deflating\ did\ not\ finish:\ \%d\(\backslash\)n"{}},\ ret);}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ deflateEnd(\&zs);}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00079\ \ \ \ \ \}}
-\DoxyCodeLine{00080\ \ \ \ \ compressedSize\ =\ zs.total\_out;}
-\DoxyCodeLine{00081\ \ \ \ \ deflateEnd(\&zs);}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ compressed.resize(compressedSize);}}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ logger.debug("{}Compr.\ size:\ "{}\ +\ to\_string(compressedSize));}}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ logger.debug("{}Chunks\ to\ send:\ "{}\ +\ to\_string((compressedSize\ +\ 1023)\ /\ 1024));}}
-\DoxyCodeLine{00085\ }
-\DoxyCodeLine{00086\ \ \ \ \ uint8\_t\ initPacket\ =\ 0x02;}
-\DoxyCodeLine{00087\ \ \ \ \ send(socket,\ (\textcolor{keywordtype}{char}*)\&initPacket,\ 1,\ 0);}
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ offset\ =\ 0;}
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ totalSize\ =\ compressedSize;}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{while}(offset\ <\ totalSize)\{}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ chunkPacket[1028]\ =\ \{\};}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ chunkLen\ =\ (1024\ <\ (totalSize\ -\/\ offset))\ ?\ 1024\ :\ (totalSize\ -\/\ offset);}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ uint8\_t\ percent\ =\ (uint8\_t)((offset\ +\ chunkLen)\ *\ 100\ /\ totalSize);}
-\DoxyCodeLine{00096\ }
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ chunkPacket[0]\ =\ 0x03;}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ chunkPacket[1]\ =\ (chunkLen\ >>\ 8)\ \&\ 0xFF;}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ chunkPacket[2]\ =\ chunkLen\ \&\ 0xFF;}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ memcpy(chunkPacket\ +\ 3,\ compressed\ +\ offset,\ chunkLen);}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ chunkPacket[1027]\ =\ (char)percent;}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ send(socket,\ chunkPacket,\ 1028,\ 0);}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ offset\ +=\ chunkLen;}
-\DoxyCodeLine{00105\ \ \ \ \ \}}
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ \ \ \ \ uint8\_t\ finalPacket[7];}
-\DoxyCodeLine{00108\ \ \ \ \ uint16\_t\ sx\ =\ (uint16\_t)x;}
-\DoxyCodeLine{00109\ \ \ \ \ uint16\_t\ sy\ =\ (uint16\_t)y;}
-\DoxyCodeLine{00110\ \ \ \ \ uint16\_t\ sz\ =\ (uint16\_t)z;}
-\DoxyCodeLine{00111\ }
-\DoxyCodeLine{00112\ \ \ \ \ finalPacket[0]\ =\ 0x04;}
-\DoxyCodeLine{00113\ \ \ \ \ \doxymbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(finalPacket,\ 1,\ x);}
-\DoxyCodeLine{00114\ \ \ \ \ \doxymbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(finalPacket,\ 3,\ y);}
-\DoxyCodeLine{00115\ \ \ \ \ \doxymbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(finalPacket,\ 5,\ z);}
-\DoxyCodeLine{00116\ \ \ \ \ send(socket,\ (\textcolor{keywordtype}{char}*)finalPacket,\ \textcolor{keyword}{sizeof}(finalPacket),\ 0);}
-\DoxyCodeLine{00117\ \ \ \ \ free(levelData);}
-\DoxyCodeLine{00118\ \ \ \ \ free(compressed);}
-\DoxyCodeLine{00119\ \}}
-\DoxyCodeLine{00120\ }
-\DoxyCodeLine{00136\ \textcolor{keywordtype}{void}\ new\_level(\textcolor{keywordtype}{int}\ new\_socket)\ \{}
-\DoxyCodeLine{00137\ \ \ \ \ level.sizeX\ =\ 256;}
-\DoxyCodeLine{00138\ \ \ \ \ level.sizeY\ =\ 64;}
-\DoxyCodeLine{00139\ \ \ \ \ level.sizeZ\ =\ 256;}
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{int}\ total\ =\ level.sizeX\ *\ level.sizeY\ *\ level.sizeZ;}
-\DoxyCodeLine{00142\ \ \ \ \ level.blocks\ =\ malloc(total);}
-\DoxyCodeLine{00143\ }
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{/*for(int\ i\ =\ 0;\ i\ <\ total;\ i++)\ \{}}
-\DoxyCodeLine{00145\ \textcolor{comment}{\ \ \ \ \ \ level.blocks[i]\ =\ rand()\ \%\ 49;}}
-\DoxyCodeLine{00146\ \textcolor{comment}{\ \ \ \ \ \ \}*/}}
-\DoxyCodeLine{00147\ }
-\DoxyCodeLine{00148\ \ \ \ \ sendLevel(new\_socket,\ \&level);}
-\DoxyCodeLine{00149\ \ \ \ \ free(level.blocks);}
-\DoxyCodeLine{00150\ \}}
-\DoxyCodeLine{00151\ }
-\DoxyCodeLine{00161\ \textcolor{keywordtype}{int}\ level\_set\_block(\textcolor{keyword}{struct}\ \doxymbox{\hyperlink{structLevel}{Level}}*\ level,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ z,\ uint8\_t\ \textcolor{keywordtype}{id})\ \{}
-\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordflow}{if}\ (}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ x\ <\ 0\ ||\ x\ >=\ level-\/>sizeX\ ||}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ y\ <\ 0\ ||\ y\ >=\ level-\/>sizeY\ ||}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ z\ <\ 0\ ||\ z\ >=\ level-\/>sizeZ}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ )\ \{}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Tried\ to\ modify\ level\ out\ of\ bounds\ (\%d,\ \%d,\ \%d)\(\backslash\)n"{}},\ x,\ y,\ z);}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
-\DoxyCodeLine{00169\ \ \ \ \ \}}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ y\ *\ (level-\/>sizeX\ *\ level-\/>sizeZ)\ +\ z\ *\ level-\/>sizeX\ +\ x;}
-\DoxyCodeLine{00172\ }
-\DoxyCodeLine{00173\ \ \ \ \ level-\/>blocks[index]\ =\ id;}
-\DoxyCodeLine{00174\ }
-\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00176\ \}}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00180\ uint8\_t\ getBlock(\textcolor{keyword}{struct}\ \doxymbox{\hyperlink{structLevel}{Level}}*\ level,\ \textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ z)\ \{}
-\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ <\ 0\ ||\ x\ >=\ level-\/>sizeX\ ||}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ y\ <\ 0\ ||\ y\ >=\ level-\/>sizeY\ ||}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ z\ <\ 0\ ||\ z\ >=\ level-\/>sizeZ)\ \{}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Tried\ to\ check\ level\ block\ out\ of\ bounds\ (\%d,\ \%d,\ \%d)\(\backslash\)n"{}},\ x,\ y,\ z);}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;\ \textcolor{comment}{//\ air}}
-\DoxyCodeLine{00186\ \ \ \ \ \}}
-\DoxyCodeLine{00187\ }
-\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ y\ *\ (level-\/>sizeX\ *\ level-\/>sizeZ)\ +\ z\ *\ level-\/>sizeX\ +\ x;}
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{return}\ level-\/>blocks[index];}
-\DoxyCodeLine{00190\ \}}
-\DoxyCodeLine{00191\ }
-\DoxyCodeLine{00192\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef LEVEL\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define LEVEL\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{11 \textcolor{keyword}{struct }\mbox{\hyperlink{structLevel}{Level}} \{}
+\DoxyCodeLine{12     \textcolor{keywordtype}{short} \mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}}, \mbox{\hyperlink{structLevel_aff4b093977274e03bb0e5d361354cbbe}{sizeY}}, \mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}};}
+\DoxyCodeLine{13     uint8\_t* \mbox{\hyperlink{structLevel_a7d02726a3c2bf5fb536dd906475133be}{blocks}};}
+\DoxyCodeLine{14 \};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{23 \textcolor{keyword}{struct }\mbox{\hyperlink{structLevel}{Level}} \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{50 \textcolor{keywordtype}{void} \mbox{\hyperlink{level_8h_a4cdd0c52ad2e08611c7093925ccf98b4}{sendLevel}}(\textcolor{keywordtype}{int} socket, \textcolor{keyword}{struct} \mbox{\hyperlink{structLevel}{Level}}* \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}})\{}
+\DoxyCodeLine{51     \textcolor{keywordtype}{int} x = \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}}, y = \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aff4b093977274e03bb0e5d361354cbbe}{sizeY}}, z = \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}};}
+\DoxyCodeLine{52     \textcolor{keywordtype}{int} totalBlocks = x * y * z;}
+\DoxyCodeLine{53     uint8\_t* levelData = malloc(4 + totalBlocks);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     levelData[0] = (totalBlocks >> 24) \& 0xFF;}
+\DoxyCodeLine{56     levelData[1] = (totalBlocks >> 16) \& 0xFF;}
+\DoxyCodeLine{57     levelData[2] = (totalBlocks >> 8) \& 0xFF;}
+\DoxyCodeLine{58     levelData[3] = totalBlocks \& 0xFF;}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     memcpy(levelData + 4, \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a7d02726a3c2bf5fb536dd906475133be}{blocks}}, totalBlocks);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     uLongf compressedSize = compressBound(4 + totalBlocks) + 18;}
+\DoxyCodeLine{63     uint8\_t* compressed = malloc(compressedSize);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     z\_stream zs = \{\};}
+\DoxyCodeLine{66     \textcolor{keywordtype}{int} ret = deflateInit2(\&zs, Z\_DEFAULT\_COMPRESSION, Z\_DEFLATED, 15 + 16, 8, Z\_DEFAULT\_STRATEGY);}
+\DoxyCodeLine{67     \textcolor{keywordflow}{if}(ret != Z\_OK)\{ printf(\textcolor{stringliteral}{"{}Deflating failed: \%d\(\backslash\)n"{}}, ret); \textcolor{keywordflow}{return}; \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     zs.next\_in = levelData;}
+\DoxyCodeLine{70     zs.avail\_in = (uInt)(4 + totalBlocks);}
+\DoxyCodeLine{71     zs.next\_out = compressed;}
+\DoxyCodeLine{72     zs.avail\_out = (uInt)compressedSize;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     ret = deflate(\&zs, Z\_FINISH);}
+\DoxyCodeLine{75     \textcolor{keywordflow}{if}(ret != Z\_STREAM\_END)\{}
+\DoxyCodeLine{76         printf(\textcolor{stringliteral}{"{}Deflating did not finish: \%d\(\backslash\)n"{}}, ret);}
+\DoxyCodeLine{77         deflateEnd(\&zs);}
+\DoxyCodeLine{78         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{79     \}}
+\DoxyCodeLine{80     compressedSize = zs.total\_out;}
+\DoxyCodeLine{81     deflateEnd(\&zs);}
+\DoxyCodeLine{82     \textcolor{comment}{// compressed.resize(compressedSize);}}
+\DoxyCodeLine{83     \textcolor{comment}{// logger.debug("{}Compr. size: "{} + to\_string(compressedSize));}}
+\DoxyCodeLine{84     \textcolor{comment}{// logger.debug("{}Chunks to send: "{} + to\_string((compressedSize + 1023) / 1024));}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     uint8\_t initPacket = 0x02;}
+\DoxyCodeLine{87     send(socket, (\textcolor{keywordtype}{char}*)\&initPacket, 1, 0);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{keywordtype}{size\_t} offset = 0;}
+\DoxyCodeLine{90     \textcolor{keywordtype}{size\_t} totalSize = compressedSize;}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordflow}{while}(offset < totalSize)\{}
+\DoxyCodeLine{93         \textcolor{keywordtype}{char} chunkPacket[1028] = \{\};}
+\DoxyCodeLine{94         \textcolor{keywordtype}{size\_t} chunkLen = (1024 < (totalSize -\/ offset)) ? 1024 : (totalSize -\/ offset);}
+\DoxyCodeLine{95         uint8\_t percent = (uint8\_t)((offset + chunkLen) * 100 / totalSize);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97         chunkPacket[0] = 0x03;}
+\DoxyCodeLine{98         chunkPacket[1] = (chunkLen >> 8) \& 0xFF;}
+\DoxyCodeLine{99         chunkPacket[2] = chunkLen \& 0xFF;}
+\DoxyCodeLine{100         memcpy(chunkPacket + 3, compressed + offset, chunkLen);}
+\DoxyCodeLine{101         chunkPacket[1027] = (char)percent;}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103         send(socket, chunkPacket, 1028, 0);}
+\DoxyCodeLine{104         offset += chunkLen;}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     uint8\_t finalPacket[7];}
+\DoxyCodeLine{108     uint16\_t sx = (uint16\_t)x;}
+\DoxyCodeLine{109     uint16\_t sy = (uint16\_t)y;}
+\DoxyCodeLine{110     uint16\_t sz = (uint16\_t)z;}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112     finalPacket[0] = 0x04;}
+\DoxyCodeLine{113     \mbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(finalPacket, 1, x);}
+\DoxyCodeLine{114     \mbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(finalPacket, 3, y);}
+\DoxyCodeLine{115     \mbox{\hyperlink{network__utils_8h_a0346f615d8d78b84b0157d9c8b609078}{write\_u16\_be}}(finalPacket, 5, z);}
+\DoxyCodeLine{116     send(socket, (\textcolor{keywordtype}{char}*)finalPacket, \textcolor{keyword}{sizeof}(finalPacket), 0);}
+\DoxyCodeLine{117     free(levelData);}
+\DoxyCodeLine{118     free(compressed);}
+\DoxyCodeLine{119 \}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{136 \textcolor{keywordtype}{void} \mbox{\hyperlink{level_8h_abe4861a732340a592a907778a1042860}{new\_level}}(\textcolor{keywordtype}{int} new\_socket) \{}
+\DoxyCodeLine{137     \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} = 256;}
+\DoxyCodeLine{138     \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_aff4b093977274e03bb0e5d361354cbbe}{sizeY}} = 64;}
+\DoxyCodeLine{139     \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}} = 256;}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{keywordtype}{int} total = \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} * \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_aff4b093977274e03bb0e5d361354cbbe}{sizeY}} * \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}};}
+\DoxyCodeLine{142     \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_a7d02726a3c2bf5fb536dd906475133be}{blocks}} = malloc(total);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{comment}{/*for(int i = 0; i < total; i++) \{}}
+\DoxyCodeLine{145 \textcolor{comment}{      level.blocks[i] = rand() \% 49;}}
+\DoxyCodeLine{146 \textcolor{comment}{      \}*/}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \mbox{\hyperlink{level_8h_a4cdd0c52ad2e08611c7093925ccf98b4}{sendLevel}}(new\_socket, \&\mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}});}
+\DoxyCodeLine{149     free(\mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}.\mbox{\hyperlink{structLevel_a7d02726a3c2bf5fb536dd906475133be}{blocks}});}
+\DoxyCodeLine{150 \}}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{161 \textcolor{keywordtype}{int} \mbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structLevel}{Level}}* \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} z, uint8\_t \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{162     \textcolor{keywordflow}{if} (}
+\DoxyCodeLine{163             x < 0 || x >= \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} ||}
+\DoxyCodeLine{164             y < 0 || y >= \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aff4b093977274e03bb0e5d361354cbbe}{sizeY}} ||}
+\DoxyCodeLine{165             z < 0 || z >= \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}}}
+\DoxyCodeLine{166        ) \{}
+\DoxyCodeLine{167         printf(\textcolor{stringliteral}{"{}Tried to modify level out of bounds (\%d, \%d, \%d)\(\backslash\)n"{}}, x, y, z);}
+\DoxyCodeLine{168         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{169     \}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171     \textcolor{keywordtype}{int} index = y * (\mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} * \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}}) + z * \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} + x;}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a7d02726a3c2bf5fb536dd906475133be}{blocks}}[index] = \textcolor{keywordtype}{id};}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{176 \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{180 uint8\_t \mbox{\hyperlink{level_8h_abe698eab5adb2254794f275180dd5b3d}{getBlock}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structLevel}{Level}}* \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}, \textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} z) \{}
+\DoxyCodeLine{181     \textcolor{keywordflow}{if} (x < 0 || x >= \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} ||}
+\DoxyCodeLine{182             y < 0 || y >= \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aff4b093977274e03bb0e5d361354cbbe}{sizeY}} ||}
+\DoxyCodeLine{183             z < 0 || z >= \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}}) \{}
+\DoxyCodeLine{184         printf(\textcolor{stringliteral}{"{}Tried to check level block out of bounds (\%d, \%d, \%d)\(\backslash\)n"{}}, x, y, z);}
+\DoxyCodeLine{185         \textcolor{keywordflow}{return} 0; \textcolor{comment}{// air}}
+\DoxyCodeLine{186     \}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     \textcolor{keywordtype}{int} index = y * (\mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} * \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_aea4a9b1da45f2e6a02a37240a69ce7ae}{sizeZ}}) + z * \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a53196846a0f38eab45453e9992c56986}{sizeX}} + x;}
+\DoxyCodeLine{189     \textcolor{keywordflow}{return} \mbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}}-\/>\mbox{\hyperlink{structLevel_a7d02726a3c2bf5fb536dd906475133be}{blocks}}[index];}
+\DoxyCodeLine{190 \}}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

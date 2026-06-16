@@ -118,20 +118,21 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('level_8h_sourc
   <div class="headertitle"><div class="title">level.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef LEVEL_H</span></div>
+<a href="level_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef LEVEL_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define LEVEL_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
 <div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="structLevel.html">   11</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structLevel.html">Level</a> {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">short</span> sizeX, sizeY, sizeZ;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    uint8_t* blocks;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="structLevel.html#a53196846a0f38eab45453e9992c56986">   12</a></span>    <span class="keywordtype">short</span> <a class="code hl_variable" href="structLevel.html#a53196846a0f38eab45453e9992c56986">sizeX</a>, <a class="code hl_variable" href="structLevel.html#aff4b093977274e03bb0e5d361354cbbe">sizeY</a>, <a class="code hl_variable" href="structLevel.html#aea4a9b1da45f2e6a02a37240a69ce7ae">sizeZ</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structLevel.html#a7d02726a3c2bf5fb536dd906475133be">   13</a></span>    uint8_t* <a class="code hl_variable" href="structLevel.html#a7d02726a3c2bf5fb536dd906475133be">blocks</a>;</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>};</div>
 </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">struct </span><a class="code hl_struct" href="structLevel.html">Level</a> level;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">   23</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structLevel.html">Level</a> <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keywordtype">void</span> sendLevel(<span class="keywordtype">int</span> socket, <span class="keyword">struct</span> <a class="code hl_struct" href="structLevel.html">Level</a>* level){</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">int</span> x = level-&gt;sizeX, y = level-&gt;sizeY, z = level-&gt;sizeZ;</div>
+<div class="foldopen" id="foldopen00050" data-start="{" data-end="}">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="level_8h.html#a4cdd0c52ad2e08611c7093925ccf98b4">   50</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="level_8h.html#a4cdd0c52ad2e08611c7093925ccf98b4">sendLevel</a>(<span class="keywordtype">int</span> socket, <span class="keyword">struct</span> <a class="code hl_struct" href="structLevel.html">Level</a>* <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>){</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">int</span> x = <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX, y = <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeY, z = <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeZ;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">int</span> totalBlocks = x * y * z;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    uint8_t* levelData = malloc(4 + totalBlocks);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('level_8h_sourc
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    levelData[2] = (totalBlocks &gt;&gt; 8) &amp; 0xFF;</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    levelData[3] = totalBlocks &amp; 0xFF;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    memcpy(levelData + 4, level-&gt;blocks, totalBlocks);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    memcpy(levelData + 4, <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;blocks, totalBlocks);</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    uLongf compressedSize = compressBound(4 + totalBlocks) + 18;</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    uint8_t* compressed = malloc(compressedSize);</div>
@@ -193,68 +194,85 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('level_8h_sourc
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    uint16_t sz = (uint16_t)z;</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    finalPacket[0] = 0x04;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    write_u16_be(finalPacket, 1, x);</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    write_u16_be(finalPacket, 3, y);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    write_u16_be(finalPacket, 5, z);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <a class="code hl_function" href="network__utils_8h.html#a0346f615d8d78b84b0157d9c8b609078">write_u16_be</a>(finalPacket, 1, x);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <a class="code hl_function" href="network__utils_8h.html#a0346f615d8d78b84b0157d9c8b609078">write_u16_be</a>(finalPacket, 3, y);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <a class="code hl_function" href="network__utils_8h.html#a0346f615d8d78b84b0157d9c8b609078">write_u16_be</a>(finalPacket, 5, z);</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    send(socket, (<span class="keywordtype">char</span>*)finalPacket, <span class="keyword">sizeof</span>(finalPacket), 0);</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    free(levelData);</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    free(compressed);</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>}</div>
+</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keywordtype">void</span> new_level(<span class="keywordtype">int</span> new_socket) {</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    level.sizeX = 256;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    level.sizeY = 64;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    level.sizeZ = 256;</div>
+<div class="foldopen" id="foldopen00121" data-start="{" data-end="}">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="level_8h.html#abe4861a732340a592a907778a1042860">  121</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="level_8h.html#abe4861a732340a592a907778a1042860">new_level</a>(<span class="keywordtype">int</span> new_socket) {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.sizeX = 256;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.sizeY = 64;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.sizeZ = 256;</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordtype">int</span> total = level.sizeX * level.sizeY * level.sizeZ;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    level.blocks = malloc(total);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordtype">int</span> total = <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.sizeX * <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.sizeY * <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.sizeZ;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.blocks = malloc(total);</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="comment">/*for(int i = 0; i &lt; total; i++) {</span></div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment">      level.blocks[i] = rand() % 49;</span></div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="comment">      }*/</span></div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    sendLevel(new_socket, &amp;level);</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    free(level.blocks);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <a class="code hl_function" href="level_8h.html#a4cdd0c52ad2e08611c7093925ccf98b4">sendLevel</a>(new_socket, &amp;<a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    free(<a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>.blocks);</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>}</div>
+</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="keywordtype">int</span> level_set_block(<span class="keyword">struct</span> <a class="code hl_struct" href="structLevel.html">Level</a>* level, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> z, uint8_t <span class="keywordtype">id</span>) {</div>
+<div class="foldopen" id="foldopen00137" data-start="{" data-end="}">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="level_8h.html#a81cd9ae87e5dd23ff76e4d1bf60f7f24">  137</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="level_8h.html#a81cd9ae87e5dd23ff76e4d1bf60f7f24">level_set_block</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structLevel.html">Level</a>* <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> z, uint8_t <span class="keywordtype">id</span>) {</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keywordflow">if</span> (</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            x &lt; 0 || x &gt;= level-&gt;sizeX ||</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            y &lt; 0 || y &gt;= level-&gt;sizeY ||</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            z &lt; 0 || z &gt;= level-&gt;sizeZ</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            x &lt; 0 || x &gt;= <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX ||</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            y &lt; 0 || y &gt;= <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeY ||</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            z &lt; 0 || z &gt;= <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeZ</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>       ) {</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        printf(<span class="stringliteral">&quot;Tried to modify level out of bounds (%d, %d, %d)\n&quot;</span>, x, y, z);</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    }</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">int</span> index = y * (level-&gt;sizeX * level-&gt;sizeZ) + z * level-&gt;sizeX + x;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">int</span> index = y * (<a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX * <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeZ) + z * <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX + x;</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    level-&gt;blocks[index] = id;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;blocks[index] = id;</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>}</div>
+</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>uint8_t getBlock(<span class="keyword">struct</span> <a class="code hl_struct" href="structLevel.html">Level</a>* level, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> z) {</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">if</span> (x &lt; 0 || x &gt;= level-&gt;sizeX ||</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            y &lt; 0 || y &gt;= level-&gt;sizeY ||</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            z &lt; 0 || z &gt;= level-&gt;sizeZ) {</div>
+<div class="foldopen" id="foldopen00154" data-start="{" data-end="}">
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="level_8h.html#abe698eab5adb2254794f275180dd5b3d">  154</a></span>uint8_t <a class="code hl_function" href="level_8h.html#abe698eab5adb2254794f275180dd5b3d">getBlock</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structLevel.html">Level</a>* <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> z) {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">if</span> (x &lt; 0 || x &gt;= <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX ||</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            y &lt; 0 || y &gt;= <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeY ||</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            z &lt; 0 || z &gt;= <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeZ) {</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        printf(<span class="stringliteral">&quot;Tried to check level block out of bounds (%d, %d, %d)\n&quot;</span>, x, y, z);</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">return</span> 0; <span class="comment">// air</span></div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    }</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordtype">int</span> index = y * (level-&gt;sizeX * level-&gt;sizeZ) + z * level-&gt;sizeX + x;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordflow">return</span> level-&gt;blocks[index];</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordtype">int</span> index = y * (<a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX * <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeZ) + z * <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;sizeX + x;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a>-&gt;blocks[index];</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>}</div>
+</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="alevel_8h_html_a2bd12bceb2b01cec5cc07f25b496f3d5"><div class="ttname"><a href="level_8h.html#a2bd12bceb2b01cec5cc07f25b496f3d5">level</a></div><div class="ttdeci">struct Level level</div><div class="ttdoc">A global level object of Level type.</div><div class="ttdef"><b>Definition</b> level.h:23</div></div>
+<div class="ttc" id="alevel_8h_html_a4cdd0c52ad2e08611c7093925ccf98b4"><div class="ttname"><a href="level_8h.html#a4cdd0c52ad2e08611c7093925ccf98b4">sendLevel</a></div><div class="ttdeci">void sendLevel(int socket, struct Level *level)</div><div class="ttdoc">Sends level to socket.</div><div class="ttdef"><b>Definition</b> level.h:50</div></div>
+<div class="ttc" id="alevel_8h_html_a81cd9ae87e5dd23ff76e4d1bf60f7f24"><div class="ttname"><a href="level_8h.html#a81cd9ae87e5dd23ff76e4d1bf60f7f24">level_set_block</a></div><div class="ttdeci">int level_set_block(struct Level *level, int x, int y, int z, uint8_t id)</div><div class="ttdef"><b>Definition</b> level.h:137</div></div>
+<div class="ttc" id="alevel_8h_html_abe4861a732340a592a907778a1042860"><div class="ttname"><a href="level_8h.html#abe4861a732340a592a907778a1042860">new_level</a></div><div class="ttdeci">void new_level(int new_socket)</div><div class="ttdef"><b>Definition</b> level.h:121</div></div>
+<div class="ttc" id="alevel_8h_html_abe698eab5adb2254794f275180dd5b3d"><div class="ttname"><a href="level_8h.html#abe698eab5adb2254794f275180dd5b3d">getBlock</a></div><div class="ttdeci">uint8_t getBlock(struct Level *level, int x, int y, int z)</div><div class="ttdef"><b>Definition</b> level.h:154</div></div>
+<div class="ttc" id="anetwork__utils_8h_html_a0346f615d8d78b84b0157d9c8b609078"><div class="ttname"><a href="network__utils_8h.html#a0346f615d8d78b84b0157d9c8b609078">write_u16_be</a></div><div class="ttdeci">static void write_u16_be(uint8_t *buf, size_t offset, uint16_t value)</div><div class="ttdoc">Writes uint16_t to buffer.</div><div class="ttdef"><b>Definition</b> network_utils.h:14</div></div>
 <div class="ttc" id="astructLevel_html"><div class="ttname"><a href="structLevel.html">Level</a></div><div class="ttdoc">Defining an array of blocks.</div><div class="ttdef"><b>Definition</b> level.h:11</div></div>
+<div class="ttc" id="astructLevel_html_a53196846a0f38eab45453e9992c56986"><div class="ttname"><a href="structLevel.html#a53196846a0f38eab45453e9992c56986">Level::sizeX</a></div><div class="ttdeci">short sizeX</div><div class="ttdef"><b>Definition</b> level.h:12</div></div>
+<div class="ttc" id="astructLevel_html_a7d02726a3c2bf5fb536dd906475133be"><div class="ttname"><a href="structLevel.html#a7d02726a3c2bf5fb536dd906475133be">Level::blocks</a></div><div class="ttdeci">uint8_t * blocks</div><div class="ttdef"><b>Definition</b> level.h:13</div></div>
+<div class="ttc" id="astructLevel_html_aea4a9b1da45f2e6a02a37240a69ce7ae"><div class="ttname"><a href="structLevel.html#aea4a9b1da45f2e6a02a37240a69ce7ae">Level::sizeZ</a></div><div class="ttdeci">short sizeZ</div><div class="ttdef"><b>Definition</b> level.h:12</div></div>
+<div class="ttc" id="astructLevel_html_aff4b093977274e03bb0e5d361354cbbe"><div class="ttname"><a href="structLevel.html#aff4b093977274e03bb0e5d361354cbbe">Level::sizeY</a></div><div class="ttdeci">short sizeY</div><div class="ttdef"><b>Definition</b> level.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>src</b></li><li class="navelem"><b>level.h</b></li>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="level_8h.html">level.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

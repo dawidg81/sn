@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('socket_8h_sour
   <div class="headertitle"><div class="title">socket.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef SOCKET_H</span></div>
+<a href="socket_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef SOCKET_H</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define SOCKET_H</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;netinet/in.h&gt;</span></div>
@@ -127,7 +127,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('socket_8h_sour
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keywordtype">int</span> setup_server_socket(<span class="keywordtype">int</span> port) {</div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="}">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="socket_8h.html#a5277deb395157d06fa9399fe436c9739">   10</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="socket_8h.html#a5277deb395157d06fa9399fe436c9739">setup_server_socket</a>(<span class="keywordtype">int</span> port) {</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keywordtype">int</span> server_fd;</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keywordtype">int</span> opt = 1;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keyword">struct </span>sockaddr_in address;</div>
@@ -162,8 +163,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('socket_8h_sour
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keywordflow">return</span> server_fd;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keywordtype">int</span> accept_client(<span class="keywordtype">int</span> server_fd) {</div>
+<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="socket_8h.html#acbd3c1bc1dc05dce1d53d767aa3292b8">   46</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="socket_8h.html#acbd3c1bc1dc05dce1d53d767aa3292b8">accept_client</a>(<span class="keywordtype">int</span> server_fd) {</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">struct </span>sockaddr_in address;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  socklen_t addrlen = <span class="keyword">sizeof</span>(address);</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
@@ -175,15 +178,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('socket_8h_sour
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordflow">return</span> new_socket;</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="asocket_8h_html_a5277deb395157d06fa9399fe436c9739"><div class="ttname"><a href="socket_8h.html#a5277deb395157d06fa9399fe436c9739">setup_server_socket</a></div><div class="ttdeci">int setup_server_socket(int port)</div><div class="ttdef"><b>Definition</b> socket.h:10</div></div>
+<div class="ttc" id="asocket_8h_html_acbd3c1bc1dc05dce1d53d767aa3292b8"><div class="ttname"><a href="socket_8h.html#acbd3c1bc1dc05dce1d53d767aa3292b8">accept_client</a></div><div class="ttdeci">int accept_client(int server_fd)</div><div class="ttdef"><b>Definition</b> socket.h:46</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>src</b></li><li class="navelem"><b>socket.h</b></li>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="socket_8h.html">socket.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

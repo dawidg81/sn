@@ -1,25 +1,25 @@
 \doxysection{player.\+h}
 \hypertarget{player_8h_source}{}\label{player_8h_source}\index{src/player.h@{src/player.h}}
-\doxymbox{\hyperlink{player_8h}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ PLAYER\_H}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ PLAYER\_H}}
 \DoxyCodeLine{00003\ }
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <errno.h>}}
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{server_8h}{server.h}}"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{level_8h}{level.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}server.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}level.h"{}}}
 \DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{network__utils_8h}{network\_utils.h}}"{}}}
 \DoxyCodeLine{00008\ }
-\DoxyCodeLine{00009\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{player_8h_a458367d07b4129832ae2b57bdb1034a0}{freeid}}\ =\ 0;}
+\DoxyCodeLine{00009\ \textcolor{keywordtype}{int}\ freeid\ =\ 0;}
 \DoxyCodeLine{00010\ }
 \DoxyCodeLine{00011\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
-\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{char}\ *\doxymbox{\hyperlink{structPlayer_a6259232bb3abdb7e1a3d21aa47fe343a}{username}};}
-\DoxyCodeLine{00013\ \ \ \ \ int8\_t\ \doxymbox{\hyperlink{structPlayer_ac04477a15276cf40bc9d3729096af0f6}{id}};}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{char}\ *username;}
+\DoxyCodeLine{00013\ \ \ \ \ int8\_t\ id;}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structPlayer_a59eec29c87225f768b3767451ceb84da}{x}},\ \doxymbox{\hyperlink{structPlayer_a28c357b9a2636f8bf9c5377de8245c80}{y}},\ \doxymbox{\hyperlink{structPlayer_a8e0de20eace64def502f3aec42aabdd6}{z}},\ \doxymbox{\hyperlink{structPlayer_ac2d42ad11e1de540ec312efeabe42507}{yaw}},\ \doxymbox{\hyperlink{structPlayer_a4e65dde5da9989d7ced883e9f5cffa18}{pitch}};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{float}\ x,\ y,\ z,\ yaw,\ pitch;}
 \DoxyCodeLine{00016\ \}\ \doxymbox{\hyperlink{structPlayer}{Player}};}
 \DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{player_8h_a1c73d2c29a545090a0f26465c7e60499}{read\_id}}(\textcolor{keywordtype}{char}\ *buffer,\ \textcolor{keywordtype}{char}\ *username,\ \textcolor{keywordtype}{char}\ *verification\_key)\{}
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{int}\ read\_id(\textcolor{keywordtype}{char}\ *buffer,\ \textcolor{keywordtype}{char}\ *username,\ \textcolor{keywordtype}{char}\ *verification\_key)\{}
 \DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ char\ buffer[131]\ =\ \{\ 0\ \};}}
 \DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ ssize\_t\ valread\ =\ read(new\_socket,\ buffer,\ sizeof(buffer));}}
 \DoxyCodeLine{00021\ }
@@ -57,27 +57,27 @@
 \DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{00054\ \}}
 \DoxyCodeLine{00055\ }
-\DoxyCodeLine{00056\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{player_8h_a01ef4fa4a7cf081a4b3da2cdb51655bf}{init\_player}}(\textcolor{keywordtype}{char}\ *buffer)\ \{}
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{int}\ init\_player(\textcolor{keywordtype}{char}\ *buffer)\ \{}
 \DoxyCodeLine{00057\ \ \ \ \ \doxymbox{\hyperlink{structPlayer}{Player}}\ new\_player;}
 \DoxyCodeLine{00058\ }
 \DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{char}\ username[64]\ =\ \{\ 0\ \};}
 \DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{char}\ verification\_key[64]\ =\ \{\ 0\ \};}
 \DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{player_8h_a1c73d2c29a545090a0f26465c7e60499}{read\_id}}(buffer,\ username,\ verification\_key)\ ==\ 0)\ \{}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ new\_player.\doxymbox{\hyperlink{structPlayer_a6259232bb3abdb7e1a3d21aa47fe343a}{username}}\ =\ malloc(64);}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ strcpy(new\_player.\doxymbox{\hyperlink{structPlayer_a6259232bb3abdb7e1a3d21aa47fe343a}{username}},\ username);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (read\_id(buffer,\ username,\ verification\_key)\ ==\ 0)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ new\_player.username\ =\ malloc(64);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ strcpy(new\_player.username,\ username);}
 \DoxyCodeLine{00065\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
 \DoxyCodeLine{00067\ \ \ \ \ \}}
 \DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \ \ \ \ new\_player.\doxymbox{\hyperlink{structPlayer_ac04477a15276cf40bc9d3729096af0f6}{id}}\ =\ \doxymbox{\hyperlink{player_8h_a458367d07b4129832ae2b57bdb1034a0}{freeid}}++;}
+\DoxyCodeLine{00069\ \ \ \ \ new\_player.id\ =\ freeid++;}
 \DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \ \ new\_player.\doxymbox{\hyperlink{structPlayer_a59eec29c87225f768b3767451ceb84da}{x}}\ =\ new\_player.\doxymbox{\hyperlink{structPlayer_a28c357b9a2636f8bf9c5377de8245c80}{y}}\ =\ new\_player.\doxymbox{\hyperlink{structPlayer_a8e0de20eace64def502f3aec42aabdd6}{z}}\ =\ 0;}
+\DoxyCodeLine{00071\ \ \ \ \ new\_player.x\ =\ new\_player.y\ =\ new\_player.z\ =\ 0;}
 \DoxyCodeLine{00072\ }
 \DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{00074\ \}}
 \DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{player_8h_adca4542efc5c29fd5f6951faa72c2db7}{recv\_block}}(\textcolor{keywordtype}{char}\ *buffer,\ \doxymbox{\hyperlink{structPlayer}{Player}}\ new\_player)\ \{}
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ recv\_block(\textcolor{keywordtype}{char}\ *buffer,\ \doxymbox{\hyperlink{structPlayer}{Player}}\ new\_player)\ \{}
 \DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ char\ buffer[8]\ =\ \{\ 0\ \};}}
 \DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ ssize\_t\ valread\ =\ read(socket,\ buffer,\ sizeof(buffer));}}
 \DoxyCodeLine{00079\ }
@@ -94,9 +94,9 @@
 \DoxyCodeLine{00090\ \ \ \ \ uint8\_t\ block\_id\ =\ buffer[7];}
 \DoxyCodeLine{00091\ }
 \DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (mode\ ==\ 0x01)\ \{}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\&\doxymbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}},\ x,\ y,\ z,\ block\_id);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ level\_set\_block(\&level,\ x,\ y,\ z,\ block\_id);}
 \DoxyCodeLine{00094\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\&\doxymbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}},\ x,\ y,\ z,\ 0);\ \textcolor{comment}{//\ player\ break\ -\/>\ air}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ level\_set\_block(\&level,\ x,\ y,\ z,\ 0);\ \textcolor{comment}{//\ player\ break\ -\/>\ air}}
 \DoxyCodeLine{00096\ \ \ \ \ \}}
 \DoxyCodeLine{00097\ \}}
 \DoxyCodeLine{00098\ }

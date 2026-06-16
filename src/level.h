@@ -118,6 +118,21 @@ void sendLevel(int socket, struct Level* level){
 	free(compressed);
 }
 
+/**
+ * @brief Creates a new level.
+ * @details
+ * Creates a new level which is
+ * 256 blocks wide and deep (X and Z axis)
+ * and 64 blocks high (Y axis).
+ *
+ * Calculates total amount of blocks
+ * from this level size and allocates them
+ * into memory. After that, the level is instantly
+ * sent to given socket then level blocks
+ * are freed from memory as no longer used.
+ *
+ * Uses global `level` object.
+ */
 void new_level(int new_socket) {
 	level.sizeX = 256;
 	level.sizeY = 64;
@@ -134,6 +149,15 @@ void new_level(int new_socket) {
 	free(level.blocks);
 }
 
+/**
+ * @brief Set block on level.
+ * @details
+ * Lets you set a block with given `id` on
+ * given `Level` type object coordinates
+ * (`x`, `y`, `z`) in block data (not array!).
+ * Checks if it tries to
+ * set a block out of level boundaries.
+ */
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 	if (
 			x < 0 || x >= level->sizeX ||
@@ -151,6 +175,8 @@ int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 	return 0;
 }
 
+/**
+ */
 uint8_t getBlock(struct Level* level, int x, int y, int z) {
 	if (x < 0 || x >= level->sizeX ||
 			y < 0 || y >= level->sizeY ||

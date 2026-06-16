@@ -24,12 +24,20 @@
 */
 var NAVTREE =
 [
-  [ "sn", "index.html", ]
+  [ "sn", "index.html", [
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ]
+    ] ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"annotated.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

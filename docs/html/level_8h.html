@@ -135,6 +135,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a81cd9ae87e5dd23ff76e4d1bf60f7f24" id="r_a81cd9ae87e5dd23ff76e4d1bf60f7f24"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a81cd9ae87e5dd23ff76e4d1bf60f7f24">level_set_block</a> (struct <a class="el" href="structLevel.html">Level</a> *level, int x, int y, int z, uint8_t id)</td></tr>
 <tr class="memdesc:a81cd9ae87e5dd23ff76e4d1bf60f7f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set block on level.  <br /></td></tr>
 <tr class="memitem:abe698eab5adb2254794f275180dd5b3d" id="r_abe698eab5adb2254794f275180dd5b3d"><td class="memItemLeft">uint8_t&#160;</td><td class="memItemRight"><a class="el" href="#abe698eab5adb2254794f275180dd5b3d">getBlock</a> (struct <a class="el" href="structLevel.html">Level</a> *level, int x, int y, int z)</td></tr>
+<tr class="memdesc:abe698eab5adb2254794f275180dd5b3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get block from level.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -170,6 +171,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get block from level. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned byte integer as block ID.</dd></dl>
+<p>Allows to check block on given coordinates (<span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>) on global <span class="tt"><a class="el" href="#a2bd12bceb2b01cec5cc07f25b496f3d5" title="A global level object of Level type.">level</a></span> object. </p>
 
 </div>
 </div>
@@ -208,7 +213,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set block on level. </p>
-<p>Lets you set a block with given <span class="tt">id</span> on given <span class="tt"><a class="el" href="structLevel.html" title="Defining an array of blocks.">Level</a></span> type object coordinates (<span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>) in block data (not array!). Checks if it tries to set a block out of level boundaries. </p>
+<p>Lets you set a block with given <span class="tt">id</span> on global <span class="tt"><a class="el" href="#a2bd12bceb2b01cec5cc07f25b496f3d5" title="A global level object of Level type.">level</a></span> object coordinates (<span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>) in block data (not array!). Checks if it tries to set a block out of level boundaries. </p>
 
 </div>
 </div>

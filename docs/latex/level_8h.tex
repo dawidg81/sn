@@ -15,7 +15,7 @@ void \doxymbox{\hyperlink{level_8h_abe4861a732340a592a907778a1042860}{new\+\_\+l
 int \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\+\_\+set\+\_\+block}} (struct \doxymbox{\hyperlink{structLevel}{Level}} \texorpdfstring{$\ast$}{*}level, int x, int y, int z, uint8\+\_\+t id)
 \begin{DoxyCompactList}\small\item\em Set block on level. \end{DoxyCompactList}\item 
 uint8\+\_\+t \doxymbox{\hyperlink{level_8h_abe698eab5adb2254794f275180dd5b3d}{get\+Block}} (struct \doxymbox{\hyperlink{structLevel}{Level}} \texorpdfstring{$\ast$}{*}level, int x, int y, int z)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get block from level. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -32,7 +32,14 @@ struct \doxymbox{\hyperlink{structLevel}{Level}} \doxymbox{\hyperlink{level_8h_a
 {\footnotesize\ttfamily \label{level_8h_abe698eab5adb2254794f275180dd5b3d} 
 uint8\+\_\+t get\+Block (\begin{DoxyParamCaption}\item[{struct \doxymbox{\hyperlink{structLevel}{Level}} \texorpdfstring{$\ast$}{*}}]{level}{, }\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{int}]{z}{}\end{DoxyParamCaption})}
 
-\Hypertarget{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}\index{level.h@{level.h}!level\_set\_block@{level\_set\_block}}
+
+
+Get block from level. 
+
+\begin{DoxyReturn}{Returns}
+unsigned byte integer as block ID.
+\end{DoxyReturn}
+Allows to check block on given coordinates ({\ttfamily x}, {\ttfamily y}, {\ttfamily z}) on global {\ttfamily \doxylink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}} object. \Hypertarget{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}\index{level.h@{level.h}!level\_set\_block@{level\_set\_block}}
 \index{level\_set\_block@{level\_set\_block}!level.h@{level.h}}
 \doxysubsubsection{\texorpdfstring{level\_set\_block()}{level\_set\_block()}}
 {\footnotesize\ttfamily \label{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24} 
@@ -42,7 +49,7 @@ int level\+\_\+set\+\_\+block (\begin{DoxyParamCaption}\item[{struct \doxymbox{\
 
 Set block on level. 
 
-Lets you set a block with given {\ttfamily id} on given {\ttfamily \doxylink{structLevel}{Level}} type object coordinates ({\ttfamily x}, {\ttfamily y}, {\ttfamily z}) in block data (not array!). Checks if it tries to set a block out of level boundaries. \Hypertarget{level_8h_abe4861a732340a592a907778a1042860}\index{level.h@{level.h}!new\_level@{new\_level}}
+Lets you set a block with given {\ttfamily id} on global {\ttfamily \doxylink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}} object coordinates ({\ttfamily x}, {\ttfamily y}, {\ttfamily z}) in block data (not array!). Checks if it tries to set a block out of level boundaries. \Hypertarget{level_8h_abe4861a732340a592a907778a1042860}\index{level.h@{level.h}!new\_level@{new\_level}}
 \index{new\_level@{new\_level}!level.h@{level.h}}
 \doxysubsubsection{\texorpdfstring{new\_level()}{new\_level()}}
 {\footnotesize\ttfamily \label{level_8h_abe4861a732340a592a907778a1042860} 

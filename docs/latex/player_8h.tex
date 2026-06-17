@@ -8,7 +8,7 @@
 \begin{DoxyCompactItemize}
 \item 
 struct \doxymbox{\hyperlink{structPlayer}{Player}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Defines player. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,7 +22,7 @@ void \doxymbox{\hyperlink{player_8h_adca4542efc5c29fd5f6951faa72c2db7}{recv\+\_\
 \begin{DoxyCompactItemize}
 \item 
 int \doxymbox{\hyperlink{player_8h_a458367d07b4129832ae2b57bdb1034a0}{freeid}} = 0
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Determines next free player ID. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \label{player_8h_doc-func-members}
@@ -57,3 +57,8 @@ void recv\+\_\+block (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$
 {\footnotesize\ttfamily \label{player_8h_a458367d07b4129832ae2b57bdb1034a0} 
 int freeid = 0}
 
+
+
+Determines next free player ID. 
+
+This variable stores next ID number that should be free for next player that joins. It should increment each new connection. 

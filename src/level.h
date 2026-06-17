@@ -9,7 +9,13 @@
  * parameter.
  */
 struct Level {
-	short sizeX, sizeY, sizeZ;
+	/** Determines how wide the level should be. */
+	short sizeX;
+	/** Determines how high the level should be. */
+	short sizeY;
+	/** Determines how deep the level should be. */
+	short sizeZ;
+	/** One block instance made of unsigned integer byte. */
 	uint8_t* blocks;
 };
 
@@ -153,7 +159,7 @@ void new_level(int new_socket) {
  * @brief Set block on level.
  * @details
  * Lets you set a block with given `id` on
- * given `Level` type object coordinates
+ * global `level` object coordinates
  * (`x`, `y`, `z`) in block data (not array!).
  * Checks if it tries to
  * set a block out of level boundaries.
@@ -176,6 +182,11 @@ int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 }
 
 /**
+ * @brief Get block from level.
+ * @return unsigned byte integer as block ID.
+ * @details
+ * Allows to check block on given coordinates
+ * (`x`, `y`, `z`) on global `level` object.
  */
 uint8_t getBlock(struct Level* level, int x, int y, int z) {
 	if (x < 0 || x >= level->sizeX ||

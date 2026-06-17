@@ -1,65 +1,65 @@
-\hypertarget{socket_8h_source}{}\doxysection{socket.\+h}
-\label{socket_8h_source}\index{src/socket.h@{src/socket.h}}
-\mbox{\hyperlink{socket_8h}{Go to the documentation of this file.}}
+\doxysection{socket.\+h}
+\hypertarget{socket_8h_source}{}\label{socket_8h_source}\index{src/socket.h@{src/socket.h}}
+\doxymbox{\hyperlink{socket_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef SOCKET\_H}}
-\DoxyCodeLine{2 \textcolor{preprocessor}{\#define SOCKET\_H}}
-\DoxyCodeLine{3 }
-\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <netinet/in.h>}}
-\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <sys/socket.h>}}
-\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <unistd.h>}}
-\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <stdio.h>}}
-\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <stdlib.h>}}
-\DoxyCodeLine{9 }
-\DoxyCodeLine{10 \textcolor{keywordtype}{int} \mbox{\hyperlink{socket_8h_a5277deb395157d06fa9399fe436c9739}{setup\_server\_socket}}(\textcolor{keywordtype}{int} port) \{}
-\DoxyCodeLine{11   \textcolor{keywordtype}{int} server\_fd;}
-\DoxyCodeLine{12   \textcolor{keywordtype}{int} opt = 1;}
-\DoxyCodeLine{13   \textcolor{keyword}{struct }sockaddr\_in address;}
-\DoxyCodeLine{14 }
-\DoxyCodeLine{15   \textcolor{keywordflow}{if} ((server\_fd = socket(AF\_INET, SOCK\_STREAM, 0)) < 0) \{}
-\DoxyCodeLine{16     perror(\textcolor{stringliteral}{"{}socket failed"{}});}
-\DoxyCodeLine{17     \textcolor{keywordflow}{return} -\/1;}
-\DoxyCodeLine{18   \}}
-\DoxyCodeLine{19 }
-\DoxyCodeLine{20   \textcolor{keywordflow}{if} (setsockopt(server\_fd, SOL\_SOCKET, SO\_REUSEADDR, }
-\DoxyCodeLine{21          \&opt, \textcolor{keyword}{sizeof}(opt)) < 0) \{}
-\DoxyCodeLine{22     perror(\textcolor{stringliteral}{"{}setsockopt"{}});}
-\DoxyCodeLine{23     close(server\_fd);}
-\DoxyCodeLine{24     \textcolor{keywordflow}{return} -\/1;}
-\DoxyCodeLine{25   \}}
-\DoxyCodeLine{26 }
-\DoxyCodeLine{27   address.sin\_family = AF\_INET;}
-\DoxyCodeLine{28   address.sin\_addr.s\_addr = INADDR\_ANY;}
-\DoxyCodeLine{29   address.sin\_port = htons(port);}
-\DoxyCodeLine{30 }
-\DoxyCodeLine{31   \textcolor{keywordflow}{if} (bind(server\_fd, (\textcolor{keyword}{struct} sockaddr*)\&address, \textcolor{keyword}{sizeof}(address)) < 0) \{}
-\DoxyCodeLine{32     perror(\textcolor{stringliteral}{"{}bind failed"{}});}
-\DoxyCodeLine{33     close(server\_fd);}
-\DoxyCodeLine{34     \textcolor{keywordflow}{return} -\/1;}
-\DoxyCodeLine{35   \}}
-\DoxyCodeLine{36 }
-\DoxyCodeLine{37   \textcolor{keywordflow}{if} (listen(server\_fd, 3) < 0) \{}
-\DoxyCodeLine{38     perror(\textcolor{stringliteral}{"{}listen"{}});}
-\DoxyCodeLine{39     close(server\_fd);}
-\DoxyCodeLine{40     \textcolor{keywordflow}{return} -\/1;}
-\DoxyCodeLine{41   \}}
-\DoxyCodeLine{42 }
-\DoxyCodeLine{43   \textcolor{keywordflow}{return} server\_fd;}
-\DoxyCodeLine{44 \}}
-\DoxyCodeLine{45 }
-\DoxyCodeLine{46 \textcolor{keywordtype}{int} \mbox{\hyperlink{socket_8h_acbd3c1bc1dc05dce1d53d767aa3292b8}{accept\_client}}(\textcolor{keywordtype}{int} server\_fd) \{}
-\DoxyCodeLine{47   \textcolor{keyword}{struct }sockaddr\_in address;}
-\DoxyCodeLine{48   socklen\_t addrlen = \textcolor{keyword}{sizeof}(address);}
-\DoxyCodeLine{49 }
-\DoxyCodeLine{50   \textcolor{keywordtype}{int} new\_socket = accept(server\_fd, (\textcolor{keyword}{struct} sockaddr*)\&address, \&addrlen);}
-\DoxyCodeLine{51   \textcolor{keywordflow}{if} (new\_socket < 0) \{}
-\DoxyCodeLine{52     perror(\textcolor{stringliteral}{"{}accept"{}});}
-\DoxyCodeLine{53     \textcolor{keywordflow}{return} -\/1;}
-\DoxyCodeLine{54   \}}
-\DoxyCodeLine{55 }
-\DoxyCodeLine{56   \textcolor{keywordflow}{return} new\_socket;}
-\DoxyCodeLine{57 \}}
-\DoxyCodeLine{58 }
-\DoxyCodeLine{59 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SOCKET\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SOCKET\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{socket_8h_a5277deb395157d06fa9399fe436c9739}{setup\_server\_socket}}(\textcolor{keywordtype}{int}\ port)\ \{}
+\DoxyCodeLine{00011\ \ \ \textcolor{keywordtype}{int}\ server\_fd;}
+\DoxyCodeLine{00012\ \ \ \textcolor{keywordtype}{int}\ opt\ =\ 1;}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ address;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordflow}{if}\ ((server\_fd\ =\ socket(AF\_INET,\ SOCK\_STREAM,\ 0))\ <\ 0)\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ perror(\textcolor{stringliteral}{"{}socket\ failed"{}});}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00018\ \ \ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keywordflow}{if}\ (setsockopt(server\_fd,\ SOL\_SOCKET,\ SO\_REUSEADDR,\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \&opt,\ \textcolor{keyword}{sizeof}(opt))\ <\ 0)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ perror(\textcolor{stringliteral}{"{}setsockopt"{}});}
+\DoxyCodeLine{00023\ \ \ \ \ close(server\_fd);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00025\ \ \ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ address.sin\_family\ =\ AF\_INET;}
+\DoxyCodeLine{00028\ \ \ address.sin\_addr.s\_addr\ =\ INADDR\_ANY;}
+\DoxyCodeLine{00029\ \ \ address.sin\_port\ =\ htons(port);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordflow}{if}\ (bind(server\_fd,\ (\textcolor{keyword}{struct}\ sockaddr*)\&address,\ \textcolor{keyword}{sizeof}(address))\ <\ 0)\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ perror(\textcolor{stringliteral}{"{}bind\ failed"{}});}
+\DoxyCodeLine{00033\ \ \ \ \ close(server\_fd);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00035\ \ \ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordflow}{if}\ (listen(server\_fd,\ 3)\ <\ 0)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ perror(\textcolor{stringliteral}{"{}listen"{}});}
+\DoxyCodeLine{00039\ \ \ \ \ close(server\_fd);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00041\ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordflow}{return}\ server\_fd;}
+\DoxyCodeLine{00044\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{socket_8h_acbd3c1bc1dc05dce1d53d767aa3292b8}{accept\_client}}(\textcolor{keywordtype}{int}\ server\_fd)\ \{}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ address;}
+\DoxyCodeLine{00048\ \ \ socklen\_t\ addrlen\ =\ \textcolor{keyword}{sizeof}(address);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{int}\ new\_socket\ =\ accept(server\_fd,\ (\textcolor{keyword}{struct}\ sockaddr*)\&address,\ \&addrlen);}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordflow}{if}\ (new\_socket\ <\ 0)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ perror(\textcolor{stringliteral}{"{}accept"{}});}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00054\ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordflow}{return}\ new\_socket;}
+\DoxyCodeLine{00057\ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

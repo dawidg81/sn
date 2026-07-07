@@ -35,7 +35,12 @@ void send_disconnect(int socket, char message[]) {
 
 void send_block(int socket, short x, short y, short z , uint8_t block_id) {
 	char buffer[8] = { 0 };
-	uint8_t pid = 0x06;
+	buffer[0] = 0x06;
+	write_u16_be((uint8_t *)buffer, 1, x);
+	write_u16_be((uint8_t *)buffer, 3, y);
+	write_u16_be((uint8_t *)buffer, 5, z);
+	buffer[7] = block_id;
+	send(socket, buffer, sizeof(buffer), 0);
 }
 
 #endif

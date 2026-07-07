@@ -91,42 +91,43 @@
 \DoxyCodeLine{00106\ \textcolor{comment}{\ \ \ \ \ \ \ \ printf("{}Did\ not\ receive\ proper\ packet\ ID\ for\ Set\ Block\ packet\ (expected\ 0x05\ but\ got\ \%d)\(\backslash\)n"{},\ pid);}}
 \DoxyCodeLine{00107\ \textcolor{comment}{\ \ \ \ \}*/}}
 \DoxyCodeLine{00108\ }
-\DoxyCodeLine{00109\ \ \ \ \ uint16\_t\ x\ =\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}((uint8\_t)buffer,\ buffer[0]);}
-\DoxyCodeLine{00110\ \ \ \ \ uint16\_t\ y\ =\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}((uint8\_t)buffer,\ buffer[2]);}
-\DoxyCodeLine{00111\ \ \ \ \ uint16\_t\ z\ =\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}((uint8\_t)buffer,\ buffer[4]);}
-\DoxyCodeLine{00112\ \ \ \ \ uint8\_t\ mode\ =\ buffer[6];}
-\DoxyCodeLine{00113\ \ \ \ \ uint8\_t\ block\_id\ =\ buffer[7];}
-\DoxyCodeLine{00114\ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{if}\ (mode\ ==\ 0x01)\ \{}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\&\doxymbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}},\ x,\ y,\ z,\ block\_id);}
-\DoxyCodeLine{00117\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\&\doxymbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}},\ x,\ y,\ z,\ 0);\ \textcolor{comment}{//\ player\ break\ -\/>\ air}}
-\DoxyCodeLine{00119\ \ \ \ \ \}}
-\DoxyCodeLine{00120\ \}}
-\DoxyCodeLine{00121\ }
-\DoxyCodeLine{00122\ \textcolor{comment}{/*void\ recv\_pos\_ort(int\ socket,\ Player\ player)\ \{}}
-\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ \ char\ buffer[9]\ =\ \{\ 0\ \};}}
-\DoxyCodeLine{00124\ \textcolor{comment}{\ \ \ \ ssize\_t\ valread\ =\ read(socket,\ buffer,\ sizeof(buffer));}}
-\DoxyCodeLine{00125\ \textcolor{comment}{}}
-\DoxyCodeLine{00126\ \textcolor{comment}{\ \ \ \ uint8\_t\ pid\ =\ buffer[0];}}
-\DoxyCodeLine{00127\ \textcolor{comment}{}}
-\DoxyCodeLine{00128\ \textcolor{comment}{\ \ \ \ if\ (pid\ !=\ 0x08)\ \{}}
-\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ \ \ \ \ printf("{}Did\ not\ receive\ proper\ packet\ ID\ for\ Set\ Block\ packet\ (expected\ 0x05\ but\ got\ \%d)\(\backslash\)n"{},\ pid);}}
-\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ \}}}
-\DoxyCodeLine{00131\ \textcolor{comment}{}}
-\DoxyCodeLine{00132\ \textcolor{comment}{\ \ \ \ uint16\_t\ x\ =\ read\_u16\_be((uint8\_t)buffer,\ buffer[1]);}}
-\DoxyCodeLine{00133\ \textcolor{comment}{\ \ \ \ uint16\_t\ y\ =\ read\_u16\_be((uint8\_t)buffer,\ buffer[3]);}}
-\DoxyCodeLine{00134\ \textcolor{comment}{\ \ \ \ uint16\_t\ z\ =\ read\_u16\_be((uint8\_t)buffer,\ buffer[5]);}}
-\DoxyCodeLine{00135\ \textcolor{comment}{\ \ \ \ uint8\_t\ mode\ =\ buffer[7];}}
-\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ uint8\_t\ block\_id\ =\ buffer[8];}}
-\DoxyCodeLine{00137\ \textcolor{comment}{}}
-\DoxyCodeLine{00138\ \textcolor{comment}{\ \ \ \ if\ (mode\ ==\ 0x01)\ \{}}
-\DoxyCodeLine{00139\ \textcolor{comment}{\ \ \ \ \ \ \ \ level\_set\_block(level,\ x,\ y,\ z,\ id);}}
-\DoxyCodeLine{00140\ \textcolor{comment}{\ \ \ \ \}\ else\ \{}}
-\DoxyCodeLine{00141\ \textcolor{comment}{\ \ \ \ \ \ \ \ level\_set\_block(level,\ x,\ y,\ z,\ 0);\ //\ player\ break\ -\/>\ air}}
-\DoxyCodeLine{00142\ \textcolor{comment}{\ \ \ \ \}}}
-\DoxyCodeLine{00143\ \textcolor{comment}{\}*/}}
-\DoxyCodeLine{00144\ }
-\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00109\ \ \ \ \ uint16\_t\ x\ =\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}((uint8\_t*)buffer,\ buffer[0]);}
+\DoxyCodeLine{00110\ \ \ \ \ uint16\_t\ y\ =\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}((uint8\_t*)buffer,\ buffer[2]);}
+\DoxyCodeLine{00111\ \ \ \ \ uint16\_t\ z\ =\ \doxymbox{\hyperlink{network__utils_8h_ad773761e5989f506b6f91b703fb535cb}{read\_u16\_be}}((uint8\_t*)buffer,\ buffer[4]);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ uint8\_t\ mode\ =\ buffer[6];}
+\DoxyCodeLine{00114\ \ \ \ \ uint8\_t\ block\_id\ =\ buffer[7];}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{if}\ (mode\ ==\ 0x01)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\&\doxymbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}},\ x,\ y,\ z,\ block\_id);}
+\DoxyCodeLine{00118\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{level_8h_a81cd9ae87e5dd23ff76e4d1bf60f7f24}{level\_set\_block}}(\&\doxymbox{\hyperlink{level_8h_a2bd12bceb2b01cec5cc07f25b496f3d5}{level}},\ x,\ y,\ z,\ 0);\ \textcolor{comment}{//\ player\ break\ -\/>\ air}}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{comment}{/*void\ recv\_pos\_ort(int\ socket,\ Player\ player)\ \{}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\ \ \ \ char\ buffer[9]\ =\ \{\ 0\ \};}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ \ \ \ ssize\_t\ valread\ =\ read(socket,\ buffer,\ sizeof(buffer));}}
+\DoxyCodeLine{00126\ \textcolor{comment}{}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ \ \ \ uint8\_t\ pid\ =\ buffer[0];}}
+\DoxyCodeLine{00128\ \textcolor{comment}{}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ if\ (pid\ !=\ 0x08)\ \{}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ \ \ \ \ printf("{}Did\ not\ receive\ proper\ packet\ ID\ for\ Set\ Block\ packet\ (expected\ 0x05\ but\ got\ \%d)\(\backslash\)n"{},\ pid);}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00132\ \textcolor{comment}{}}
+\DoxyCodeLine{00133\ \textcolor{comment}{\ \ \ \ uint16\_t\ x\ =\ read\_u16\_be((uint8\_t)buffer,\ buffer[1]);}}
+\DoxyCodeLine{00134\ \textcolor{comment}{\ \ \ \ uint16\_t\ y\ =\ read\_u16\_be((uint8\_t)buffer,\ buffer[3]);}}
+\DoxyCodeLine{00135\ \textcolor{comment}{\ \ \ \ uint16\_t\ z\ =\ read\_u16\_be((uint8\_t)buffer,\ buffer[5]);}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ uint8\_t\ mode\ =\ buffer[7];}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ \ \ \ uint8\_t\ block\_id\ =\ buffer[8];}}
+\DoxyCodeLine{00138\ \textcolor{comment}{}}
+\DoxyCodeLine{00139\ \textcolor{comment}{\ \ \ \ if\ (mode\ ==\ 0x01)\ \{}}
+\DoxyCodeLine{00140\ \textcolor{comment}{\ \ \ \ \ \ \ \ level\_set\_block(level,\ x,\ y,\ z,\ id);}}
+\DoxyCodeLine{00141\ \textcolor{comment}{\ \ \ \ \}\ else\ \{}}
+\DoxyCodeLine{00142\ \textcolor{comment}{\ \ \ \ \ \ \ \ level\_set\_block(level,\ x,\ y,\ z,\ 0);\ //\ player\ break\ -\/>\ air}}
+\DoxyCodeLine{00143\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00144\ \textcolor{comment}{\}*/}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

@@ -14,7 +14,7 @@
 #include "level.h"
 #include "player.h"
 
-#define	PORT	25567
+#define	PORT	25565
 
 Player players[256];
 
@@ -42,8 +42,8 @@ int main() {
 				if (init_player(buffer) != 0) {
 					printf("Player initialization failed\n");
 				}
-			case 0x05:
-				recv_block(buffer, new_player);
+			/*case 0x05:
+				recv_block(buffer, new_player);*/
 		}
 	}
 

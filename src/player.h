@@ -106,9 +106,10 @@ void recv_block(char *buffer, Player new_player) {
 		printf("Did not receive proper packet ID for Set Block packet (expected 0x05 but got %d)\n", pid);
 	}*/
 
-	uint16_t x = read_u16_be((uint8_t)buffer, buffer[0]);
-	uint16_t y = read_u16_be((uint8_t)buffer, buffer[2]);
-	uint16_t z = read_u16_be((uint8_t)buffer, buffer[4]);
+	uint16_t x = read_u16_be((uint8_t*)buffer, buffer[0]);
+	uint16_t y = read_u16_be((uint8_t*)buffer, buffer[2]);
+	uint16_t z = read_u16_be((uint8_t*)buffer, buffer[4]);
+
 	uint8_t mode = buffer[6];
 	uint8_t block_id = buffer[7];
 

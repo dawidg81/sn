@@ -1,58 +1,13 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-/**
- * @brief Defining an array of blocks.
- * @details
- * Includes X, Y, Z parameters defining size of
- * level. Makes unsigned byte integer as `blocks`
- * parameter.
- */
 struct Level {
-	/** Determines how wide the level should be. */
-	short sizeX;
-	/** Determines how high the level should be. */
-	short sizeY;
-	/** Determines how deep the level should be. */
-	short sizeZ;
-	/** One block instance made of unsigned integer byte. */
+	short sizeX, sizeY, sizeZ;
 	uint8_t* blocks;
 };
 
-/**
- * @brief A global `level` object of `Level` type.
- * @details
- * Gives a global, publicly accessible level object.
- * It's being created on start of the program.
- * It's the only operable level object so far.
- */
 struct Level level;
 
-/**
- * @brief Sends level to socket.
- * @details
- * Defines level data size by multiplicating level boundaries.
- * Allocates them in memory and adds them to `totalBlocks`.
- * Defines estimated size of compression to put in buffer.
- * Compresses whole array with gzip.
- *
- * After done compressing, sends Level Initialization Packet
- * with ID `0x02` to socket. Estimates total size of level
- * to send.
- *
- * It starts level serialization by sending chunks to socket in a
- * loop until it has done sending whole level. Each iteration is
- * chopping down the compressed level array into chunks made of
- * 1024 bytes plus 4 last bytes for offset confirmation, making
- * each buffer be 1028 bytes. That buffer is used to send
- * chunk level packet with ID `0x03`. It also includes byte
- * indicating percentage.
- *
- * If offset is less than total size of level to send, the loop
- * ends. To confirm that level sending completed, server sends to
- * client finalization packet with ID `0x04`. That packet gives
- * client information about level boundaries.
- */
 void sendLevel(int socket, struct Level* level){
 	int x = level->sizeX, y = level->sizeY, z = level->sizeZ;
 	int totalBlocks = x * y * z;
@@ -124,21 +79,6 @@ void sendLevel(int socket, struct Level* level){
 	free(compressed);
 }
 
-/**
- * @brief Creates a new level.
- * @details
- * Creates a new level which is
- * 256 blocks wide and deep (X and Z axis)
- * and 64 blocks high (Y axis).
- *
- * Calculates total amount of blocks
- * from this level size and allocates them
- * into memory. After that, the level is instantly
- * sent to given socket then level blocks
- * are freed from memory as no longer used.
- *
- * Uses global `level` object.
- */
 void new_level(int new_socket) {
 	level.sizeX = 256;
 	level.sizeY = 64;
@@ -152,18 +92,9 @@ void new_level(int new_socket) {
 	  }*/
 
 	sendLevel(new_socket, &level);
-	free(level.blocks);
+	// free(level.blocks);
 }
 
-/**
- * @brief Set block on level.
- * @details
- * Lets you set a block with given `id` on
- * global `level` object coordinates
- * (`x`, `y`, `z`) in block data (not array!).
- * Checks if it tries to
- * set a block out of level boundaries.
- */
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 	if (
 			x < 0 || x >= level->sizeX ||
@@ -181,13 +112,6 @@ int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 	return 0;
 }
 
-/**
- * @brief Get block from level.
- * @return unsigned byte integer as block ID.
- * @details
- * Allows to check block on given coordinates
- * (`x`, `y`, `z`) on global `level` object.
- */
 uint8_t getBlock(struct Level* level, int x, int y, int z) {
 	if (x < 0 || x >= level->sizeX ||
 			y < 0 || y >= level->sizeY ||

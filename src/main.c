@@ -13,6 +13,7 @@
 #include "socket.h"
 #include "level.h"
 #include "player.h"
+#include "server.h"
 
 #define	PORT	25568
 
@@ -37,13 +38,10 @@ int main() {
 		}
 
 		// From here we handle client
-		
+
 		unsigned char buffer[1024] = { 0 };
 
 		ssize_t valread = read(new_socket, buffer, sizeof(buffer));
-
-		printf("new_socket = %d\n", new_socket);
-		printf("read() = %zd\n", valread);
 
 		if (valread <= 0) {
 			perror("read");
@@ -52,19 +50,24 @@ int main() {
 		}
 
 		// read_id(new_socket);
+		send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
 		new_level(new_socket);
 		Player new_player;
 
-		switch (buffer[0]) {
-			case 0x00:
-				if (init_player((char *)buffer, &new_player) != 0) {
-					printf("Player initialization failed\n");
-				}
-				send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
-				break;
-			case 0x05:
-				recv_block(buffer, new_player);
-				break;
+		while(true){
+			unsigned char packet[1024] = { 0 };
+			ssize_t bytes = read(new_socket, packet, sizeof(packet));
+			if (bytes <= 0) break;
+			switch (packet[0]) {
+				case 0x00:
+					if (init_player((char *)packet, &new_player) != 0) {
+						printf("Player initialization failed\n");
+					}
+					break;
+				case 0x05:
+					recv_block((char *)packet, new_player);
+					break;
+			}
 		}
 		close(new_socket);
 	}

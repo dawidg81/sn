@@ -12,6 +12,8 @@ void send_server_identification(int socket, char name[], char motd[]) {
 	write_str64((uint8_t *)buffer, 2, name);
 	write_str64((uint8_t *)buffer, 66, motd);
 	buffer[130] = utype;
+
+	send(socket, buffer, sizeof(buffer), 0);
 }
 
 void send_disconnect(int socket, char message[]) {

@@ -6,13 +6,36 @@
 #include "level.h"
 #include "network_utils.h"
 
+/**
+ * @brief Determines next free player ID.
+ * @details
+ * This variable stores next ID number that
+ * should be free for next player that joins.
+ * It should increment each new connection.
+ */
 int freeid = 0;
 
+/**
+ * @brief Defines player.
+ * @details
+ * Defines player instance and its parameters.
+ */
 typedef struct {
+	/** Player username string, array of characters. */
 	char *username;
+	/** Internal ID of player to operate on it.*/
 	int8_t id;
 
-	float x, y, z, yaw, pitch;
+	/** X coordinate of player position. */
+	float x;
+	/** Y coordinate of player position. */
+	float y;
+	/** Z coordinate of player position. */
+	float z;
+	/** Yaw angle of player's orientation. */
+	float yaw;
+	/** Pitch angle of player's orientation. */
+	float pitch;
 } Player;
 
 int read_id(char *buffer, char *username, char *verification_key){

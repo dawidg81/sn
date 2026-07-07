@@ -52,18 +52,9 @@ int init_player(char *buffer, Player *player) {
 }
 
 void recv_block(char *buffer, Player new_player) {
-	// char buffer[8] = { 0 };
-	// ssize_t valread = read(socket, buffer, sizeof(buffer));
-
-	// uint8_t pid = buffer[0];
-
-	/*if (pid != 0x05) {
-		printf("Did not receive proper packet ID for Set Block packet (expected 0x05 but got %d)\n", pid);
-	}*/
-
-	uint16_t x = read_u16_be((const uint8_t *)buffer, buffer[1]);
-	uint16_t y = read_u16_be((const uint8_t *)buffer, buffer[3]);
-	uint16_t z = read_u16_be((const uint8_t *)buffer, buffer[5]);
+	uint16_t x = read_u16_be((const uint8_t *)buffer, 1);
+	uint16_t y = read_u16_be((const uint8_t *)buffer, 3);
+	uint16_t z = read_u16_be((const uint8_t *)buffer, 5);
 	
 	uint8_t mode = buffer[6];
 	uint8_t block_id = buffer[7];

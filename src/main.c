@@ -50,21 +50,25 @@ int main() {
 		}
 
 		// read_id(new_socket);
-		send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
-		new_level(new_socket);
+		
 		Player new_player;
+
+		if (buffer[0] == 0x00) {
+			if (init_player((char*)buffer, &new_player) != 0) {
+				printf("Player initialization failed");
+				close(new_socket);
+				continue;
+			}
+			send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
+			new_level(new_socket);
+		}
 
 		while(true){
 			unsigned char packet[1024] = { 0 };
 			ssize_t bytes = read(new_socket, packet, sizeof(packet));
 			if (bytes <= 0) break;
 			switch (packet[0]) {
-				case 0x00:
-					if (init_player((char *)packet, &new_player) != 0) {
-						printf("Player initialization failed\n");
-					}
-					break;
-				case 0x05:
+				case 0x05: // Set block
 					recv_block((char *)packet, new_player);
 					break;
 			}

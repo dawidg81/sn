@@ -33,4 +33,9 @@ void send_disconnect(int socket, char message[]) {
 	send(socket, buffer, sizeof(buffer), 0);
 }
 
+void send_block(int socket, short x, short y, short z , uint8_t block_id) {
+	char buffer[8] = { 0 };
+	uint8_t pid = 0x06;
+}
+
 #endif

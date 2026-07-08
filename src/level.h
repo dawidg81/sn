@@ -1,6 +1,8 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include "mapgen.h"
+
 struct Level {
 	short sizeX, sizeY, sizeZ;
 	uint8_t* blocks;
@@ -80,19 +82,22 @@ void sendLevel(int socket, struct Level* level){
 }
 
 void new_level(int new_socket) {
-	level.sizeX = 256;
-	level.sizeY = 64;
-	level.sizeZ = 256;
+        level.sizeX = 256;
+        level.sizeY = 64;
+        level.sizeZ = 256;
 
-	int total = level.sizeX * level.sizeY * level.sizeZ;
-	level.blocks = malloc(total);
+        int total = level.sizeX * level.sizeY * level.sizeZ;
+        level.blocks = malloc(total);
 
-	/*for(int i = 0; i < total; i++) {
-	  level.blocks[i] = rand() % 49;
-	  }*/
+        Level* gen_level = mapgen_create_level(256, 64, 256, (uint32_t)time(NULL));
+        
+        for (int i = 0; i < total; i++) {
+                level.blocks[i] = (uint8_t)gen_level->blocks[i];
+        }
+        
+        mapgen_free_level(gen_level);
 
-	sendLevel(new_socket, &level);
-	// free(level.blocks);
+        sendLevel(new_socket, &level);
 }
 
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {

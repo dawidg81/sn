@@ -91,8 +91,6 @@ void new_level(int new_socket) {
                 level.blocks[i] = 0;
         }
         
-        mapgen_free_level(gen_level);
-
         sendLevel(new_socket, &level);
 }
 

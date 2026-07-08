@@ -14,7 +14,6 @@
 #include "level.h"
 #include "player.h"
 #include "server.h"
-#include "mapgen.h"
 
 #define	PORT	25568
 

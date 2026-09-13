@@ -70,13 +70,13 @@ void recv_block(char* buffer, Player new_player) {
 void recv_pos_ort(char* buffer, Player player) {
     // ssize_t valread = read(socket, buffer, sizeof(buffer));
 
-    // uint8_t player_id = buffer[0];
+    uint8_t player_id = buffer[1];
 
-    uint16_t x = read_u16_be((const uint8_t*)buffer, 1);
-    uint16_t y = read_u16_be((const uint8_t*)buffer, 3);
-    uint16_t z = read_u16_be((const uint8_t*)buffer, 5);
-    uint8_t yaw = buffer[7];
-    uint8_t pitch = buffer[8];
+    uint16_t x = read_u16_be((const uint8_t*)buffer, 2);
+    uint16_t y = read_u16_be((const uint8_t*)buffer, 4);
+    uint16_t z = read_u16_be((const uint8_t*)buffer, 6);
+    uint8_t yaw = buffer[8];
+    uint8_t pitch = buffer[9];
 
     player.x = x;
     player.y = y;

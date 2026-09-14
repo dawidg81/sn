@@ -75,8 +75,10 @@ int main() {
                     recv_pos_ort((char*)packet, new_player);
                     printf("DEBUG: Player pos: %f, %f, %f\r", new_player.x, new_player.y,
                            new_player.z);
+                    break;
                 default:
                     printf("ERROR: player sent unknown packet %d", packet[0]);
+                    break;
             }
         }
         close(new_socket);

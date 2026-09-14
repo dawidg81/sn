@@ -57,8 +57,8 @@ void recv_block(char* buffer, Player new_player) {
     uint16_t y = read_u16_be((const uint8_t*)buffer, 3);
     uint16_t z = read_u16_be((const uint8_t*)buffer, 5);
 
-    uint8_t mode = buffer[6];
-    uint8_t block_id = buffer[7];
+    uint8_t mode = buffer[7];
+    uint8_t block_id = buffer[8];
 
     if (mode == 0x01) {
         level_set_block(&level, x, y, z, block_id);

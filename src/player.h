@@ -76,14 +76,12 @@ void recv_pos_ort(char* buffer, Player* player) {
     int16_t x_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 2);
     int16_t y_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 4);
     int16_t z_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 6);
+    uint8_t yaw = buffer[8];
+    uint8_t pitch = buffer[9];
 
     player->x = x_fixed / 32.0f;
     player->y = y_fixed / 32.0f;
     player->z = z_fixed / 32.0f;
-
-    uint8_t yaw = buffer[8];
-    uint8_t pitch = buffer[9];
-
     player->yaw = yaw;
     player->pitch = pitch;
 }

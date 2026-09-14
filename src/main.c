@@ -72,9 +72,12 @@ int main() {
                     recv_block((char*)packet, &new_player);
                     break;
                 case 0x08:  // Pos ort
+                    printf("DEBUG: Received packet 0x08\n");
+                    fflush(stdout);
                     recv_pos_ort((char*)packet, &new_player);
                     printf("DEBUG: Player pos: %f, %f, %f\n", new_player.x, new_player.y,
                            new_player.z);
+                    fflush(stdout);
                     break;
                 default:
                     printf("ERROR: player sent unknown packet %d", packet[0]);

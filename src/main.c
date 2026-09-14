@@ -73,8 +73,8 @@ int main() {
                     break;
                 case 0x08:
                     recv_pos_ort((char*)packet, new_player);
-            }
             printf("Tracking player: %f, %f, %f\r", new_player.x, new_player.y, new_player.z);
+            }
         }
         close(new_socket);
     }

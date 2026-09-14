@@ -69,11 +69,11 @@ int main() {
             if (bytes <= 0) break;
             switch (packet[0]) {
                 case 0x05:  // Set block
-                    recv_block((char*)packet, new_player);
+                    recv_block((char*)packet, &new_player);
                     break;
                 case 0x08:  // Pos ort
-                    recv_pos_ort((char*)packet, new_player);
-                    printf("DEBUG: Player pos: %f, %f, %f\r", new_player.x, new_player.y,
+                    recv_pos_ort((char*)packet, &new_player);
+                    printf("DEBUG: Player pos: %f, %f, %f\n", new_player.x, new_player.y,
                            new_player.z);
                     break;
                 default:

@@ -62,6 +62,7 @@ void recv_block(char* buffer, Player new_player) {
 
     if (mode == 0x01) {
         level_set_block(&level, x, y, z, block_id);
+        printf("DEBUG: Player placed block %d at %d, %d, %d\n", block_id, x, y, z);
     } else {
         level_set_block(&level, x, y, z, 0);  // player break -> air
     }

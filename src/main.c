@@ -71,9 +71,12 @@ int main() {
                 case 0x05:  // Set block
                     recv_block((char*)packet, new_player);
                     break;
-                case 0x08:
+                case 0x08:  // Pos ort
                     recv_pos_ort((char*)packet, new_player);
-            printf("Tracking player: %f, %f, %f\r", new_player.x, new_player.y, new_player.z);
+                    printf("DEBUG: Player pos: %f, %f, %f\r", new_player.x, new_player.y,
+                           new_player.z);
+                default:
+                    printf("ERROR: player sent unknown packet %d", packet[0]);
             }
         }
         close(new_socket);

@@ -53,12 +53,12 @@ int init_player(char* buffer, Player* player) {
 }
 
 void recv_block(char* buffer, Player* new_player) {
-    uint16_t x = read_u16_be((const uint8_t*)buffer, 1);
-    uint16_t y = read_u16_be((const uint8_t*)buffer, 3);
-    uint16_t z = read_u16_be((const uint8_t*)buffer, 5);
+    uint16_t x = read_u16_be((const uint8_t*)buffer, 0);
+    uint16_t y = read_u16_be((const uint8_t*)buffer, 2);
+    uint16_t z = read_u16_be((const uint8_t*)buffer, 4);
 
-    uint8_t mode = buffer[7];
-    uint8_t block_id = buffer[8];
+    uint8_t mode = buffer[6];
+    uint8_t block_id = buffer[7];
 
     if (mode == 0x01) {
         level_set_block(&level, x, y, z, block_id);
@@ -71,13 +71,13 @@ void recv_block(char* buffer, Player* new_player) {
 void recv_pos_ort(char* buffer, Player* player) {
     // ssize_t valread = read(socket, buffer, sizeof(buffer));
 
-    uint8_t player_id = buffer[1];
+    uint8_t player_id = buffer[0];
 
-    int16_t x_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 2);
-    int16_t y_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 4);
-    int16_t z_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 6);
-    uint8_t yaw = buffer[8];
-    uint8_t pitch = buffer[9];
+    int16_t x_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 1);
+    int16_t y_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 3);
+    int16_t z_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 5);
+    uint8_t yaw = buffer[7];
+    uint8_t pitch = buffer[8];
 
     player->x = x_fixed / 32.0f;
     player->y = y_fixed / 32.0f;

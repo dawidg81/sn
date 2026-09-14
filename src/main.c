@@ -39,7 +39,7 @@ int main() {
 
         // From here we handle client
 
-        unsigned char buffer[1024] = {0};
+        unsigned char buffer[131] = {0};
 
         ssize_t valread = read(new_socket, buffer, sizeof(buffer));
 
@@ -63,24 +63,44 @@ int main() {
             new_level(new_socket);
         }
 
+        /*unsigned char b[100] = {0};
+        ssize_t bsize = read(new_socket, b, sizeof(b));
+        printf("%s\n", b);*/
+
         while (true) {
-            unsigned char packet[1024] = {0};
-            ssize_t bytes = read(new_socket, packet, sizeof(packet));
-            if (bytes <= 0) break;
-            switch (packet[0]) {
+            unsigned char buf[1] = {0};
+            ssize_t bufsize = read(new_socket, buf, sizeof(buf));
+            if (bufsize <= 0) break;
+            printf("DEBUG: Checking buffer\n");
+            switch (buf[0]) {
                 case 0x05:  // Set block
+                    unsigned char packet[130] = {0};
+                    ssize_t bytes = read(new_socket, packet, sizeof(packet));
+                    if (bytes <= 0) break;
+
                     recv_block((char*)packet, &new_player);
                     break;
                 case 0x08:  // Pos ort
+                    unsigned char packet2[9] = {0};
+                    ssize_t bytes2 = read(new_socket, packet2, sizeof(packet2));
+                    if (bytes2 <= 0) break;
+
                     printf("DEBUG: Received packet 0x08\n");
                     fflush(stdout);
-                    recv_pos_ort((char*)packet, &new_player);
+                    recv_pos_ort((char*)packet2, &new_player);
                     printf("DEBUG: Player pos: %f, %f, %f\n", new_player.x, new_player.y,
                            new_player.z);
                     fflush(stdout);
                     break;
+                case 0x0d:
+                    unsigned char packet3[65] = {0};
+                    ssize_t bytes3 = read(new_socket, packet3, sizeof(packet3));
+                    if (bytes3 <= 0) break;
+
+                    printf("DEBUG: Received message packet from player: %s\n", packet3);
+                    break;
                 default:
-                    printf("ERROR: player sent unknown packet %d", packet[0]);
+                    printf("ERROR: player sent unknown packet %d\n", packet[0]);
                     break;
             }
         }

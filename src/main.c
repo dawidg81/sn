@@ -14,6 +14,7 @@
 #include "player.h"
 #include "server.h"
 #include "socket.h"
+#include "mapgen.h"
 
 #define PORT 25568
 
@@ -67,7 +68,7 @@ int main() {
         ssize_t bsize = read(new_socket, b, sizeof(b));
         printf("%s\n", b);*/
 
-        send_spawn(new_socket, -1, new_player.username, level.sizeX/2, level.sizeY/2, level.sizeZ/2, 0x00, 0x00);
+        send_spawn(new_socket, -1, new_player.username, level.sizeX/2, level.sizeY, level.sizeZ/2, 0x00, 0x00);
 
         while (true) {
             unsigned char buf[1] = {0};
@@ -90,7 +91,7 @@ int main() {
                     recv_pos_ort((char*)packet2, &new_player);
                     fflush(stdout);
                     break;
-                case 0x0d:
+                case 0x0d:  // Message
                     unsigned char packet3[65] = {0};
                     ssize_t bytes3 = read(new_socket, packet3, sizeof(packet3));
                     if (bytes3 <= 0) break;

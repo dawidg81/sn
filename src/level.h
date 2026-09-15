@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include "network_utils.h"
+#include "mapgen.h"
 
 struct Level {
     short sizeX, sizeY, sizeZ;
@@ -96,6 +97,7 @@ void new_level(int new_socket) {
         level.blocks[i] = 0;
     }
 
+    flatgen_generate(&level);
     sendLevel(new_socket, &level);
 }
 

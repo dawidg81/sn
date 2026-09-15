@@ -50,6 +50,13 @@ void send_spawn(int socket, int8_t pid, char name[64], float x, float y, float z
     buffer[0] = 0x07;
     buffer[1] = pid;
     write_str64((uint8_t*)buffer, 2, name);
+    write_u16_be((const uint8_t*)buffer, 66, (int16_t)(x * 32));
+    write_u16_be((const uint8_t*)buffer, 68, (int16_t)(y * 32));
+    write_u16_be((const uint8_t*)buffer, 70, (int16_t)(z * 32));
+    buffer[72] = yaw;
+    buffer[73] = pitch;
+
+    send(socket, buffer, sizeof(buffer), 0);
 }
 
 #endif

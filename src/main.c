@@ -67,6 +67,8 @@ int main() {
         ssize_t bsize = read(new_socket, b, sizeof(b));
         printf("%s\n", b);*/
 
+        send_spawn(new_socket, -1, new_player.username, level.sizeX/2, level.sizeY/2, level.sizeZ/2, 0x00, 0x00);
+
         while (true) {
             unsigned char buf[1] = {0};
             ssize_t bufsize = read(new_socket, buf, sizeof(buf));

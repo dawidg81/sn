@@ -43,6 +43,13 @@ void send_block(int socket, short x, short y, short z, uint8_t block_id) {
     send(socket, buffer, sizeof(buffer), 0);
 }
 
-void send_pos_ort(int socket, float x, float y, float z, uint8_t yaw, uint8_t pitch) {}
+void send_spawn(int socket, int8_t pid, char name[64], float x, float y, float z, uint8_t yaw,
+                uint8_t pitch) {
+    char buffer[74] = {0};
+
+    buffer[0] = 0x07;
+    buffer[1] = pid;
+    write_str64((uint8_t*)buffer, 2, name);
+}
 
 #endif

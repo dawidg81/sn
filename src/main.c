@@ -10,7 +10,6 @@
 #include <zlib.h>
 
 #include "level.h"
-#include "mapgen.h"
 #include "network_utils.h"
 #include "player.h"
 #include "server.h"

@@ -98,16 +98,16 @@ int main() {
                     ssize_t bytes3 = read(new_socket, packet3, sizeof(packet3));
                     if (bytes3 <= 0) break;
 
-                    char msg[64] = {0};
-                    strcpy(msg, new_player.username);
-                    strcpy(msg, ": ");
-                    strcpy(msg, recv_message(packet3, &new_player));
+                    const char *received = recv_message(packet3, &new_player);
+
+                    char msg[64];
+                    snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);
 
                     send_message(new_socket, msg);
 
                     break;
                 default:
-                    printf("ERROR: player sent unknown packet %d\n", packet[0]);
+                    printf("ERROR: player sent unknown packet %d\n", buf[0]);
                     break;
             }
         }

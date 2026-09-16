@@ -69,6 +69,7 @@ int main() {
 
         send_spawn(new_socket, -1, new_player.username, level.sizeX / 2, level.sizeY,
                    level.sizeZ / 2, 0x00, 0x00);
+        send_message(new_socket, "a potatoe e tomatoe");
 
         while (true) {
             unsigned char buf[1] = {0};

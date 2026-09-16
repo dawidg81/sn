@@ -59,4 +59,14 @@ void send_spawn(int socket, int8_t pid, char name[64], float x, float y, float z
     send(socket, buffer, sizeof(buffer), 0);
 }
 
+void send_message(int socket, char msg[64]) {
+    char buffer[66] = {0};
+
+    buffer[0] = 0x0d;
+    buffer[1] = 0x00;
+    write_str64((uint8_t*)buffer, 2, msg);
+
+    send(socket, buffer, sizeof(buffer), 0);
+}
+
 #endif

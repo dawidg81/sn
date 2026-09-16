@@ -92,11 +92,9 @@ void new_level(int new_socket) {
     int total = level.sizeX * level.sizeY * level.sizeZ;
     level.blocks = malloc(total);
 
-    /*for (int i = 0; i < total; i++) {
+    for (int i = 0; i < total; i++) {
         level.blocks[i] = 0;
-    }*/
-
-    flatgen_generate(&level);
+    }
 
     sendLevel(new_socket, &level);
 }
@@ -123,7 +121,5 @@ uint8_t getBlock(struct Level* level, int x, int y, int z) {
     int index = y * (level->sizeX * level->sizeZ) + z * level->sizeX + x;
     return level->blocks[index];
 }
-
-#include "mapgen.h"
 
 #endif

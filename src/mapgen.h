@@ -8,7 +8,7 @@
 #define GRASS_ID 3
 #define WATER_ID 9
 
-void flatgen_generate(struct Level* level) {
+static inline void flatgen_generate(struct Level* level) {
     int ground_level = 32;
     int total = level->sizeX * level->sizeY * level->sizeZ;
 

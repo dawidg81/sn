@@ -25,9 +25,10 @@ int read_id(char* buffer, char* username, char* verification_key) {
     memcpy(verification_key, buffer + 66, 64);
     verification_key[64] = '\0';
 
-    printf("New client connected\n");
-    printf("Their username is %s\n", username);
-    printf("They are identifying with %s\n", verification_key);
+    printf("DEBUG: New client connected\n");
+    printf("DEBUG: Their username is %s\n", username);
+    printf("DEBUG: They are identifying with %s\n", verification_key);
+    printf("DEBUG: Gave them ID number %d\n", freeid);
 
     return 0;
 }
@@ -83,6 +84,15 @@ void recv_pos_ort(char* buffer, Player* player) {
     player->z = z_fixed / 32.0f;
     player->yaw = yaw;
     player->pitch = pitch;
+}
+
+char recv_message(char* buffer, Player* player) {
+    char message[64] = {0};
+
+    uint8_t player_id = buffer[0];
+    memcpy(message, buffer + 1, 64);
+
+    return message;
 }
 
 #endif

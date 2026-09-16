@@ -60,6 +60,7 @@ int main() {
                 continue;
             }
             send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
+            players[new_player.id] = new_player; // appending player to global table
             new_level(new_socket);
         }
 
@@ -96,6 +97,14 @@ int main() {
                     unsigned char packet3[65] = {0};
                     ssize_t bytes3 = read(new_socket, packet3, sizeof(packet3));
                     if (bytes3 <= 0) break;
+
+                    char msg[64] = {0};
+                    strcpy(msg, new_player.username);
+                    strcpy(msg, ": ");
+                    strcpy(msg, recv_message(packet3, &new_player));
+
+                    send_message(new_socket, msg);
+
                     break;
                 default:
                     printf("ERROR: player sent unknown packet %d\n", packet[0]);

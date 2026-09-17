@@ -77,26 +77,26 @@ int main() {
             ssize_t bufsize = read(new_socket, buf, sizeof(buf));
             if (bufsize <= 0) break;
             switch (buf[0]) {
-                case 0x05:  // Set block
+                case 0x05: { // Set block
                     unsigned char packet[8] = {0};
                     ssize_t bytes = read(new_socket, packet, sizeof(packet));
                     if (bytes <= 0) break;
 
                     recv_block((char*)packet, &new_player);
-                    break;
-                case 0x08:  // Pos ort
-                    unsigned char packet2[9] = {0};
-                    ssize_t bytes2 = read(new_socket, packet2, sizeof(packet2));
-                    if (bytes2 <= 0) break;
+                }   break;
+                case 0x08: { // Pos ort
+                    unsigned char packet[9] = {0};
+                    ssize_t bytes = read(new_socket, packet, sizeof(packet));
+                    if (bytes <= 0) break;
 
                     fflush(stdout);
                     recv_pos_ort((char*)packet2, &new_player);
                     fflush(stdout);
-                    break;
-                case 0x0d:  // Message (experimental)
-                    unsigned char packet3[65] = {0};
-                    ssize_t bytes3 = read(new_socket, packet3, sizeof(packet3));
-                    if (bytes3 <= 0) break;
+                }   break;
+                case 0x0d: { // Message (experimental)
+                    unsigned char packet[65] = {0};
+                    ssize_t bytes = read(new_socket, packet, sizeof(packet));
+                    if (bytes <= 0) break;
 
                     const char* received = recv_message(packet3, &new_player);
 
@@ -105,7 +105,7 @@ int main() {
 
                     send_message(new_socket, msg);
 
-                    break;
+                }   break;
                 default:
                     printf("ERROR: player sent unknown packet %d\n", buf[0]);
                     break;

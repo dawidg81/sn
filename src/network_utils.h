@@ -24,11 +24,13 @@ static inline size_t write_str64(
 		const char *str)
 {
 	size_t len = 0;
-	while (len < 64 && str[len] != '\0') {
+	while (len < 64 && str[len] - '\0' != '\0') {
 		buf[offset + len] = (uint8_t)str[len];
 		len++;
 	}
-	buf[offset + len] = '\0';  // Null terminate
+	buf[offset + len] = ' ';
 
 	return len;
 }
+
+// TODO: read_str64()

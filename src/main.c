@@ -60,7 +60,7 @@ int main() {
                 continue;
             }
             send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
-            players[new_player.id] = new_player; // appending player to global table
+            players[new_player.id] = new_player;  // appending player to global table
             new_level(new_socket);
         }
 
@@ -78,7 +78,7 @@ int main() {
             if (bufsize <= 0) break;
             switch (buf[0]) {
                 case 0x05:  // Set block
-                    unsigned char packet[130] = {0};
+                    unsigned char packet[8] = {0};
                     ssize_t bytes = read(new_socket, packet, sizeof(packet));
                     if (bytes <= 0) break;
 
@@ -98,7 +98,7 @@ int main() {
                     ssize_t bytes3 = read(new_socket, packet3, sizeof(packet3));
                     if (bytes3 <= 0) break;
 
-                    const char *received = recv_message(packet3, &new_player);
+                    const char* received = recv_message(packet3, &new_player);
 
                     char msg[64];
                     snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);

@@ -38,10 +38,18 @@ static inline size_t write_str64(
 
 // TODO: read_str64()
 
-static inline size_t read_str64(
+static inline const char *read_str64(
         uint8_t *buf,
         size_t offset,
-        const char *str)
+        char *out)
 {
-    size_t len = 0;
+    int i;
+    for(i = 63; i >= 0; i--){
+        if(buf[offset + i] != ' '){ break; }
+    }
+
+    size_t len = (i < 0) ? 0 : (i + 1);
+    memcpy(out, buf + offset, len);
+    out[len] = '\0';
+    return out;
 }

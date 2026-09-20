@@ -19,11 +19,8 @@ typedef struct {
 int read_id(char* buffer, char* username, char* verification_key) {
     uint8_t protocol_version = buffer[1];
 
-    memcpy(username, buffer + 2, 64);
-    username[64] = '\0';
-
-    memcpy(verification_key, buffer + 66, 64);
-    verification_key[64] = '\0';
+    read_str64((uint8_t *)buffer, 2, username);
+    read_str64((uint8_t *)buffer, 66, verification_key);
 
     printf("DEBUG: New client connected\n");
     printf("DEBUG: Their username is %s\n", username);
@@ -36,8 +33,8 @@ int read_id(char* buffer, char* username, char* verification_key) {
 int init_player(char* buffer, Player* player) {
     char username[65] = {0};
     char verification_key[65] = {0};
-    username[64] = '\0';
-    verification_key[64] = '\0';
+    /*username[64] = '\0';
+    verification_key[64] = '\0';*/
 
     if (read_id(buffer, username, verification_key) == 0) {
         player->username = malloc(65);

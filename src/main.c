@@ -93,12 +93,13 @@ int main() {
                     recv_pos_ort((char*)packet, &new_player);
                     fflush(stdout);
                 }   break;
-                case 0x0d: { // Message (experimental)
+                case 0x0d: { // Message
                     unsigned char packet[65] = {0};
                     ssize_t bytes = read(new_socket, packet, sizeof(packet));
                     if (bytes <= 0) break;
 
-                    const char* received = recv_message(packet, &new_player);
+                    char received[64] = {0};
+                    recv_message((char*)packet, &new_player, received);
 
                     char msg[64];
                     snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);

@@ -31,7 +31,7 @@ int main() {
     printf("Server ready\n");
 
     pthread_t gameloop;
-    pthread_create(&gameloop, NULL, handle_player, server_fd);
+    pthread_create(&gameloop, NULL, handle_player, (void*)(intptr_t)server_fd);
     //handle_player(server_fd);
 
     pthread_join(gameloop, NULL);

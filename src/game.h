@@ -14,7 +14,7 @@ Player players[256];
 
 void handle_player(void *arg)
 {
-    int server_fd = *(int*)arg;
+    int server_fd = (int)(intptr_t)arg;
 
     while (true) {
             int new_socket = accept_client(server_fd);

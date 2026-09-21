@@ -87,9 +87,9 @@ char recv_message(char* buffer, Player* player) {
     char message[64] = {0};
 
     uint8_t player_id = buffer[0];
-    memcpy(message, buffer + 1, 64);
+    read_str64((uint8_t*)buffer, 1, message);
 
-    return message;
+    return &message;
 }
 
 #endif

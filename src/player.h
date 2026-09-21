@@ -83,13 +83,9 @@ void recv_pos_ort(char* buffer, Player* player) {
     player->pitch = pitch;
 }
 
-char recv_message(char* buffer, Player* player) {
-    char message[64] = {0};
-
+void recv_message(char* buffer, Player* player, char* out_message) {
     uint8_t player_id = buffer[0];
     read_str64((uint8_t*)buffer, 1, message);
-
-    return &message;
 }
 
 #endif

@@ -57,18 +57,21 @@ void* handle_player(void *arg)
                 unsigned char buf[1] = {0};
                 ssize_t bufsize = read(new_socket, buf, sizeof(buf));
                 if (bufsize <= 0) break;
+
+                int should_exit = 0;
+
                 switch (buf[0]) {
                     case 0x05: { // Set block
                         unsigned char packet[8] = {0};
                         ssize_t bytes = read(new_socket, packet, sizeof(packet));
-                        if (bytes <= 0) break;
+                        if (bytes <= 0) {should_exit=1;break;}
 
                         recv_block((char*)packet, &new_player);
                     }   break;
                     case 0x08: { // Pos ort
                         unsigned char packet[9] = {0};
                         ssize_t bytes = read(new_socket, packet, sizeof(packet));
-                        if (bytes <= 0) break;
+                        if (bytes <= 0) {should_exit=1;break;}
 
                         fflush(stdout);
                         recv_pos_ort((char*)packet, &new_player);
@@ -77,7 +80,7 @@ void* handle_player(void *arg)
                     case 0x0d: { // Message
                         unsigned char packet[65] = {0};
                         ssize_t bytes = read(new_socket, packet, sizeof(packet));
-                        if (bytes <= 0) break;
+                        if (bytes <= 0) {should_exit=1;break;}
 
                         char received[64] = {0};
                         recv_message((char*)packet, &new_player, received);
@@ -92,8 +95,11 @@ void* handle_player(void *arg)
                         printf("ERROR: player sent unknown packet %d\n", buf[0]);
                         break;
                 }
+                if(should_exit) break;
             }
+            
             close(new_socket);
+            return NULL;
         }
 }
 

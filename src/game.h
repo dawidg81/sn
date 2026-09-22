@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <pthread.h>
 
 #include "socket.h"
 #include "player.h"
@@ -12,17 +13,11 @@
 
 Player players[256];
 
-void handle_player(void *arg)
+void* handle_player(void *arg)
 {
-    int server_fd = (int)(intptr_t)arg;
+    int new_socket = (int)(intptr_t)arg;
 
     while (true) {
-            int new_socket = accept_client(server_fd);
-
-            if (new_socket < 0) {
-                continue;
-            }
-
             // From here we handle client
 
             unsigned char buffer[131] = {0};
@@ -100,6 +95,21 @@ void handle_player(void *arg)
             }
             close(new_socket);
         }
+}
+
+void* new_conn(void *arg)
+{
+    int server_fd = (int)(intptr_t)arg;
+    while(true){
+        int new_socket = accept_client(server_fd);
+        if (new_socket < 0) {
+            continue;
+        }
+
+        pthread_t client_thread;
+        pthread_create(&client_thread, NULL, handle_player, (void*)(intptr_t)new_socket);
+        pthread_detach(client_thread);
+    }
 }
 
 #endif

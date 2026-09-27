@@ -15,7 +15,7 @@ INCLUDE := -I.
 LIBPATH :=
 LIBS := -lz -lm -lpthread
 
-FLAGS := -Wall
+FLAGS := -Wall -g -O0
 CCFLAGS := $(FLAGS) -std=c99
 CXXFLAGS := $(FLAGS)
 

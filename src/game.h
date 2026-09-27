@@ -11,7 +11,7 @@
 #include "server.h"
 #include "level.h"
 
-Player players[256];
+Player players[128];
 
 void* handle_player(void *arg)
 {

@@ -40,6 +40,24 @@ void* handle_player(void *arg)
                     close(new_socket);
                     continue;
                 }
+
+                int username_taken = 0;
+                for(int i=0; i < 128; i++){
+                    if(players[i].id != -1){
+                        if(strcmp(players[i].username, new_player.username) == 0){
+                            username_taken = 1;
+                            break;
+                        }
+                    }
+                }
+
+                if(username_taken == 1){
+                    printf("Username '%s' already logged in\n", new_player.username);
+                    send_disconnect(new_socket, "Already logged in!");
+                    close(new_socket);
+                    continue;
+                }
+
                 send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
                 players[new_player.id] = new_player;  // appending player to global table
                 new_level(new_socket);

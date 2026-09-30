@@ -12,7 +12,7 @@ int freeid = 0;
 typedef struct {
     char* username;
     int8_t id;
-
+    int sock;
     float x, y, z, yaw, pitch;
 } Player;
 

@@ -12,6 +12,23 @@
 #include "level.h"
 
 Player players[128];
+/*
+The players table element should be -1 if it's empty.
+*/
+
+
+pthread_mutex_t players_lock = PTHREAD_MUTEX_INITIALIZER;
+
+void broadcast_message(const char* msg)
+{
+    pthread_mutex_lock(&players_lock);
+    for(int i = 0; i < 128; i++){
+        if(players[i].id != -1 && players[i].username != NULL){
+            send_message(players[i].sock, msg);
+        }
+    }
+    pthread_mutex_unlock(&players_lock);
+}
 
 void* handle_player(void *arg)
 {
@@ -33,6 +50,7 @@ void* handle_player(void *arg)
             // read_id(new_socket);
 
             Player new_player = {0};
+            new_player.sock = new_socket;
 
             if (buffer[0] == 0x00) {
                 if (init_player((char*)buffer, &new_player) != 0) {
@@ -59,7 +77,11 @@ void* handle_player(void *arg)
                 }
 
                 send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
+
+                pthread_mutex_lock(&players_lock);
                 players[new_player.id] = new_player;  // appending player to global table
+                pthread_mutex_unlock(&players_lock);
+
                 new_level(new_socket);
             } else {
                 printf("A client connected but sent invalid data. Closing\n");
@@ -73,7 +95,8 @@ void* handle_player(void *arg)
 
             send_spawn(new_socket, -1, new_player.username, level.sizeX / 2, level.sizeY,
                        level.sizeZ / 2, 0x00, 0x00);
-            send_message(new_socket, "a potatoe e tomatoe");
+            send_message(new_socket, "&7Only the chat is functional at this moment.");
+            send_message(new_socket, "&7You can treat it like IRC or Discord...");
 
             while (true) {
                 unsigned char buf[1] = {0};
@@ -110,7 +133,7 @@ void* handle_player(void *arg)
                         char msg[64];
                         snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);
 
-                        send_message(new_socket, msg);
+                        broadcast_message(msg);
 
                     }   break;
                     default:
@@ -119,7 +142,14 @@ void* handle_player(void *arg)
                 }
                 if(should_exit) break;
             }
-            
+
+            pthread_mutex_lock(&players_lock);
+            players[new_player.id].id = -1;
+            players[new_player.id].sock = -1;
+            free(players[new_player.id].username);
+            players[new_player.id].username = NULL;
+            pthread_mutex_unlock(&players_lock);
+
             close(new_socket);
             return NULL;
         }

@@ -17,6 +17,7 @@
 #include "server.h"
 #include "socket.h"
 #include "game.h"
+#include "heartbeat.h"
 
 #define PORT 25568
 
@@ -29,6 +30,8 @@ int main() {
     if (server_fd < 0) {
         return EXIT_FAILURE;
     }
+
+    heartbeat_start(PORT, "the bedrock lounge [chat with others]", 128);
 
     printf("Server ready\n");
 

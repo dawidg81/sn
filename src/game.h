@@ -103,7 +103,7 @@ void* handle_player(void *arg)
                        level.sizeZ / 2, 0x00, 0x00);
             send_message(new_socket, "&7Only the chat is functional at this moment.");
             send_message(new_socket, "&7You can treat it like IRC or Discord...");
-            broadcast_message("%s joined the chat", new_player.username);
+            broadcast_message("&e%s joined the chat", new_player.username);
 
             while (true) {
                 unsigned char buf[1] = {0};
@@ -150,7 +150,7 @@ void* handle_player(void *arg)
                 if(should_exit) break;
             }
 
-            broadcast_message("%s left the chat", new_player.username);
+            broadcast_message("&e%s left the chat", new_player.username);
 
             pthread_mutex_lock(&players_lock);
             players[new_player.id].id = -1;

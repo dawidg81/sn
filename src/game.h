@@ -32,7 +32,7 @@ void* handle_player(void *arg)
 
             // read_id(new_socket);
 
-            Player new_player;
+            Player new_player = {0};
 
             if (buffer[0] == 0x00) {
                 if (init_player((char*)buffer, &new_player) != 0) {
@@ -61,6 +61,10 @@ void* handle_player(void *arg)
                 send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
                 players[new_player.id] = new_player;  // appending player to global table
                 new_level(new_socket);
+            } else {
+                printf("A client connected but sent invalid data. Closing\n");
+                close(new_socket);
+                return NULL;
             }
 
             /*unsigned char b[100] = {0};

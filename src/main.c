@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <zlib.h>
 #include <pthread.h>
+#include <signal.h>
 
 #include "level.h"
 #include "network_utils.h"
@@ -21,6 +22,7 @@
 
 int main() {
     srand(time(NULL));
+    signal(SIGPIPE, SIG_IGN);
 
     int server_fd = setup_server_socket(PORT);
 

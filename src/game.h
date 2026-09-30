@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
+#include <stdarg.h>
 
 #include "socket.h"
 #include "player.h"
@@ -16,11 +17,16 @@ Player players[128];
 The players table element should be -1 if it's empty.
 */
 
-
 pthread_mutex_t players_lock = PTHREAD_MUTEX_INITIALIZER;
 
-void broadcast_message(const char* msg)
+void broadcast_message(const char* fmt, ...)
 {
+    char msg[65];
+    va_list args;
+    va_start(args, fmt);
+    vsnprintf(msg, sizeof(msg), fmt, args);
+    va_end(args);
+
     pthread_mutex_lock(&players_lock);
     for(int i = 0; i < 128; i++){
         if(players[i].id != -1 && players[i].username != NULL){
@@ -97,6 +103,7 @@ void* handle_player(void *arg)
                        level.sizeZ / 2, 0x00, 0x00);
             send_message(new_socket, "&7Only the chat is functional at this moment.");
             send_message(new_socket, "&7You can treat it like IRC or Discord...");
+            broadcast_message("%s joined the chat");
 
             while (true) {
                 unsigned char buf[1] = {0};

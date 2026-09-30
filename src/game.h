@@ -44,7 +44,7 @@ void* handle_player(void *arg)
                 int username_taken = 0;
                 for(int i=0; i < 128; i++){
                     if(players[i].id != -1){
-                        if(strcmp(players[i].username, new_player.username) == 0){
+                        if(players[i].username != NULL && strcmp(players[i].username, new_player.username) == 0){
                             username_taken = 1;
                             break;
                         }

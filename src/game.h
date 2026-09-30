@@ -27,7 +27,7 @@ void* handle_player(void *arg)
             if (valread <= 0) {
                 perror("read");
                 close(new_socket);
-                continue;
+                return NULL;
             }
 
             // read_id(new_socket);
@@ -38,7 +38,7 @@ void* handle_player(void *arg)
                 if (init_player((char*)buffer, &new_player) != 0) {
                     printf("Player initialization failed");
                     close(new_socket);
-                    continue;
+                    return NULL;
                 }
 
                 int username_taken = 0;
@@ -55,7 +55,7 @@ void* handle_player(void *arg)
                     printf("Username '%s' already logged in\n", new_player.username);
                     send_disconnect(new_socket, "Already logged in!");
                     close(new_socket);
-                    continue;
+                    return NULL;
                 }
 
                 send_server_identification(new_socket, "A Minecraft Server", "Welcome!");

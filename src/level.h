@@ -71,9 +71,9 @@ void sendLevel(int socket, struct Level* level) {
     }
 
     uint8_t finalPacket[7];
-    uint16_t sx = (uint16_t)x;
+    /*uint16_t sx = (uint16_t)x;
     uint16_t sy = (uint16_t)y;
-    uint16_t sz = (uint16_t)z;
+    uint16_t sz = (uint16_t)z;*/
 
     finalPacket[0] = 0x04;
     write_u16_be(finalPacket, 1, x);

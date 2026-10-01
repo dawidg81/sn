@@ -82,7 +82,7 @@ void* handle_player(void* arg) {
                 return NULL;
             }
 
-            pthread_mutex_lock(&players_mutex);
+            pthread_mutex_lock(&players_lock);
 
             int slot = -1, taken = 0;
 

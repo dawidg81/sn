@@ -146,6 +146,7 @@ void* handle_player(void* arg) {
 
         pthread_mutex_unlock(&players_lock);
 
+        send_message(new_socket, "&cSaving the world to file is not supported yet");
         send_message(new_socket, "&cThe world data will be lost after server shutdown");
         broadcast_message("&e%s joined the game", me->username);
 

@@ -82,31 +82,40 @@ void* handle_player(void* arg) {
                 return NULL;
             }
 
-            pthread_mutex
+            pthread_mutex_lock(&players_mutex);
 
-                /*int username_taken = 0;
-                for (int i = 0; i < 128; i++) {
-                    if (players[i].id != -1) {
-                        if (players[i].username != NULL &&
-                            strcmp(players[i].username, new_player.username) == 0) {
-                            username_taken = 1;
-                            break;
-                        }
-                    }
-                }*/
+            int slot = -1, taken = 0;
 
-                if (username_taken == 1) {
+            for (int i = 0; i < 128; i++) {
+                if (players[i].username != NULL) {
+                    if (slot < 0) slot = i;
+                } else if (strcmp(players[i].username, new_player.username) == 0)
+                    taken = 1;
+            }
+
+            if (taken || slot < 0) {
+                pthread_mutex_unlock(&players_lock);
                 printf("Username '%s' already logged in\n", new_player.username);
-                send_disconnect(new_socket, "Already logged in!");
+                send_disconnect(new_socket, taken ? "Already logged in" : "Server is full");
+                free(new_player.username);
                 close(new_socket);
                 return NULL;
             }
 
+            new_player.id = slot;
+            new_player.spawned = 0;
+            new_player.x = level.sizeX / 2.0f;
+            new_player.y = level.sizeY;
+            new_player.z = level.sizeZ / 2.0f;
+            players[slot] = new_player;
+            me = &players[slot];
+            pthread_mutex_unlock(&players_lock);
+
             send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
 
-            pthread_mutex_lock(&players_lock);
+            /*pthread_mutex_lock(&players_lock);
             players[new_player.id] = new_player;  // appending player to global table
-            pthread_mutex_unlock(&players_lock);
+            pthread_mutex_unlock(&players_lock);*/
 
             new_level(new_socket);
         } else {
@@ -119,11 +128,22 @@ void* handle_player(void* arg) {
         ssize_t bsize = read(new_socket, b, sizeof(b));
         printf("%s\n", b);*/
 
-        send_spawn(new_socket, -1, new_player.username, level.sizeX / 2, level.sizeY,
-                   level.sizeZ / 2, 0x00, 0x00);
-        send_message(new_socket, "&7Only the chat is functional at this moment.");
-        send_message(new_socket, "&7You can treat it like IRC or Discord...");
-        broadcast_message("&e%s joined the chat", new_player.username);
+        pthread_mutex_lock(&players_lock);
+        me->spawned = 1;
+
+        send_spawn(new_socket, -1, me->username, me->x, me->y, me->z, 0, 0);
+
+        for (int i = 0; i < 128; i++) {
+            Player* o = &players[i];
+            if (!LIVE(*o) || o == me) continue;
+            send_spawn(new_socket, o->id, o->username, o->x, o->y, o->z, (uint8_t)o->yaw,
+                       (uint8_t)o->pitch);
+            send_spawn(o->sock, me->id, me->username, me->x, me->y, me->z, 0, 0);
+        }
+
+        pthread_mutex_unlock(&players_lock);
+
+        broadcast_message("&e%s joined the chat", me->username);
 
         while (true) {
             unsigned char buf[1] = {0};

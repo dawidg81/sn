@@ -146,7 +146,8 @@ void* handle_player(void* arg) {
 
         pthread_mutex_unlock(&players_lock);
 
-        broadcast_message("&e%s joined the chat", me->username);
+        send_message(new_socket, "&cThe world data will be lost after server shutdown");
+        broadcast_message("&e%s joined the game", me->username);
 
         while (true) {
             unsigned char buf[1] = {0};
@@ -208,7 +209,7 @@ void* handle_player(void* arg) {
             if (should_exit) break;
         }
 
-        broadcast_message("&e%s left the chat", me->username);
+        broadcast_message("&e%s left the game", me->username);
 
         pthread_mutex_lock(&players_lock);
         int my_id = me->id;

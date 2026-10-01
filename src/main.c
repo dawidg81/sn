@@ -32,7 +32,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    heartbeat_start(PORT, "the bedrock lounge [chat with others]", 128);
+    heartbeat_start(PORT, "Supernova Online Experimental", 128);
 
     printf("Server ready\n");
 

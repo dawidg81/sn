@@ -5,22 +5,22 @@ software.
 
 # TODO List
 
-   Handle level
+ V Handle level
    Save to file
    Load from file
-   Level modifying by player
+ V Level modifying by player
 
-   Handle packets
+ V Handle packets
  V Login
-   Set Block
+ V Set Block
    Level reacts on modifies
-   Position and Orientation change
+ V Position and Orientation change
    Ping
 
-   Multiple player management
-   Threading
-   Handling multiple players
-   Player ID assigning
+ V Multiple player management
+ V Threading
+ V Handling multiple players
+ V Player ID assigning
 
 # Project structure
 

@@ -161,7 +161,11 @@ void* handle_player(void* arg) {
                         break;
                     }
 
-                    recv_block((char*)packet, &new_player);
+                    // recv_block((char*)packet, &new_player);
+                    uint16_t x, y, z;
+                    uint8_t block;
+                    if (recv_block((char*)packet, &x, &y, &z, &block) == 0)
+                        broadcast_block(x, y, z, block);
                 } break;
                 case 0x08: {  // Pos ort
                     unsigned char packet[9] = {0};
@@ -171,9 +175,10 @@ void* handle_player(void* arg) {
                         break;
                     }
 
-                    fflush(stdout);
-                    recv_pos_ort((char*)packet, &new_player);
-                    fflush(stdout);
+                    pthread_mutex_lock(&players_lock);
+                    recv_pos_ort((char*)packet, me);
+                    relay_pos_ort_locked(me);
+                    pthread_mutex_unlock(&players_lock);
                 } break;
                 case 0x0d: {  // Message
                     unsigned char packet[65] = {0};
@@ -199,13 +204,20 @@ void* handle_player(void* arg) {
             if (should_exit) break;
         }
 
-        broadcast_message("&e%s left the chat", new_player.username);
+        broadcast_message("&e%s left the chat", me->username);
 
         pthread_mutex_lock(&players_lock);
-        players[new_player.id].id = -1;
-        players[new_player.id].sock = -1;
-        free(players[new_player.id].username);
-        players[new_player.id].username = NULL;
+        int my_id = me->id;
+        free(me->username);
+        me->username = NULL;
+        me->spawned = 0;
+        me->id = -1;
+        me->sock = -1;
+
+        for (int i = 0; i < 128; i++) {
+            if (LIVE(players[i])) send_despawn(players[i].sock, my_id);
+        }
+
         pthread_mutex_unlock(&players_lock);
 
         close(new_socket);

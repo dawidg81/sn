@@ -87,7 +87,7 @@ void* handle_player(void* arg) {
             int slot = -1, taken = 0;
 
             for (int i = 0; i < 128; i++) {
-                if (players[i].username != NULL) {
+                if (players[i].username == NULL) {
                     if (slot < 0) slot = i;
                 } else if (strcmp(players[i].username, new_player.username) == 0)
                     taken = 1;

@@ -13,14 +13,15 @@ typedef struct {
     char* username;
     int8_t id;
     int sock;
+    int spawned;  // should be 1 once level is sent and player is visible to others
     float x, y, z, yaw, pitch;
 } Player;
 
 int read_id(char* buffer, char* username, char* verification_key) {
     uint8_t protocol_version = buffer[1];
 
-    read_str64((uint8_t *)buffer, 2, username);
-    read_str64((uint8_t *)buffer, 66, verification_key);
+    read_str64((uint8_t*)buffer, 2, username);
+    read_str64((uint8_t*)buffer, 66, verification_key);
 
     printf("DEBUG: New client connected\n");
     printf("DEBUG: Their username is %s\n", username);

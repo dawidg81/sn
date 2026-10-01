@@ -59,10 +59,22 @@ void send_spawn(int socket, int8_t pid, char name[64], float x, float y, float z
     send(socket, buffer, sizeof(buffer), 0);
 }
 
-void send_despawn(int socket, int8_t pid){
+void send_despawn(int socket, int8_t pid) {
     char buffer[2] = {0};
     buffer[0] = 0x0c;
     buffer[1] = pid;
+    send(socket, buffer, sizeof(buffer), 0);
+}
+
+void send_pos_ort(int socket, int8_t pid, float x, float y, float z, uint8_t yaw, uint8_t pitch) {
+    char buffer[10] = {0};
+    buffer[0] = 0x08;
+    buffer[1] = pid;
+    write_u16_be((uint8_t*)buffer, 2, (int16_t)(x * 32));
+    write_u16_be((uint8_t*)buffer, 4, (int16_t)(y * 32));
+    write_u16_be((uint8_t*)buffer, 6, (int16_t)(z * 32));
+    buffer[8] = yaw;
+    buffer[9] = pitch;
     send(socket, buffer, sizeof(buffer), 0);
 }
 

@@ -51,7 +51,7 @@ int init_player(char* buffer, Player* player) {
     return 0;
 }
 
-void recv_block(char* buffer, Player* new_player) {
+/*void recv_block(char* buffer, Player* new_player) {
     uint16_t x = read_u16_be((const uint8_t*)buffer, 0);
     uint16_t y = read_u16_be((const uint8_t*)buffer, 2);
     uint16_t z = read_u16_be((const uint8_t*)buffer, 4);
@@ -64,6 +64,18 @@ void recv_block(char* buffer, Player* new_player) {
     } else {
         level_set_block(&level, x, y, z, 0);  // player break -> air
     }
+}*/
+
+int recv_block(char* buffer, uint16_t* x, uint16_t* y, uint16_t* z, uint8_t* block) {
+    *x = read_u16_be((const uint8_t*)buffer, 0);
+    *y = read_u16_be((const uint8_t*)buffer, 2);
+    *z = read_u16_be((const uint8_t*)buffer, 4);
+    uint8_t mode = buffer[6];
+    *block = (mode == 0x01) ? buffer[7] : 0;  // break -> air
+
+    if (*x >= level.sizeX || *y >= level.sizeY || *z >= level.sizeZ) return -1;
+    level_set_block(&level, *x, *y, *z, *block);
+    return 0;
 }
 
 void recv_pos_ort(char* buffer, Player* player) {

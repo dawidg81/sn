@@ -1,16 +1,16 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
 #include <pthread.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
-#include "socket.h"
+#include "level.h"
 #include "player.h"
 #include "server.h"
-#include "level.h"
+#include "socket.h"
 
 Player players[128];
 /*
@@ -19,8 +19,7 @@ The players table element should be -1 if it's empty.
 
 pthread_mutex_t players_lock = PTHREAD_MUTEX_INITIALIZER;
 
-void broadcast_message(const char* fmt, ...)
-{
+void broadcast_message(const char* fmt, ...) {
     char msg[65];
     va_list args;
     va_start(args, fmt);
@@ -28,146 +27,175 @@ void broadcast_message(const char* fmt, ...)
     va_end(args);
 
     pthread_mutex_lock(&players_lock);
-    for(int i = 0; i < 128; i++){
-        if(players[i].id != -1 && players[i].username != NULL){
+    for (int i = 0; i < 128; i++) {
+        if (players[i].spawned && players[i].username != NULL) {
             send_message(players[i].sock, msg);
         }
     }
     pthread_mutex_unlock(&players_lock);
 }
 
-void* handle_player(void *arg)
-{
+#define LIVE(p) ((p).username != NULL && (p).spawned)
+
+void relay_pos_ort_locked(Player* from) {
+    for (int i = 0; i < 128; i++) {
+        if (!LIVE(players[i]) || &players[i] == from) continue;
+        send_pos_ort(players[i].sock, from->id, from->x, from->y, from->z, (uint8_t)from->yaw,
+                     (uint8_t)from->pitch);
+    }
+}
+
+void broadcast_block(short x, short y, short z, uint8_t block) {
+    pthread_mutex_lock(&players_lock);
+    for (int i = 0; i < 128; i++) {
+        if (LIVE(players[i])) send_block(players[i].sock, x, y, z, block);
+    }
+    pthread_mutex_unlock(&players_lock);
+}
+
+void* handle_player(void* arg) {
     int new_socket = (int)(intptr_t)arg;
 
     while (true) {
-            // From here we handle client
+        // From here we handle client
 
-            unsigned char buffer[131] = {0};
+        unsigned char buffer[131] = {0};
 
-            ssize_t valread = read(new_socket, buffer, sizeof(buffer));
+        ssize_t valread = read(new_socket, buffer, sizeof(buffer));
 
-            if (valread <= 0) {
-                perror("read");
+        if (valread <= 0) {
+            perror("read");
+            close(new_socket);
+            return NULL;
+        }
+
+        // read_id(new_socket);
+
+        Player new_player = {0};
+        Player* me = NULL;
+        new_player.sock = new_socket;
+
+        if (buffer[0] == 0x00) {
+            if (init_player((char*)buffer, &new_player) != 0) {
+                printf("Player initialization failed");
                 close(new_socket);
                 return NULL;
             }
 
-            // read_id(new_socket);
+            pthread_mutex
 
-            Player new_player = {0};
-            new_player.sock = new_socket;
-
-            if (buffer[0] == 0x00) {
-                if (init_player((char*)buffer, &new_player) != 0) {
-                    printf("Player initialization failed");
-                    close(new_socket);
-                    return NULL;
-                }
-
-                int username_taken = 0;
-                for(int i=0; i < 128; i++){
-                    if(players[i].id != -1){
-                        if(players[i].username != NULL && strcmp(players[i].username, new_player.username) == 0){
+                /*int username_taken = 0;
+                for (int i = 0; i < 128; i++) {
+                    if (players[i].id != -1) {
+                        if (players[i].username != NULL &&
+                            strcmp(players[i].username, new_player.username) == 0) {
                             username_taken = 1;
                             break;
                         }
                     }
-                }
+                }*/
 
-                if(username_taken == 1){
-                    printf("Username '%s' already logged in\n", new_player.username);
-                    send_disconnect(new_socket, "Already logged in!");
-                    close(new_socket);
-                    return NULL;
-                }
-
-                send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
-
-                pthread_mutex_lock(&players_lock);
-                players[new_player.id] = new_player;  // appending player to global table
-                pthread_mutex_unlock(&players_lock);
-
-                new_level(new_socket);
-            } else {
-                printf("A client connected but sent invalid data. Closing\n");
+                if (username_taken == 1) {
+                printf("Username '%s' already logged in\n", new_player.username);
+                send_disconnect(new_socket, "Already logged in!");
                 close(new_socket);
                 return NULL;
             }
 
-            /*unsigned char b[100] = {0};
-            ssize_t bsize = read(new_socket, b, sizeof(b));
-            printf("%s\n", b);*/
-
-            send_spawn(new_socket, -1, new_player.username, level.sizeX / 2, level.sizeY,
-                       level.sizeZ / 2, 0x00, 0x00);
-            send_message(new_socket, "&7Only the chat is functional at this moment.");
-            send_message(new_socket, "&7You can treat it like IRC or Discord...");
-            broadcast_message("&e%s joined the chat", new_player.username);
-
-            while (true) {
-                unsigned char buf[1] = {0};
-                ssize_t bufsize = read(new_socket, buf, sizeof(buf));
-                if (bufsize <= 0) break;
-
-                int should_exit = 0;
-
-                switch (buf[0]) {
-                    case 0x05: { // Set block
-                        unsigned char packet[8] = {0};
-                        ssize_t bytes = read(new_socket, packet, sizeof(packet));
-                        if (bytes <= 0) {should_exit=1;break;}
-
-                        recv_block((char*)packet, &new_player);
-                    }   break;
-                    case 0x08: { // Pos ort
-                        unsigned char packet[9] = {0};
-                        ssize_t bytes = read(new_socket, packet, sizeof(packet));
-                        if (bytes <= 0) {should_exit=1;break;}
-
-                        fflush(stdout);
-                        recv_pos_ort((char*)packet, &new_player);
-                        fflush(stdout);
-                    }   break;
-                    case 0x0d: { // Message
-                        unsigned char packet[65] = {0};
-                        ssize_t bytes = read(new_socket, packet, sizeof(packet));
-                        if (bytes <= 0) {should_exit=1;break;}
-
-                        char received[64] = {0};
-                        recv_message((char*)packet, &new_player, received);
-
-                        char msg[64];
-                        snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);
-
-                        broadcast_message("%s", msg);
-
-                    }   break;
-                    default:
-                        printf("ERROR: player sent unknown packet %d\n", buf[0]);
-                        break;
-                }
-                if(should_exit) break;
-            }
-
-            broadcast_message("&e%s left the chat", new_player.username);
+            send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
 
             pthread_mutex_lock(&players_lock);
-            players[new_player.id].id = -1;
-            players[new_player.id].sock = -1;
-            free(players[new_player.id].username);
-            players[new_player.id].username = NULL;
+            players[new_player.id] = new_player;  // appending player to global table
             pthread_mutex_unlock(&players_lock);
 
+            new_level(new_socket);
+        } else {
+            printf("A client connected but sent invalid data. Closing\n");
             close(new_socket);
             return NULL;
         }
+
+        /*unsigned char b[100] = {0};
+        ssize_t bsize = read(new_socket, b, sizeof(b));
+        printf("%s\n", b);*/
+
+        send_spawn(new_socket, -1, new_player.username, level.sizeX / 2, level.sizeY,
+                   level.sizeZ / 2, 0x00, 0x00);
+        send_message(new_socket, "&7Only the chat is functional at this moment.");
+        send_message(new_socket, "&7You can treat it like IRC or Discord...");
+        broadcast_message("&e%s joined the chat", new_player.username);
+
+        while (true) {
+            unsigned char buf[1] = {0};
+            ssize_t bufsize = read(new_socket, buf, sizeof(buf));
+            if (bufsize <= 0) break;
+
+            int should_exit = 0;
+
+            switch (buf[0]) {
+                case 0x05: {  // Set block
+                    unsigned char packet[8] = {0};
+                    ssize_t bytes = read(new_socket, packet, sizeof(packet));
+                    if (bytes <= 0) {
+                        should_exit = 1;
+                        break;
+                    }
+
+                    recv_block((char*)packet, &new_player);
+                } break;
+                case 0x08: {  // Pos ort
+                    unsigned char packet[9] = {0};
+                    ssize_t bytes = read(new_socket, packet, sizeof(packet));
+                    if (bytes <= 0) {
+                        should_exit = 1;
+                        break;
+                    }
+
+                    fflush(stdout);
+                    recv_pos_ort((char*)packet, &new_player);
+                    fflush(stdout);
+                } break;
+                case 0x0d: {  // Message
+                    unsigned char packet[65] = {0};
+                    ssize_t bytes = read(new_socket, packet, sizeof(packet));
+                    if (bytes <= 0) {
+                        should_exit = 1;
+                        break;
+                    }
+
+                    char received[64] = {0};
+                    recv_message((char*)packet, &new_player, received);
+
+                    char msg[64];
+                    snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);
+
+                    broadcast_message("%s", msg);
+
+                } break;
+                default:
+                    printf("ERROR: player sent unknown packet %d\n", buf[0]);
+                    break;
+            }
+            if (should_exit) break;
+        }
+
+        broadcast_message("&e%s left the chat", new_player.username);
+
+        pthread_mutex_lock(&players_lock);
+        players[new_player.id].id = -1;
+        players[new_player.id].sock = -1;
+        free(players[new_player.id].username);
+        players[new_player.id].username = NULL;
+        pthread_mutex_unlock(&players_lock);
+
+        close(new_socket);
+        return NULL;
+    }
 }
 
-void* new_conn(void *arg)
-{
+void* new_conn(void* arg) {
     int server_fd = (int)(intptr_t)arg;
-    while(true){
+    while (true) {
         int new_socket = accept_client(server_fd);
         if (new_socket < 0) {
             continue;

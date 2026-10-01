@@ -95,7 +95,8 @@ void* handle_player(void* arg) {
 
             if (taken || slot < 0) {
                 pthread_mutex_unlock(&players_lock);
-                printf("Username '%s' already logged in\n", new_player.username);
+                printf("Username '%s' already logged in or server is out of free player slots\n",
+                       new_player.username);
                 send_disconnect(new_socket, taken ? "Already logged in" : "Server is full");
                 free(new_player.username);
                 close(new_socket);
@@ -189,16 +190,17 @@ void* handle_player(void* arg) {
                     }
 
                     char received[64] = {0};
-                    recv_message((char*)packet, &new_player, received);
+                    recv_message((char*)packet, &me, received);
 
                     char msg[64];
-                    snprintf(msg, sizeof(msg), "%s: %s", new_player.username, received);
+                    snprintf(msg, sizeof(msg), "%s: %s", me->username, received);
 
                     broadcast_message("%s", msg);
 
                 } break;
                 default:
                     printf("ERROR: player sent unknown packet %d\n", buf[0]);
+                    should_exit = 1;
                     break;
             }
             if (should_exit) break;

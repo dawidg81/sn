@@ -1,4 +1,6 @@
 #include <netinet/in.h>
+#include <pthread.h>
+#include <signal.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -8,22 +10,21 @@
 #include <time.h>
 #include <unistd.h>
 #include <zlib.h>
-#include <pthread.h>
-#include <signal.h>
 
+#include "game.h"
+#include "heartbeat.h"
 #include "level.h"
 #include "network_utils.h"
 #include "player.h"
 #include "server.h"
 #include "socket.h"
-#include "game.h"
-#include "heartbeat.h"
 
 #define PORT 25568
 
 int main() {
     srand(time(NULL));
     signal(SIGPIPE, SIG_IGN);
+    level_init();
 
     int server_fd = setup_server_socket(PORT);
 
@@ -37,7 +38,7 @@ int main() {
 
     pthread_t gameloop;
     pthread_create(&gameloop, NULL, new_conn, (void*)(intptr_t)server_fd);
-    //handle_player(server_fd);
+    // handle_player(server_fd);
 
     pthread_join(gameloop, NULL);
 

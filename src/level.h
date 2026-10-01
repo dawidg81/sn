@@ -1,7 +1,15 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <zlib.h>
+
 #include "network_utils.h"
+
+pthread_mutex_t level_lock = PTHREAD_MUTEX_INITIALIZER;
 
 struct Level {
     short sizeX, sizeY, sizeZ;
@@ -20,7 +28,9 @@ void sendLevel(int socket, struct Level* level) {
     levelData[2] = (totalBlocks >> 8) & 0xFF;
     levelData[3] = totalBlocks & 0xFF;
 
+    pthread_mutex_lock(&level_lock);
     memcpy(levelData + 4, level->blocks, totalBlocks);
+    pthread_mutex_unlock(&level_lock);
 
     uLongf compressedSize = compressBound(4 + totalBlocks) + 18;
     uint8_t* compressed = malloc(compressedSize);
@@ -29,6 +39,10 @@ void sendLevel(int socket, struct Level* level) {
     int ret = deflateInit2(&zs, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY);
     if (ret != Z_OK) {
         printf("Deflating failed: %d\n", ret);
+
+        free(levelData);
+        free(compressed);
+
         return;
     }
 
@@ -41,6 +55,8 @@ void sendLevel(int socket, struct Level* level) {
     if (ret != Z_STREAM_END) {
         printf("Deflating did not finish: %d\n", ret);
         deflateEnd(&zs);
+        free(levelData);
+        free(compressed);
         return;
     }
     compressedSize = zs.total_out;
@@ -84,7 +100,7 @@ void sendLevel(int socket, struct Level* level) {
     free(compressed);
 }
 
-void new_level(int new_socket) {
+/*void new_level(int new_socket) {
     level.sizeX = 256;
     level.sizeY = 64;
     level.sizeZ = 256;
@@ -97,6 +113,15 @@ void new_level(int new_socket) {
     }
 
     sendLevel(new_socket, &level);
+}*/
+
+void level_init(void) {
+    level.sizeX = 256;
+    level.sizeY = 64;
+    level.sizeZ = 256;
+
+    size_t total = (size_t)level.sizeX * level.sizeY * level.sizeZ;
+    level.blocks = calloc(total, 1);
 }
 
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
@@ -107,7 +132,9 @@ int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 
     int index = y * (level->sizeX * level->sizeZ) + z * level->sizeX + x;
 
+    pthread_mutex_lock(&level_lock);
     level->blocks[index] = id;
+    pthread_mutex_unlock(&level_lock);
 
     return 0;
 }

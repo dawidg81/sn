@@ -118,7 +118,9 @@ void* handle_player(void* arg) {
             players[new_player.id] = new_player;  // appending player to global table
             pthread_mutex_unlock(&players_lock);*/
 
-            new_level(new_socket);
+            // new_level(new_socket);
+
+            sendLevel(new_socket, &level);
         } else {
             printf("A client connected but sent invalid data. Closing\n");
             close(new_socket);

@@ -124,6 +124,17 @@ void level_init(void) {
     level.blocks = calloc(total, 1);
 }
 
+void save_level(void)
+{
+    FILE *file_ptr;
+    file_ptr = fopen("level.bin", "wb");
+    if(file_ptr == NULL){printf("ERROR: Unable to save the world to file\n");return NULL;}
+
+    fwrite(level.blocks, sizeof(level.blocks), 1, file_ptr);
+
+    fclose(file_ptr);
+}
+
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
     if (x < 0 || x >= level->sizeX || y < 0 || y >= level->sizeY || z < 0 || z >= level->sizeZ) {
         printf("Tried to modify level out of bounds (%d, %d, %d)\n", x, y, z);

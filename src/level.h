@@ -124,15 +124,20 @@ void level_init(void) {
     level.blocks = calloc(total, 1);
 }
 
-void save_level(void)
+int save_level()
 {
     FILE *file_ptr;
     file_ptr = fopen("level.bin", "wb");
-    if(file_ptr == NULL){printf("ERROR: Unable to save the world to file\n");return NULL;}
+    if(file_ptr == NULL){printf("ERROR: Unable to open the file for world save\n");return 1;}
 
-    fwrite(level.blocks, sizeof(level.blocks), 1, file_ptr);
+    pthread_mutex_lock(&level_lock);
+    if(fwrite(level.blocks, (size_t)level.sizeX * level.sizeY * level.sizeZ, 1, file_ptr) == 0){
+        printf("ERROR: Failed to write world data to file\n"); return 1;
+    }
+    pthread_mutex_unlock(&level_lock);
 
     fclose(file_ptr);
+    return 0;
 }
 
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {

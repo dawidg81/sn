@@ -194,7 +194,7 @@ void* handle_player(void* arg) {
                     }
 
                     char received[64] = {0};
-                    recv_message((char*)packet, &me, received);
+                    recv_message((char*)packet, me, received);
 
                     if(strcmp(received, "/save") == 0){
                         save_level();

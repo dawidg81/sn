@@ -15,4 +15,8 @@
 #define NBT_TAG_INT_ARRAY   0x0B
 #define NBT_TAG_LONG_ARRAY  0x0C
 
+#include <stdio.h>
+
+int nbt_write(FILE* file)
+
 #endif

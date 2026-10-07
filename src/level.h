@@ -133,6 +133,8 @@ int save_level()
     pthread_mutex_lock(&level_lock);
     if(fwrite(level.blocks, (size_t)level.sizeX * level.sizeY * level.sizeZ, 1, file_ptr) == 0){
         printf("ERROR: Failed to write world data to file\n"); return 1;
+        pthread_mutex_unlock(&level_lock);
+        fclose(file_ptr);
     }
     pthread_mutex_unlock(&level_lock);
 

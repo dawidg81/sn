@@ -17,6 +17,6 @@
 
 #include <stdio.h>
 
-int nbt_write(FILE* file)
+
 
 #endif

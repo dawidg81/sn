@@ -132,14 +132,43 @@ int save_level()
 
     pthread_mutex_lock(&level_lock);
     if(fwrite(level.blocks, (size_t)level.sizeX * level.sizeY * level.sizeZ, 1, file_ptr) == 0){
-        printf("ERROR: Failed to write world data to file\n"); return 1;
+        printf("ERROR: Failed to write world data to file\n");
         pthread_mutex_unlock(&level_lock);
-        fclose(file_ptr);
+        fclose(file_ptr); return 1;
     }
     pthread_mutex_unlock(&level_lock);
 
     fclose(file_ptr);
     return 0;
+}
+
+int load_level()
+{
+	/*
+	Failure codes:
+	1 = file exists but failed to load world data
+	-1 = file does not exist. creating a new world
+	Successful exit code is 0
+	*/
+	
+	FILE *file;
+	file = fopen("level.bin", "r");
+	if(file == NULL){printf("ERROR: Unable to open the file for world load\n");return -1;}
+
+	fseek(file, 0, SEEK_END);
+	int length = ftell(file);
+	fseek(file, 0, SEEK_SET);
+	
+	pthread_mutex_lock(&level_lock);
+    if(fread(file, length, 1, level.blocks) == 0){
+        printf("ERROR: Failed to write world data to file\n");
+        pthread_mutex_unlock(&level_lock);
+        fclose(file_ptr); return 1;
+    }
+    pthread_mutex_unlock(&level_lock);
+
+	fclose(file);
+	return 0;
 }
 
 int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {

@@ -163,7 +163,7 @@ int load_level()
     if(fread(file, length, 1, level.blocks) == 0){
         printf("ERROR: Failed to write world data to file\n");
         pthread_mutex_unlock(&level_lock);
-        fclose(file_ptr); return 1;
+        fclose(file); return 1;
     }
     pthread_mutex_unlock(&level_lock);
 

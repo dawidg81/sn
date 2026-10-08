@@ -25,6 +25,7 @@ int main() {
     srand(time(NULL));
     signal(SIGPIPE, SIG_IGN);
     level_init();
+	level_load();
 
     int server_fd = setup_server_socket(PORT);
 

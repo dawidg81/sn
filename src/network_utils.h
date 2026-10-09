@@ -31,12 +31,9 @@ static inline size_t write_str64(
     if(len < 64) {
         memset(buf + offset + len, ' ', 64 - len);
     }
-	//buf[offset + len] = ' ';
 
 	return len;
 }
-
-// TODO: read_str64()
 
 static inline const char *read_str64(
         uint8_t *buf,

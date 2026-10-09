@@ -13,7 +13,7 @@ typedef struct {
     char* username;
     int8_t id;
     int sock;
-    int spawned;  // should be 1 once level is sent and player is visible to others
+    int spawned;  /* should be 1 once level is sent and player is visible to others */
     float x, y, z, yaw, pitch;
 } Player;
 
@@ -62,7 +62,7 @@ int init_player(char* buffer, Player* player) {
     if (mode == 0x01) {
         level_set_block(&level, x, y, z, block_id);
     } else {
-        level_set_block(&level, x, y, z, 0);  // player break -> air
+        level_set_block(&level, x, y, z, 0);
     }
 }*/
 
@@ -71,7 +71,7 @@ int recv_block(char* buffer, uint16_t* x, uint16_t* y, uint16_t* z, uint8_t* blo
     *y = read_u16_be((const uint8_t*)buffer, 2);
     *z = read_u16_be((const uint8_t*)buffer, 4);
     uint8_t mode = buffer[6];
-    *block = (mode == 0x01) ? buffer[7] : 0;  // break -> air
+    *block = (mode == 0x01) ? buffer[7] : 0;
 
     if (*x >= level.sizeX || *y >= level.sizeY || *z >= level.sizeZ) return -1;
     level_set_block(&level, *x, *y, *z, *block);
@@ -79,7 +79,7 @@ int recv_block(char* buffer, uint16_t* x, uint16_t* y, uint16_t* z, uint8_t* blo
 }
 
 void recv_pos_ort(char* buffer, Player* player) {
-    // ssize_t valread = read(socket, buffer, sizeof(buffer));
+    /* ssize_t valread = read(socket, buffer, sizeof(buffer)); */
 
     uint8_t player_id = buffer[0];
 

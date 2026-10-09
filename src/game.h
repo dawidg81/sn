@@ -57,7 +57,7 @@ void* handle_player(void* arg) {
     int new_socket = (int)(intptr_t)arg;
 
     while (true) {
-        // From here we handle client
+        /* From here we handle client */
 
         unsigned char buffer[131] = {0};
 
@@ -68,8 +68,6 @@ void* handle_player(void* arg) {
             close(new_socket);
             return NULL;
         }
-
-        // read_id(new_socket);
 
         Player new_player = {0};
         Player* me = NULL;
@@ -115,10 +113,8 @@ void* handle_player(void* arg) {
             send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
 
             /*pthread_mutex_lock(&players_lock);
-            players[new_player.id] = new_player;  // appending player to global table
+            players[new_player.id] = new_player;
             pthread_mutex_unlock(&players_lock);*/
-
-            // new_level(new_socket);
 
             sendLevel(new_socket, &level);
         } else {
@@ -158,7 +154,7 @@ void* handle_player(void* arg) {
             int should_exit = 0;
 
             switch (buf[0]) {
-                case 0x05: {  // Set block
+                case 0x05: {  /* Set block */
                     unsigned char packet[8] = {0};
                     ssize_t bytes = read(new_socket, packet, sizeof(packet));
                     if (bytes <= 0) {
@@ -166,13 +162,13 @@ void* handle_player(void* arg) {
                         break;
                     }
 
-                    // recv_block((char*)packet, &new_player);
+                    /* recv_block((char*)packet, &new_player); */
                     uint16_t x, y, z;
                     uint8_t block;
                     if (recv_block((char*)packet, &x, &y, &z, &block) == 0)
                         broadcast_block(x, y, z, block);
                 } break;
-                case 0x08: {  // Pos ort
+                case 0x08: {  /* Pos ort */
                     unsigned char packet[9] = {0};
                     ssize_t bytes = read(new_socket, packet, sizeof(packet));
                     if (bytes <= 0) {
@@ -185,7 +181,7 @@ void* handle_player(void* arg) {
                     relay_pos_ort_locked(me);
                     pthread_mutex_unlock(&players_lock);
                 } break;
-                case 0x0d: {  // Message
+                case 0x0d: {  /* Message */
                     unsigned char packet[65] = {0};
                     ssize_t bytes = read(new_socket, packet, sizeof(packet));
                     if (bytes <= 0) {

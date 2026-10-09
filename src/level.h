@@ -61,9 +61,9 @@ void sendLevel(int socket, struct Level* level) {
     }
     compressedSize = zs.total_out;
     deflateEnd(&zs);
-    // compressed.resize(compressedSize);
-    // logger.debug("Compr. size: " + to_string(compressedSize));
-    // logger.debug("Chunks to send: " + to_string((compressedSize + 1023) / 1024));
+    /* compressed.resize(compressedSize);
+     logger.debug("Compr. size: " + to_string(compressedSize));
+     logger.debug("Chunks to send: " + to_string((compressedSize + 1023) / 1024));*/
 
     uint8_t initPacket = 0x02;
     send(socket, (char*)&initPacket, 1, 0);
@@ -189,7 +189,7 @@ int level_set_block(struct Level* level, int x, int y, int z, uint8_t id) {
 uint8_t getBlock(struct Level* level, int x, int y, int z) {
     if (x < 0 || x >= level->sizeX || y < 0 || y >= level->sizeY || z < 0 || z >= level->sizeZ) {
         printf("Tried to check level block out of bounds (%d, %d, %d)\n", x, y, z);
-        return 0;  // air
+        return 0;
     }
 
     int index = y * (level->sizeX * level->sizeZ) + z * level->sizeX + x;

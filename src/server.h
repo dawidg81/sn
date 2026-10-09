@@ -5,7 +5,7 @@ void send_server_identification(int socket, char name[], char motd[]) {
     char buffer[131] = {0};
     uint8_t pid = 0x00;
     uint8_t prot_ver = 0x07;
-    uint8_t utype = 0x64;  // player is admin by default for now
+    uint8_t utype = 0x64;  /* player is admin by default for now */
 
     buffer[0] = pid;
     buffer[1] = prot_ver;

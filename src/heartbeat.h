@@ -8,13 +8,11 @@
 #include <string.h>
 #include <unistd.h>
 
-// Include this AFTER game.h (needs players[] and players_lock)
-
 #define HEARTBEAT_URL "https://www.classicube.net/server/heartbeat/"
 #define HEARTBEAT_INTERVAL 60
 
-char server_salt[33] = {0};       // needed later to verify mppass = md5(salt + username)
-char server_play_url[512] = {0};  // URL returned by ClassiCube
+char server_salt[33] = {0};
+char server_play_url[512] = {0};
 
 static int hb_port;
 static int hb_max;
@@ -26,7 +24,7 @@ static void generate_salt(void) {
     unsigned char rnd[32];
     FILE* f = fopen("/dev/urandom", "rb");
     if (!f || fread(rnd, 1, sizeof(rnd), f) != sizeof(rnd)) {
-        for (int i = 0; i < 32; i++) rnd[i] = rand();  // fallback
+        for (int i = 0; i < 32; i++) rnd[i] = rand();
     }
     if (f) fclose(f);
     for (int i = 0; i < 32; i++) server_salt[i] = chars[rnd[i] % (sizeof(chars) - 1)];
@@ -79,7 +77,7 @@ static void send_heartbeat(CURL* curl) {
         return;
     }
 
-    // strip trailing whitespace
+
     size_t len = strlen(response);
     while (len > 0 &&
            (response[len - 1] == '\n' || response[len - 1] == '\r' || response[len - 1] == ' '))

@@ -21,11 +21,21 @@
 
 #define PORT 25568
 
+int safe_exit(){
+	save_level();
+}
+
 int main() {
     srand(time(NULL));
     signal(SIGPIPE, SIG_IGN);
+	signal(SIGINT, safe_exit);
     level_init();
-	load_level();
+	
+	if(load_level() == 1){
+		/* ? */
+	} else if(load_level() == -1){
+		/* ? */
+	}
 
     int server_fd = setup_server_socket(PORT);
 

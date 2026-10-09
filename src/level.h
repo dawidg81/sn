@@ -160,7 +160,7 @@ int load_level()
 	fseek(file, 0, SEEK_SET);
 	
 	pthread_mutex_lock(&level_lock);
-    if(fread(file, length, 1, level.blocks) == 0){
+    if(fread(level.blocks, (size_t)length, 1, file) == 0){
         printf("ERROR: Failed to write world data to file\n");
         pthread_mutex_unlock(&level_lock);
         fclose(file); return 1;

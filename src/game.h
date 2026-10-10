@@ -191,10 +191,22 @@ void* handle_player(void* arg) {
 
                     char received[64] = {0};
                     recv_message((char*)packet, me, received);
+					
+					/* replace % to & for user-usable colors */
+					for(int i = 0; received[i] != '\0'; i++){
+						if(received[i] == '%'){
+							received[i] == '&';
+						}
+					}
 
+					/* COMMANDS */
                     if(strcmp(received, "/save") == 0){
                         save_level();
                         send_message(new_socket, "&eWorld saved");
+                        break;
+                    } else if(strcmp(received, "/help") == 0){
+                        save_level();
+                        send_message(new_socket, "&c/save &9- Save the world to file");
                         break;
                     }
 

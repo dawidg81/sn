@@ -44,6 +44,17 @@ int init_player(char* buffer, Player* player) {
         return -1;
     }
 
+#if 1 /* WHITELIST: DELETE THIS BLOCK TO REMOVE */
+    if (strcmp(username, "Ludinko23") != 0 &&
+        strcmp(username, "SpicyPomatoes777") != 0 &&
+        strcmp(username, "dawidg81") != 0 &&
+        strcmp(username, "Marsmissionben2") != 0) {
+        printf("Rejected: %s is not whitelisted\n", username);
+        free(player->username);
+        return -1;
+    }
+#endif /* END WHITELIST */
+
     player->id = freeid++;
 
     player->x = player->y = player->z = 0;

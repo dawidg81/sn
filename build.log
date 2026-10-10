@@ -1,0 +1,65 @@
+gcc -Wall -g -O0 -std=c99 -I. -c obj/../src/main.c -o obj/main.o
+In file included from obj/../src/player.h:8,
+                 from obj/../src/game.h:11,
+                 from obj/../src/main.c:14:
+obj/../src/server.h: In function ‘send_spawn’:
+obj/../src/server.h:53:18: warning: passing argument 1 of ‘write_u16_be’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   53 |     write_u16_be((const uint8_t*)buffer, 66, (int16_t)(x * 32));
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+In file included from obj/../src/level.h:10,
+                 from obj/../src/game.h:10:
+obj/../src/network_utils.h:4:26: note: expected ‘uint8_t *’ {aka ‘unsigned char *’} but argument is of type ‘const uint8_t *’ {aka ‘const unsigned char *’}
+    4 |                 uint8_t *buf,
+      |                 ~~~~~~~~~^~~
+obj/../src/server.h:54:18: warning: passing argument 1 of ‘write_u16_be’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   54 |     write_u16_be((const uint8_t*)buffer, 68, (int16_t)(y * 32));
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+obj/../src/network_utils.h:4:26: note: expected ‘uint8_t *’ {aka ‘unsigned char *’} but argument is of type ‘const uint8_t *’ {aka ‘const unsigned char *’}
+    4 |                 uint8_t *buf,
+      |                 ~~~~~~~~~^~~
+obj/../src/server.h:55:18: warning: passing argument 1 of ‘write_u16_be’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   55 |     write_u16_be((const uint8_t*)buffer, 70, (int16_t)(z * 32));
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+obj/../src/network_utils.h:4:26: note: expected ‘uint8_t *’ {aka ‘unsigned char *’} but argument is of type ‘const uint8_t *’ {aka ‘const unsigned char *’}
+    4 |                 uint8_t *buf,
+      |                 ~~~~~~~~~^~~
+obj/../src/player.h: In function ‘read_id’:
+obj/../src/player.h:21:13: warning: unused variable ‘protocol_version’ [-Wunused-variable]
+   21 |     uint8_t protocol_version = buffer[1];
+      |             ^~~~~~~~~~~~~~~~
+obj/../src/player.h: At top level:
+obj/../src/player.h:34:1: error: expected identifier or ‘(’ before ‘if’
+   34 | if 1 /* WHITELIST: DELETE THIS BLOCK TO REMOVE */
+      | ^~
+obj/../src/player.h:44:6: error: expected ‘;’ before ‘int’
+   44 | endif /* END WHITELIST */
+      |      ^
+      |      ;
+   45 | 
+   46 | int init_player(char* buffer, Player* player) {
+      | ~~~   
+obj/../src/player.h: In function ‘recv_pos_ort’:
+obj/../src/player.h:96:13: warning: unused variable ‘player_id’ [-Wunused-variable]
+   96 |     uint8_t player_id = buffer[0];
+      |             ^~~~~~~~~
+obj/../src/player.h: In function ‘recv_message’:
+obj/../src/player.h:112:13: warning: unused variable ‘player_id’ [-Wunused-variable]
+  112 |     uint8_t player_id = buffer[0];
+      |             ^~~~~~~~~
+obj/../src/main.c: In function ‘main’:
+obj/../src/main.c:31:24: warning: passing argument 2 of ‘signal’ from incompatible pointer type [-Wincompatible-pointer-types]
+   31 |         signal(SIGINT, safe_exit);
+      |                        ^~~~~~~~~
+      |                        |
+      |                        int (*)()
+In file included from /usr/include/features.h:489,
+                 from /usr/include/netinet/in.h:21,
+                 from obj/../src/main.c:1:
+/usr/include/signal.h:93:23: note: expected ‘__sighandler_t’ {aka ‘void (*)(int)’} but argument is of type ‘int (*)()’
+   93 | extern __sighandler_t __REDIRECT_NTH (signal,
+      |                       ^~~~~~~~~~~~~~
+obj/../src/main.c: In function ‘safe_exit’:
+obj/../src/main.c:26:1: warning: control reaches end of non-void function [-Wreturn-type]
+   26 | }
+      | ^
+make: *** [Makefile:29: obj/main.o] Error 1

@@ -17,7 +17,7 @@ char server_play_url[512] = {0};
 static int hb_port;
 static int hb_max;
 static const char* hb_name;
-static const char* hb_software = "sn v0.1.0";
+static const char* hb_software = "sn v0.1.5 patch 1";
 
 static void generate_salt(void) {
     static const char chars[] = "abcdefghijklmnopqrstuvwxyz0123456789";

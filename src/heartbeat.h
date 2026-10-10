@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 #define HEARTBEAT_URL "https://www.classicube.net/server/heartbeat/"
-#define HEARTBEAT_INTERVAL 60
+#define HEARTBEAT_INTERVAL 30
 
 char server_salt[33] = {0};
 char server_play_url[512] = {0};

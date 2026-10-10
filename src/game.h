@@ -195,7 +195,7 @@ void* handle_player(void* arg) {
 					/* replace % to & for user-usable colors */
 					for(int i = 0; received[i] != '\0'; i++){
 						if(received[i] == '%'){
-							received[i] == '&';
+							received[i] = '&';
 						}
 					}
 

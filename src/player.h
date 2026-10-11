@@ -47,10 +47,13 @@ int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to
         return -1;
     }
 	
-	char mppass[64];
-	md5_string(strcat(username, server_salt), mppass);
-	if(verification_key != mppass){
+	char mppass[100];
+	snprintf(mppass, 100, "%s%s", server_salt, username);
+	char mphash[64];
+	md5_string(mppass, mphash);
+	if(strcmp(verification_key, mphash) != 0){
 		printf("Rejected: %s is not authenticated\n", username);
+		free(player->username);
 		return -1;
 	}
 

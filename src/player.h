@@ -2,10 +2,13 @@
 #define PLAYER_H
 
 #include <errno.h>
+#include <string.h>
 
 #include "level.h"
 #include "network_utils.h"
 #include "server.h"
+#include "salt.h"
+#include "crypt.h"
 
 int freeid = 0;
 
@@ -31,7 +34,7 @@ int read_id(char* buffer, char* username, char* verification_key) {
     return 0;
 }
 
-int init_player(char* buffer, Player* player) {
+int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to use send_disconnect() for player kicks */
     char username[65] = {0};
     char verification_key[65] = {0};
     /*username[64] = '\0';
@@ -43,12 +46,21 @@ int init_player(char* buffer, Player* player) {
     } else {
         return -1;
     }
+	
+	char mppass[64];
+	md5_string(strcat(username, server_salt), mppass);
+	if(verification_key != mppass){
+		printf("Rejected: %s is not authenticated\n", username);
+		return -1;
+	}
 
 #if 1 /* WHITELIST: DELETE THIS BLOCK TO REMOVE */
     if (strcmp(username, "Ludinko23") != 0 &&
         strcmp(username, "SpicyPomatoes777") != 0 &&
         strcmp(username, "dawidg81") != 0 &&
-        strcmp(username, "Marsmissionben2") != 0) {
+        strcmp(username, "Marsmissionben2") != 0 &&
+        strcmp(username, "vince") != 0 &&
+        strcmp(username, "Jimcreator14") != 0) {
         printf("Rejected: %s is not whitelisted\n", username);
         free(player->username);
         return -1;

@@ -62,6 +62,10 @@ int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to
         strcmp(username, "SpicyPomatoes777") != 0 &&
         strcmp(username, "dawidg81") != 0 &&
         strcmp(username, "Marsmissionben2") != 0 &&
+        strcmp(username, "jdg_map") != 0 &&
+        strcmp(username, "TheEarthGuy") != 0 &&
+        strcmp(username, "0x42") != 0 &&
+        strcmp(username, "im20op1234") != 0 &&
         strcmp(username, "vince") != 0 &&
         strcmp(username, "Jimcreator14") != 0) {
         printf("Rejected: %s is not whitelisted\n", username);

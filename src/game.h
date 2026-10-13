@@ -11,6 +11,8 @@
 #include "player.h"
 #include "server.h"
 #include "socket.h"
+#include "salt.h"
+#include "crypt.h"
 
 Player players[128];
 /*
@@ -101,6 +103,18 @@ void* handle_player(void* arg) {
                 return NULL;
             }
 
+            char mppass[100];
+        	snprintf(mppass, 100, "%s%s", server_salt, new_player.username);
+        	char mphash[64];
+        	md5_string(mppass, mphash);
+        	if(strcmp(new_player.verification_key, mphash) != 0){
+        		printf("Rejected: %s is not authenticated\n", new_player.username);
+                send_disconnect(new_socket, "Login failed");
+        		free(new_player.username);
+                close(new_socket);
+        		return -1;
+        	}
+        
             new_player.id = slot;
             new_player.spawned = 0;
             new_player.x = level.sizeX / 2.0f;

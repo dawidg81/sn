@@ -7,13 +7,12 @@
 #include "level.h"
 #include "network_utils.h"
 #include "server.h"
-#include "salt.h"
-#include "crypt.h"
 
 int freeid = 0;
 
 typedef struct {
     char* username;
+    char* verification_key;
     int8_t id;
     int sock;
     int spawned;  /* should be 1 once level is sent and player is visible to others */
@@ -43,11 +42,13 @@ int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to
     if (read_id(buffer, username, verification_key) == 0) {
         player->username = malloc(65);
         strcpy(player->username, username);
+        player->verification_key = malloc(65);
+        strcpy(player->verification_key, verification_key);
     } else {
         return -1;
     }
 	
-	char mppass[100];
+	/*char mppass[100];
 	snprintf(mppass, 100, "%s%s", server_salt, username);
 	char mphash[64];
 	md5_string(mppass, mphash);
@@ -55,7 +56,7 @@ int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to
 		printf("Rejected: %s is not authenticated\n", username);
 		free(player->username);
 		return -1;
-	}
+	}*/
 
 #if 1 /* WHITELIST: DELETE THIS BLOCK TO REMOVE */
     if (strcmp(username, "Ludinko23") != 0 &&

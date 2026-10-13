@@ -127,7 +127,7 @@ void* handle_player(void* arg) {
                 strcmp(new_player.username, "vince") != 0 &&
                 strcmp(new_player.username, "Jimcreator14") != 0) {
                 printf("Rejected: %s is not whitelisted\n", username);
-                send_disconnect(new_player, "You are not whitelisted!");
+                send_disconnect(new_socket, "You are not whitelisted!");
                 free(new_player.username);
                 return -1;
             }

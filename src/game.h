@@ -112,7 +112,7 @@ void* handle_player(void* arg) {
                 send_disconnect(new_socket, "Login failed");
         		free(new_player.username);
                 close(new_socket);
-        		return -1;
+        		return NULL;
         	}
 
             /* TODO: parse whitelist.txt instead hardcoded whitelist */
@@ -129,7 +129,7 @@ void* handle_player(void* arg) {
                 printf("Rejected: %s is not whitelisted\n", new_player.username);
                 send_disconnect(new_socket, "You are not whitelisted!");
                 free(new_player.username);
-                return -1;
+                return NULL;
             }
 
             new_player.id = slot;

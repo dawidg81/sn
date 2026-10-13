@@ -114,7 +114,24 @@ void* handle_player(void* arg) {
                 close(new_socket);
         		return -1;
         	}
-        
+
+            /* TODO: parse whitelist.txt instead hardcoded whitelist*/
+            if (strcmp(new_player.username, "Ludinko23") != 0 &&
+                strcmp(new_player.username, "SpicyPomatoes777") != 0 &&
+                strcmp(new_player.username, "dawidg81") != 0 &&
+                strcmp(new_player.username, "Marsmissionben2") != 0 &&
+                strcmp(new_player.username, "jdg_map") != 0 &&
+                strcmp(new_player.username, "TheEarthGuy") != 0 &&
+                strcmp(new_player.username, "0x42") != 0 &&
+                strcmp(new_player.username, "im20op1234") != 0 &&
+                strcmp(new_player.username, "vince") != 0 &&
+                strcmp(new_player.username, "Jimcreator14") != 0) {
+                printf("Rejected: %s is not whitelisted\n", username);
+                send_disconnect(new_player, "You are not whitelisted!");
+                free(new_player.username);
+                return -1;
+            }
+
             new_player.id = slot;
             new_player.spawned = 0;
             new_player.x = level.sizeX / 2.0f;

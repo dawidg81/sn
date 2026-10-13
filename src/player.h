@@ -58,7 +58,7 @@ int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to
 		return -1;
 	}*/
 
-#if 1 /* WHITELIST: DELETE THIS BLOCK TO REMOVE */
+/*#if 1
     if (strcmp(username, "Ludinko23") != 0 &&
         strcmp(username, "SpicyPomatoes777") != 0 &&
         strcmp(username, "dawidg81") != 0 &&
@@ -73,7 +73,7 @@ int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to
         free(player->username);
         return -1;
     }
-#endif /* END WHITELIST */
+#endif*/
 
     player->id = freeid++;
 

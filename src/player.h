@@ -33,7 +33,7 @@ int read_id(char* buffer, char* username, char* verification_key) {
     return 0;
 }
 
-int init_player(char* buffer, Player* player) { /* TODO: pass socket in order to use send_disconnect() for player kicks */
+int init_player(char* buffer, Player* player) {
     char username[65] = {0};
     char verification_key[65] = {0};
     /*username[64] = '\0';

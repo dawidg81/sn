@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 #include "player.h"
-#include "salt.h"
+#include "attr.h"
 
 #define HEARTBEAT_URL "https://www.classicube.net/server/heartbeat/"
 #define HEARTBEAT_INTERVAL 30
@@ -20,7 +20,6 @@ char server_play_url[512] = {0};
 static int hb_port;
 static int hb_max;
 static const char* hb_name;
-static const char* hb_software = "sn 0.1.6.1";
 
 static void generate_salt(void) {
     static const char chars[] = "abcdefghijklmnopqrstuvwxyz0123456789";

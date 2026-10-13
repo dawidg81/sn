@@ -11,7 +11,7 @@
 #include "player.h"
 #include "server.h"
 #include "socket.h"
-#include "salt.h"
+#include "attr.h"
 #include "crypt.h"
 
 Player players[128];
@@ -115,7 +115,7 @@ void* handle_player(void* arg) {
         		return -1;
         	}
 
-            /* TODO: parse whitelist.txt instead hardcoded whitelist*/
+            /* TODO: parse whitelist.txt instead hardcoded whitelist */
             if (strcmp(new_player.username, "Ludinko23") != 0 &&
                 strcmp(new_player.username, "SpicyPomatoes777") != 0 &&
                 strcmp(new_player.username, "dawidg81") != 0 &&

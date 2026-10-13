@@ -103,11 +103,15 @@ void* handle_player(void* arg) {
                 return NULL;
             }
 
+            /* TODO: next time move mppass and whitelist check out
+             * of player lock because both if statements don't need
+             * to access global player table. */
             char mppass[100];
         	snprintf(mppass, 100, "%s%s", server_salt, new_player.username);
         	char mphash[64];
         	md5_string(mppass, mphash);
         	if(strcmp(new_player.verification_key, mphash) != 0){
+                pthread_mutex_unlock(&players_lock);
         		printf("Rejected: %s is not authenticated\n", new_player.username);
                 send_disconnect(new_socket, "Login failed");
         		free(new_player.username);
@@ -126,9 +130,11 @@ void* handle_player(void* arg) {
                 strcmp(new_player.username, "im20op1234") != 0 &&
                 strcmp(new_player.username, "vince") != 0 &&
                 strcmp(new_player.username, "Jimcreator14") != 0) {
+                pthread_mutex_unlock(&players_lock);
                 printf("Rejected: %s is not whitelisted\n", new_player.username);
                 send_disconnect(new_socket, "You are not whitelisted!");
                 free(new_player.username);
+                close(new_socket);
                 return NULL;
             }
 

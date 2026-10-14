@@ -119,8 +119,7 @@ void* handle_player(void* arg) {
         		return NULL;
         	}
 
-            /* TODO: parse whitelist.txt instead hardcoded whitelist */
-            if (is_whitelisted(new_player)) {
+            if (is_whitelisted(&new_player)) {
                 pthread_mutex_unlock(&players_lock);
                 printf("Rejected: %s is not whitelisted\n", new_player.username);
                 send_disconnect(new_socket, "You are not whitelisted!");

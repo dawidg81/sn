@@ -3,6 +3,7 @@
 
 #include <errno.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "level.h"
 #include "network_utils.h"
@@ -48,34 +49,7 @@ int init_player(char* buffer, Player* player) {
         return -1;
     }
 	
-	/*char mppass[100];
-	snprintf(mppass, 100, "%s%s", server_salt, username);
-	char mphash[64];
-	md5_string(mppass, mphash);
-	if(strcmp(verification_key, mphash) != 0){
-		printf("Rejected: %s is not authenticated\n", username);
-		free(player->username);
-		return -1;
-	}*/
-
-/*#if 1
-    if (strcmp(username, "Ludinko23") != 0 &&
-        strcmp(username, "SpicyPomatoes777") != 0 &&
-        strcmp(username, "dawidg81") != 0 &&
-        strcmp(username, "Marsmissionben2") != 0 &&
-        strcmp(username, "jdg_map") != 0 &&
-        strcmp(username, "TheEarthGuy") != 0 &&
-        strcmp(username, "0x42") != 0 &&
-        strcmp(username, "im20op1234") != 0 &&
-        strcmp(username, "vince") != 0 &&
-        strcmp(username, "Jimcreator14") != 0) {
-        printf("Rejected: %s is not whitelisted\n", username);
-        free(player->username);
-        return -1;
-    }
-#endif*/
-
-    player->id = freeid++;
+	player->id = freeid++;
 
     player->x = player->y = player->z = 0;
 
@@ -130,6 +104,28 @@ void recv_pos_ort(char* buffer, Player* player) {
 void recv_message(char* buffer, Player* player, char* out_message) {
     uint8_t player_id = buffer[0];
     read_str64((uint8_t*)buffer, 1, out_message);
+}
+
+/* FILE I/O */
+
+int is_whitelisted(Player* player)
+{
+    /* 0 = whitelisted; 1 = not whitelisted */
+    FILE* file = fopen("whitelist.txt", "r");
+    if(file == NULL){
+        printf("Failed to open whitelist.txt! Does it exist?\n");
+        fclose(file);
+        return 1;
+    }
+
+    char line[65];
+    while(fgets(line, sizeof(line), file) != NULL){
+        line[strcspn(line, "\r\n")] = '\0';
+        if(strcmp(line, player->username) == 0) return 0;
+    }
+
+    fclose(file);
+    return 1;
 }
 
 #endif

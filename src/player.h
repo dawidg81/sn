@@ -121,7 +121,7 @@ int is_whitelisted(Player* player)
     char line[65];
     while(fgets(line, sizeof(line), file) != NULL){
         line[strcspn(line, "\r\n")] = '\0';
-        if(strcmp(line, player->username) == 0) return 0;
+        if(strcmp(line, player->username) == 0){fclose(file);return 0;}
     }
 
     fclose(file);

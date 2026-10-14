@@ -129,6 +129,7 @@ void* handle_player(void* arg) {
                 strcmp(new_player.username, "0x42") != 0 &&
                 strcmp(new_player.username, "im20op1234") != 0 &&
                 strcmp(new_player.username, "vince") != 0 &&
+                strcmp(new_player.username, "poypersonwee") != 0 &&
                 strcmp(new_player.username, "Jimcreator14") != 0) {
                 pthread_mutex_unlock(&players_lock);
                 printf("Rejected: %s is not whitelisted\n", new_player.username);

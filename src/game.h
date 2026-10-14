@@ -120,17 +120,7 @@ void* handle_player(void* arg) {
         	}
 
             /* TODO: parse whitelist.txt instead hardcoded whitelist */
-            if (strcmp(new_player.username, "Ludinko23") != 0 &&
-                strcmp(new_player.username, "SpicyPomatoes777") != 0 &&
-                strcmp(new_player.username, "dawidg81") != 0 &&
-                strcmp(new_player.username, "Marsmissionben2") != 0 &&
-                strcmp(new_player.username, "jdg_map") != 0 &&
-                strcmp(new_player.username, "TheEarthGuy") != 0 &&
-                strcmp(new_player.username, "0x42") != 0 &&
-                strcmp(new_player.username, "im20op1234") != 0 &&
-                strcmp(new_player.username, "vince") != 0 &&
-                strcmp(new_player.username, "poypersonwee") != 0 &&
-                strcmp(new_player.username, "Jimcreator14") != 0) {
+            if (is_whitelisted(new_player)) {
                 pthread_mutex_unlock(&players_lock);
                 printf("Rejected: %s is not whitelisted\n", new_player.username);
                 send_disconnect(new_socket, "You are not whitelisted!");

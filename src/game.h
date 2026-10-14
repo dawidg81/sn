@@ -97,7 +97,7 @@ void* handle_player(void* arg) {
                 pthread_mutex_unlock(&players_lock);
                 printf("Username '%s' already logged in or server is out of free player slots\n",
                        new_player.username);
-                send_disconnect(new_socket, taken ? "Already logged in" : "Server is full");
+                send_disconnect(new_socket, taken ? "Already logged in!" : "Server is full!");
                 free(new_player.username);
                 close(new_socket);
                 return NULL;
@@ -113,7 +113,7 @@ void* handle_player(void* arg) {
         	if(strcmp(new_player.verification_key, mphash) != 0){
                 pthread_mutex_unlock(&players_lock);
         		printf("Rejected: %s is not authenticated\n", new_player.username);
-                send_disconnect(new_socket, "Login failed");
+                send_disconnect(new_socket, "Name not verified by classicube.net!");
         		free(new_player.username);
                 close(new_socket);
         		return NULL;
@@ -147,7 +147,7 @@ void* handle_player(void* arg) {
             me = &players[slot];
             pthread_mutex_unlock(&players_lock);
 
-            send_server_identification(new_socket, "A Minecraft Server", "Welcome!");
+            send_server_identification(new_socket, "Minecraft Server", "Welcome!");
 
             /*pthread_mutex_lock(&players_lock);
             players[new_player.id] = new_player;

@@ -17,6 +17,7 @@ typedef struct {
     int8_t id;
     int sock;
     int spawned;  /* should be 1 once level is sent and player is visible to others */
+    int is_op; /* 1 = op, 0 = not op */
     float x, y, z, yaw, pitch;
 } Player;
 

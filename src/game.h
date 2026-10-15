@@ -228,6 +228,10 @@ void* handle_player(void* arg) {
 
 					/* COMMANDS */
                     if(strcmp(received, "/save") == 0){
+                        if(is_admin(me) != 0){
+                            send_message(new_socket, "&eYou are not an op!");
+                            break;
+                        }
                         save_level();
                         send_message(new_socket, "&eWorld saved.");
                         break;

@@ -1,6 +1,8 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "player.h"
+
 void send_server_identification(int socket, char name[], char motd[]) {
     char buffer[131] = {0};
     uint8_t pid = 0x00;

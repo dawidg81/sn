@@ -128,4 +128,24 @@ int is_whitelisted(Player* player)
     return 1;
 }
 
+int is_admin(Player* player)
+{
+    /* 0 = admin; 1 = not admin */
+    FILE* file = fopen("admins.txt", "r");
+    if(file == NULL){
+        printf("Failed to open admins.txt! Does it exist?\n");
+        fclose(file);
+        return 1;
+    }
+
+    char line[65];
+    while(fgets(line, sizeof(line), file) != NULL){
+        line[strcspn(line, "\r\n")] = '\0';
+        if(strcmp(line, player->username) == 0){fclose(file);return 0;}
+    }
+
+    fclose(file);
+    return 1;
+}
+
 #endif

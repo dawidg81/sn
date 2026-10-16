@@ -122,7 +122,7 @@ void* handle_player(void* arg) {
             if (is_whitelisted(&new_player)) {
                 pthread_mutex_unlock(&players_lock);
                 printf("Rejected: %s is not whitelisted\n", new_player.username);
-                send_disconnect(new_socket, "You are not whitelisted!");
+                send_disconnect(new_socket, "You're not whitelisted!");
                 free(new_player.username);
                 close(new_socket);
                 return NULL;
@@ -171,7 +171,7 @@ void* handle_player(void* arg) {
 
         /*send_message(new_socket, "&cSaving the world to file is not supported yet");
         send_message(new_socket, "&cThe world data will be lost after server shutdown");*/
-        broadcast_message("&e%s joined the game", me->username);
+        broadcast_message("&e%s joined the game.", me->username);
 
         while (true) {
             unsigned char buf[1] = {0};
@@ -237,7 +237,7 @@ void* handle_player(void* arg) {
                         break;
                     } else if(strcmp(received, "/help") == 0){
                         save_level();
-                        send_message(new_socket, "&c/save &9- Save the world to file");
+                        send_message(new_socket, "&c/save &9- Save the world to file.");
                         break;
                     } else if(strcmp(received, "/clients") == 0){
                         save_level();
@@ -247,7 +247,7 @@ void* handle_player(void* arg) {
 
 
                     char msg[64];
-                    snprintf(msg, sizeof(msg), "%s: %s", me->username, received);
+                    snprintf(msg, sizeof(msg), "<%s> %s", me->username, received);
 
                     broadcast_message("%s", msg);
 
@@ -260,7 +260,7 @@ void* handle_player(void* arg) {
             if (should_exit) break;
         }
 
-        broadcast_message("&e%s left the game", me->username);
+        broadcast_message("&e%s left the game.", me->username);
 
         pthread_mutex_lock(&players_lock);
         int my_id = me->id;

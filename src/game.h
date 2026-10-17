@@ -137,7 +137,8 @@ void* handle_player(void* arg) {
             me = &players[slot];
             pthread_mutex_unlock(&players_lock);
 
-            send_server_identification(new_socket, "Minecraft Server", "Welcome!", &me);
+            me->is_op = (is_admin(me) == 0);
+            send_server_identification(new_socket, "Minecraft Server", "Welcome!", me->is_op ? 0x64 : 0x00);
 
             /*pthread_mutex_lock(&players_lock);
             players[new_player.id] = new_player;

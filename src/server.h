@@ -1,19 +1,11 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "player.h"
-
-void send_server_identification(int socket, char name[], char motd[], Player* player) {
+void send_server_identification(int socket, char name[], char motd[], uint8_t op) {
     char buffer[131] = {0};
     uint8_t pid = 0x00;
     uint8_t prot_ver = 0x07;
-    if(is_admin(player) == 0){
-        player->is_op = 1;
-        uint8_t utype = 0x64;
-    } else {
-        player->is_op = 0;
-        uint8_t utype = 0x00;
-    }
+    uint8_t utype = op;
 
     buffer[0] = pid;
     buffer[1] = prot_ver;

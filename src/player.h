@@ -7,7 +7,7 @@
 
 #include "level.h"
 #include "network_utils.h"
-/*#include "server.h"*/
+#include "server.h"
 
 /*int freeid = 0;*/
 

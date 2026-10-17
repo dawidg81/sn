@@ -241,7 +241,6 @@ void* handle_player(void* arg) {
                         send_message(new_socket, "&c/save &9- Save the world to file.");
                         break;
                     } else if(strcmp(received, "/clients") == 0){
-                        save_level();
                         send_message(new_socket, "&cThe game does not handle the CEF plugin.");
                         break;
                     }

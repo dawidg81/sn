@@ -115,7 +115,6 @@ int is_whitelisted(Player* player)
     FILE* file = fopen("whitelist.txt", "r");
     if(file == NULL){
         printf("Failed to open whitelist.txt! Does it exist?\n");
-        fclose(file);
         return 1;
     }
 
@@ -135,7 +134,6 @@ int is_admin(Player* player)
     FILE* file = fopen("admins.txt", "r");
     if(file == NULL){
         printf("Failed to open admins.txt! Does it exist?\n");
-        fclose(file);
         return 1;
     }
 

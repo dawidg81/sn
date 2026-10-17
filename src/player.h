@@ -7,9 +7,9 @@
 
 #include "level.h"
 #include "network_utils.h"
-#include "server.h"
+/*#include "server.h"*/
 
-int freeid = 0;
+/*int freeid = 0;*/
 
 typedef struct {
     char* username;
@@ -30,7 +30,7 @@ int read_id(char* buffer, char* username, char* verification_key) {
     printf("DEBUG: New client connected\n");
     printf("DEBUG: Their username is %s\n", username);
     printf("DEBUG: They are identifying with %s\n", verification_key);
-    printf("DEBUG: Gave them ID number %d\n", freeid);
+    /*printf("DEBUG: Gave them ID number %d\n", freeid);*/
 
     return 0;
 }
@@ -50,7 +50,7 @@ int init_player(char* buffer, Player* player) {
         return -1;
     }
 	
-	player->id = freeid++;
+	/*player->id = freeid++;*/
 
     player->x = player->y = player->z = 0;
 

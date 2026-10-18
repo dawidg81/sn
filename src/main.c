@@ -23,6 +23,7 @@
 
 int safe_exit(){
 	save_level();
+    return 0;
 }
 
 int main() {
@@ -32,9 +33,9 @@ int main() {
     level_init();
 	
 	if(load_level() == 1){
-		/* ? */
+		printf("\bWARNING: Failed to load world data from file. The world will be empty!\n");
 	} else if(load_level() == -1){
-		/* ? */
+		printf("There is no world file saved so far. The world will be empty.\n");
 	}
 
     int server_fd = setup_server_socket(PORT);

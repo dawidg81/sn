@@ -228,7 +228,10 @@ void* handle_player(void* arg) {
 					}
 
 					/* COMMANDS */
-                    if(strcmp(received, "/save") == 0){
+                    if(received[0]){
+                        /* TODO: Separate command parser in a new function here! */
+                    }
+                    /*if(strcmp(received, "/save") == 0){
                         if(is_admin(me) != 0){
                             send_message(new_socket, "&eYou are not an op!");
                             break;
@@ -243,7 +246,7 @@ void* handle_player(void* arg) {
                     } else if(strcmp(received, "/clients") == 0){
                         send_message(new_socket, "&cThe game does not handle the CEF plugin.");
                         break;
-                    }
+                    }*/
 
 
                     char msg[64];

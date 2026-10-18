@@ -228,7 +228,7 @@ void* handle_player(void* arg) {
 					}
 
 					/* COMMANDS */
-                    if(received[0]){
+                    if(received[0] == '/'){
                         /* TODO: Separate command parser in a new function here! */
                     }
                     /*if(strcmp(received, "/save") == 0){

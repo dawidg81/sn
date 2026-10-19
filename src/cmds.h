@@ -6,7 +6,7 @@
 #include "level.h"
 
 void handle_command(char* cmd)
-{
+{ /* game.h */
     if(strcmp(received, "save") == 0){
         if(is_admin(me) != 0){
             send_message(new_socket, "&eYou are not an op!");

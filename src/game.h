@@ -229,7 +229,9 @@ void* handle_player(void* arg) {
 
 					/* COMMANDS */
                     if(received[0] == '/'){
+                        memmove(received, received + 1, strlen(received));
                         /* TODO: Separate command parser in a new function here! */
+                        handle_command(received);
                     }
                     /*if(strcmp(received, "/save") == 0){
                         if(is_admin(me) != 0){

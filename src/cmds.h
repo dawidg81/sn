@@ -5,22 +5,8 @@
 #include "player.h"
 #include "server.h"
 
-struct {
-  char *name;
-  char *args[];
-  void *func();
-} Command;
-
-void register_command(char *name_, char *args_[], void (*f)())
-{
-  Command cmd;
-  cmd.name = name_;
-  cmd.args = args_;
-  cmd.func = f;
-}
-
 void handle_command(char *cmd)
-{ /* game.h */
+{
     if (strcmp(cmd, "save") == 0) {
         if (is_admin(me) != 0) {
             send_message(new_socket, "&eYou are not an op!");

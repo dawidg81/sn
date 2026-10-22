@@ -13,6 +13,7 @@
 #include "socket.h"
 #include "attr.h"
 #include "crypt.h"
+#include "cmds.h"
 
 Player players[128];
 /*
@@ -219,18 +220,17 @@ void* handle_player(void* arg) {
 
                     char received[64] = {0};
                     recv_message((char*)packet, me, received);
-					
-					/* replace % to & for user-usable colors */
-					for(int i = 0; received[i] != '\0'; i++){
-						if(received[i] == '%'){
-							received[i] = '&';
-						}
-					}
 
-					/* COMMANDS */
+                    /* replace % to & for user-usable colors */
+                    for(int i = 0; received[i] != '\0'; i++){
+                        if(received[i] == '%'){
+                           received[i] = '&';
+                        }
+                    }
+
                     if(received[0] == '/'){
                         memmove(received, received + 1, strlen(received));
-                        handle_command(received);
+                        handle_command(received, &me);
                     }
                     /*if(strcmp(received, "/save") == 0){
                         if(is_admin(me) != 0){

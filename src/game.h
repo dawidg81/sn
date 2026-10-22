@@ -77,8 +77,17 @@ void* handle_player(void* arg) {
         new_player.sock = new_socket;
 
         if (buffer[0] == 0x00) {
-            if (init_player((char*)buffer, &new_player) != 0) {
+            if (init_player((char*)buffer, &new_player) == -1) {
                 printf("Player initialization failed");
+                free(new_player.username);
+                free(new_player.verification_key);
+                close(new_socket);
+                return NULL;
+            } else if (init_player((char*)buffer, &new_player) == 3) {
+                printf("Player gave wrong protocol version");
+                send_disconnect(new_socket, "Wrong protocol version!");
+                free(new_player.username);
+                free(new_player.verification_key);
                 close(new_socket);
                 return NULL;
             }
@@ -100,6 +109,7 @@ void* handle_player(void* arg) {
                        new_player.username);
                 send_disconnect(new_socket, taken ? "Already logged in!" : "Server is full!");
                 free(new_player.username);
+                free(new_player.verification_key);
                 close(new_socket);
                 return NULL;
             }
@@ -108,23 +118,25 @@ void* handle_player(void* arg) {
              * of player lock because both if statements don't need
              * to access global player table. */
             char mppass[100];
-        	snprintf(mppass, 100, "%s%s", server_salt, new_player.username);
-        	char mphash[64];
-        	md5_string(mppass, mphash);
-        	if(strcmp(new_player.verification_key, mphash) != 0){
+            snprintf(mppass, 100, "%s%s", server_salt, new_player.username);
+            char mphash[64];
+            md5_string(mppass, mphash);
+            if(strcmp(new_player.verification_key, mphash) != 0){
                 pthread_mutex_unlock(&players_lock);
-        		printf("Rejected: %s is not authenticated\n", new_player.username);
+                printf("Rejected: %s is not authenticated\n", new_player.username);
                 send_disconnect(new_socket, "Name not verified by classicube.net!");
-        		free(new_player.username);
+                free(new_player.username);
+                free(new_player.verification_key);
                 close(new_socket);
-        		return NULL;
-        	}
+                return NULL;
+            }
 
             if (is_whitelisted(&new_player)) {
                 pthread_mutex_unlock(&players_lock);
                 printf("Rejected: %s is not whitelisted\n", new_player.username);
                 send_disconnect(new_socket, "You're not whitelisted!");
                 free(new_player.username);
+                free(new_player.verification_key);
                 close(new_socket);
                 return NULL;
             }
@@ -232,23 +244,6 @@ void* handle_player(void* arg) {
                         memmove(received, received + 1, strlen(received));
                         handle_command(received, &me);
                     }
-                    /*if(strcmp(received, "/save") == 0){
-                        if(is_admin(me) != 0){
-                            send_message(new_socket, "&eYou are not an op!");
-                            break;
-                        }
-                        save_level();
-                        send_message(new_socket, "&eWorld saved.");
-                        break;
-                    } else if(strcmp(received, "/help") == 0){
-                        save_level();
-                        send_message(new_socket, "&c/save &9- Save the world to file.");
-                        break;
-                    } else if(strcmp(received, "/clients") == 0){
-                        send_message(new_socket, "&cThe game does not handle the CEF plugin.");
-                        break;
-                    }*/
-
 
                     char msg[64];
                     snprintf(msg, sizeof(msg), "<%s> %s", me->username, received);

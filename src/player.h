@@ -32,6 +32,10 @@ int read_id(char* buffer, char* username, char* verification_key) {
     printf("DEBUG: They are identifying with %s\n", verification_key);
     /*printf("DEBUG: Gave them ID number %d\n", freeid);*/
 
+    if (protocol_version != 0x07) {
+        return 3;
+    }
+
     return 0;
 }
 
@@ -46,6 +50,8 @@ int init_player(char* buffer, Player* player) {
         strcpy(player->username, username);
         player->verification_key = malloc(65);
         strcpy(player->verification_key, verification_key);
+    } else if (read_id(buffer, username, verification_key == 3)) {
+        return 3;
     } else {
         return -1;
     }

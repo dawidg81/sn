@@ -7,6 +7,7 @@
 
 void handle_command(char *cmd, Player *you)
 {
+    printf("DEBUG: %s used command: %s", you->username, cmd);
     if (strcmp(cmd, "save") == 0) {
         if (is_admin(you) != 0) {
             send_message(you->sock, "&eYou are not an op!");

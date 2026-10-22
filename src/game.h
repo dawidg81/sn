@@ -243,6 +243,7 @@ void* handle_player(void* arg) {
                     if(received[0] == '/'){
                         memmove(received, received + 1, strlen(received));
                         handle_command(received, &me);
+                        break;
                     }
 
                     char msg[64];

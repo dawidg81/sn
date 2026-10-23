@@ -46,9 +46,9 @@ int init_player(char* buffer, Player* player) {
     verification_key[64] = '\0';*/
 
     if (read_id(buffer, username, verification_key) == 0) {
-        player->username = malloc(65);
+        player->username = calloc(65);
         strcpy(player->username, username);
-        player->verification_key = malloc(65);
+        player->verification_key = calloc(65);
         strcpy(player->verification_key, verification_key);
     } else if (read_id(buffer, username, verification_key) == 3) {
         return 3;

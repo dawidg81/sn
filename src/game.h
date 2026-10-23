@@ -243,7 +243,7 @@ void* handle_player(void* arg) {
                     if(received[0] == '/'){
                         printf("DEBUG: Detected /\n");
                         memmove(received, received + 1, strlen(received));
-                        handle_command(received, me);
+                        handle_command(received, me, players);
                         break;
                     }
 

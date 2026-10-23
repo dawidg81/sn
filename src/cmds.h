@@ -23,6 +23,9 @@ void handle_command(char *cmd, Player *you)
     } else if (strcmp(cmd, "clients") == 0) {
         send_message(you->sock, "&cThe game does not handle the CEF plugin.");
         return;
+    } else if (strcmp(cmd, "kick") == 0) {
+        send_message(you->sock, "&eType the name of player you want to kick.");
+
     }
 }
 

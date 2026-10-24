@@ -77,13 +77,14 @@ void* handle_player(void* arg) {
         new_player.sock = new_socket;
 
         if (buffer[0] == 0x00) {
-            if (init_player((char*)buffer, &new_player) == -1) {
+            int succeded = init_player((char*)buffer, &new_player);
+            if (succeded == -1) {
                 printf("Player initialization failed");
                 free(new_player.username);
                 free(new_player.verification_key);
                 close(new_socket);
                 return NULL;
-            } else if (init_player((char*)buffer, &new_player) == 3) {
+            } else if (succeded == 3) {
                 printf("Player gave wrong protocol version");
                 send_disconnect(new_socket, "Wrong protocol version!");
                 free(new_player.username);

@@ -17,7 +17,8 @@ void handle_command(char *cmd, Player *you, Player *players)
         send_message(you->sock, "&eWorld saved.");
         return;
     } else if (strcmp(cmd, "help") == 0) {
-        send_message(you->sock, "&c/save &9- Save the world to file.");
+        send_message(you->sock, "&csave &9- Save the world to file.");
+        send_message(you->sock, "&ckick [player] &9- Kick player with name [player] from the server.");
         return;
     } else if (strcmp(cmd, "clients") == 0) {
         send_message(you->sock, "&cThe game does not handle the CEF plugin.");

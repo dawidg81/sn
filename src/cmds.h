@@ -24,13 +24,8 @@ void handle_command(char *cmd, Player *you, Player *players)
         send_message(you->sock, "&cThe game does not handle the CEF plugin.");
         return;
     } else if (strncmp(cmd, "kick ", 5) == 0) {
-        /*char *args = strtok(cmd, " ");
-        args = strtok(NULL, " ");*/
-        // printf("DEBUG: kick arg: %s\n", args);
         for (int i=0; i < 128; i++) {
             if (players[i].username == NULL || !players[i].spawned) continue;
-            /*printf("DEBUG: cmds+5 = %s\n", cmd + 5);
-            printf("DEBUG: name = %s\n", players[i].username);*/
             if (strcmp(players[i].username, cmd + 5) == 0) {
                 send_disconnect(players[i].sock, "You have been kicked.");
                 //free(players[i].username);

@@ -153,4 +153,32 @@ int is_admin(Player* player)
     return 1;
 }
 
+int is_banned(Player* player)
+{
+    /* 0 = banned; 1 = not banned */
+    FILE* file = fopen("banned.txt", "r");
+    if(file == NULL){
+        printf("Failed to open banned.txt! Does it exist?\n");
+        return 1;
+    }
+
+    char line[65];
+    while(fgets(line, sizeof(line), file) != NULL){
+        line[strcspn(line, "\r\n")] = '\0';
+        if(strcmp(line, player->username) == 0){fclose(file);return 0;}
+    }
+
+    fclose(file);
+    return 1;
+}
+
+/* TODO: A function or two functions that
+ * add or remove an username to/from bannned.txt
+ * Or making it as universal as possible:
+ * One function that will accept text file
+ * name as an argument and will add or remove
+ * given string to the file. Whether it
+ * should add or remove should be passed as
+ * an argument. */
+
 #endif

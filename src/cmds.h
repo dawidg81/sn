@@ -34,7 +34,17 @@ void handle_command(char *cmd, Player *you, Player *players)
                 break;
             }
         }
-    }
+    } else if (strncmp(cmd, "ban ", 4) == 0) {
+        for (int i=0; i < 128; i++) {
+            if (players[i].username == NULL || !players[i].spawned) continue;
+            if (strcmp(players[i].username, cmd + 4) == 0) {
+                send_disconnect(players[i].sock, "You have been banned.");
+                //free(players[i].username);
+                free(players[i].verification_key);
+                close(players[i].sock);
+                break;
+            }
+        }
 }
 
 #endif

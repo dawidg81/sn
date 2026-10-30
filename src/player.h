@@ -182,13 +182,28 @@ int edit_file_line(char* filename, char* line, uint8_t mode)
     }
 
     char line[65];
-    while(fgets(line, sizeof(line), file) != NULL){
-        line[strcspn(line, "\r\n")] = '\0';
-        if(strcmp(line, player->username) == 0){fclose(file);return 0;}
-    }
+    if (mode == 0x00) {
+        while(fgets(line, sizeof(line), file) != NULL){
+            line[strcspn(line, "\r\n")] = '\0';
+            if(strcmp(line, player->username) == 0){
+                fclose(file);
+                return 0;
+            }
+        }
 
-    fclose(file);
-    return 1;
+        fclose(file);
+    } else if (mode == 0x64) {
+        while(fgets(line, sizeof(line), file) != NULL){
+            line[strcspn(line, "\r\n")] = '\0';
+            if(strcmp(line, player->username) == 0){
+                fclose(file);
+                return 0;
+            }
+        }
+
+        fclose(file);
+    }
+    return 0;
 }
 
 #endif

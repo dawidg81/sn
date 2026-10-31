@@ -172,7 +172,7 @@ int is_banned(Player* player)
     return 1;
 }
 
-int edit_file_line(char* filename, char* line, uint8_t mode)
+int edit_file_line(char* filename, char* linestr, uint8_t mode)
 {
     /* mode: 0x64 - add line; 0x00 - remove line*/
     FILE* file = fopen(filename, "w");
@@ -185,7 +185,8 @@ int edit_file_line(char* filename, char* line, uint8_t mode)
     if (mode == 0x00) {
         while(fgets(line, sizeof(line), file) != NULL){
             line[strcspn(line, "\r\n")] = '\0';
-            if(strcmp(line, player->username) == 0){
+            if(strcmp(line, linestr) == 0){
+                /* something here to delete the found line */
                 fclose(file);
                 return 0;
             }
@@ -194,11 +195,8 @@ int edit_file_line(char* filename, char* line, uint8_t mode)
         fclose(file);
     } else if (mode == 0x64) {
         while(fgets(line, sizeof(line), file) != NULL){
-            line[strcspn(line, "\r\n")] = '\0';
-            if(strcmp(line, player->username) == 0){
-                fclose(file);
-                return 0;
-            }
+            /* something here to add the given line to the end of the file
+                the while loop here might be unnecessary */
         }
 
         fclose(file);

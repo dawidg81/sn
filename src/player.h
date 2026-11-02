@@ -187,7 +187,6 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
             line[strcspn(line, "\r\n")] = '\0';
             if(strcmp(line, linestr) == 0){
                 /* something here to delete the found line */
-                rewind(file);
                 fclose(file);
                 return 0;
             }

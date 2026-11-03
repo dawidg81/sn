@@ -174,8 +174,13 @@ int is_banned(Player* player)
 
 int edit_file_line(char* filename, char* linestr, uint8_t mode)
 {
+    /* Very likely a rewrite from zero is needed */
+
+    /* something here to add the given line to the end of the file
+    the while loop here might be unnecessary */
+    /* copying everything to a temp file but not the file to remove */
     /* mode: 0x64 - add line; 0x00 - remove line*/
-    FILE* file = fopen(filename, "w");
+    /*FILE* file = fopen(filename, "w");
     FILE* temp;
     if(file == NULL){
         printf("Failed to open %s! Does it exist?\n", filename);
@@ -183,7 +188,7 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
     }
 
     char buffer[1028];
-    if (mode == 0x00) { /* copying everything to a temp file but not the file to remove */
+    if (mode == 0x00) {
         int current_line = 1;
         while(fgets(buffer, sizeof(buffer), file) != NULL){
             if(strcmp(line, linestr) != 0){
@@ -195,12 +200,11 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
         fclose(file);
     } else if (mode == 0x64) {
         while(fgets(line, sizeof(line), file) != NULL){
-            /* something here to add the given line to the end of the file
-                the while loop here might be unnecessary */
+
         }
     }
     fclose(file);
-    return 0;
+    return 0;*/
 }
 
 #endif

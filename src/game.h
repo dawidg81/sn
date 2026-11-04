@@ -142,6 +142,16 @@ void* handle_player(void* arg) {
                 return NULL;
             }
 
+            if (is_banned(&new_player)) {
+                pthread_mutex_unlock(&players_lock);
+                printf("Rejected: %s is not whitelisted\n", new_player.username);
+                send_disconnect(new_socket, "You were banned.");
+                free(new_player.username);
+                free(new_player.verification_key);
+                close(new_socket);
+                return NULL;
+            }
+
             new_player.id = slot;
             new_player.spawned = 0;
             new_player.x = level.sizeX / 2.0f;

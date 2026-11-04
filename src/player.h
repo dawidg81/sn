@@ -213,7 +213,7 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
             return 1;
         }
 
-        fprintf(file, "%s", linestr);
+        fprintf(file, "%s\n", linestr);
 
         fclose(file);
         return 0;

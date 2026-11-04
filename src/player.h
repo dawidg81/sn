@@ -206,7 +206,47 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
     fclose(file);
     return 0;*/
     if (mode == 0x64) {
-        FILE* file = fopen(filename, "w");
+        FILE* file = fopen(filename, "a");
+
+        if (file == NULL) {
+            perror("ERROR: Couldn't open temporary file");
+            return 1;
+        }
+
+        fprintf(file, "%s", linestr);
+
+        fclose(file);
+        return 0;
+    } else if (mode == 0x00) {
+        FILE* file = fopen(filename, "r");
+        FILE* temp = fopen("CCSN_TEMP.TXT", "w");
+
+        if (file == NULL) {
+            perror("ERROR: Couldn't open temporary file");
+            return 1;
+        }
+
+        if (temp == NULL) {
+            perror("ERROR: Couldn't open temporary file");
+            fclose(file);
+            return 1;
+        }
+
+        char buffer[1024];
+
+        while (fgets(buffer, sizeof(buffer), file) != NULL) {
+            if (strcmp(buffer, linestr) != 0) {
+                fputs(buffer, temp);
+            }
+        }
+
+        fclose(file);
+        fclose(temp);
+
+        remove(filename);
+        rename("CCSN_TEMP.TXT", filename);
+
+        return 0;
     }
 }
 

@@ -205,6 +205,9 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
     }
     fclose(file);
     return 0;*/
+    if (mode == 0x64) {
+        FILE* file = fopen(filename, "w");
+    }
 }
 
 #endif

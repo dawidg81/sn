@@ -38,6 +38,7 @@ void handle_command(char *cmd, Player *you, Player *players)
         for (int i=0; i < 128; i++) {
             if (players[i].username == NULL || !players[i].spawned) continue;
             if (strcmp(players[i].username, cmd + 4) == 0) {
+                edit_file_line("banned.txt", players[i].username, 0x64);
                 send_disconnect(players[i].sock, "You have been banned.");
                 //free(players[i].username);
                 free(players[i].verification_key);

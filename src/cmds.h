@@ -46,6 +46,7 @@ void handle_command(char *cmd, Player *you, Player *players)
                 break;
             }
         }
+    }
 }
 
 #endif

@@ -209,7 +209,7 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
         FILE* file = fopen(filename, "a");
 
         if (file == NULL) {
-            perror("ERROR: Couldn't open temporary file");
+            perror("ERROR: Couldn't open file");
             return 1;
         }
 
@@ -222,7 +222,7 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
         FILE* temp = fopen("CCSN_TEMP.TXT", "w");
 
         if (file == NULL) {
-            perror("ERROR: Couldn't open temporary file");
+            perror("ERROR: Couldn't open file");
             return 1;
         }
 

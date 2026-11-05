@@ -93,7 +93,7 @@ int recv_block(char* buffer, uint16_t* x, uint16_t* y, uint16_t* z, uint8_t* blo
 void recv_pos_ort(char* buffer, Player* player) {
     /* ssize_t valread = read(socket, buffer, sizeof(buffer)); */
 
-    uint8_t player_id = buffer[0];
+    //uint8_t player_id = buffer[0];
 
     int16_t x_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 1);
     int16_t y_fixed = (int16_t)read_u16_be((const uint8_t*)buffer, 3);
@@ -109,7 +109,7 @@ void recv_pos_ort(char* buffer, Player* player) {
 }
 
 void recv_message(char* buffer, Player* player, char* out_message) {
-    uint8_t player_id = buffer[0];
+    //uint8_t player_id = buffer[0];
     read_str64((uint8_t*)buffer, 1, out_message);
 }
 
@@ -216,7 +216,6 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
         fprintf(file, "%s\n", linestr);
 
         fclose(file);
-        return 0;
     } else if (mode == 0x00) {
         FILE* file = fopen(filename, "r");
         FILE* temp = fopen("CCSN_TEMP.TXT", "w");
@@ -245,9 +244,8 @@ int edit_file_line(char* filename, char* linestr, uint8_t mode)
 
         remove(filename);
         rename("CCSN_TEMP.TXT", filename);
-
-        return 0;
     }
+    return 0;
 }
 
 #endif

@@ -21,7 +21,7 @@
 
 #define PORT 25568
 
-void safe_exit(int){
+void safe_exit(){
     save_level();
     return;
 }

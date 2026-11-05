@@ -24,6 +24,11 @@ void handle_command(char *cmd, Player *you, Player *players)
         send_message(you->sock, "&cThe game does not handle the CEF plugin.");
         return;
     } else if (strncmp(cmd, "kick ", 5) == 0) {
+        if (is_admin(you) == 1) {
+            send_message(you->sock, "&cPermission denied.");
+            return;
+        }
+
         for (int i=0; i < 128; i++) {
             if (players[i].username == NULL || !players[i].spawned) continue;
             if (strcmp(players[i].username, cmd + 5) == 0) {
@@ -35,6 +40,11 @@ void handle_command(char *cmd, Player *you, Player *players)
             }
         }
     } else if (strncmp(cmd, "ban ", 4) == 0) {
+        if (is_admin(you) == 1) {
+            send_message(you->sock, "&cPermission denied.");
+            return;
+        }
+
         for (int i=0; i < 128; i++) {
             if (players[i].username == NULL || !players[i].spawned) continue;
             if (strcmp(players[i].username, cmd + 4) == 0) {

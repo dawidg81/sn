@@ -13,8 +13,8 @@ software.
 
     PARTIALLY DONE Moderation commands
 	          DONE   A set of useful commands such as '/kick [player] <reason>',
-	         NDONE   '/mute [player] <reason>', '/ban [player] <reason>'.
-	         NDONE   Requires implementation of parsing ops.txt and banned.txt
+	          DONE   '/ban [player] <reason>'.
+	          DONE   Requires implementation of parsing ops.txt and banned.txt
 	
     Building commands
 	  (CHECK: building commands as a convenience for building

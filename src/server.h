@@ -78,7 +78,7 @@ void send_pos_ort(int socket, int8_t pid, float x, float y, float z, uint8_t yaw
     send(socket, buffer, sizeof(buffer), 0);
 }
 
-void send_message(int socket, char msg[64]) {
+void send_message(int socket, char* msg) {
     char buffer[66] = {0};
 
     buffer[0] = 0x0d;

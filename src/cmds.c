@@ -17,13 +17,14 @@ void handle_command(char *cmd, Player *you, Player *players)
     } else if (strcmp(cmd, "help") == 0) {
         send_message(you->sock, "&csave &9- Save the world to file.");
         send_message(you->sock, "&ckick [player] &9- Kick player with name [player] from the server.");
+        send_message(you->sock, "&cban [player] &9- Ban player with name [player] from the server.");
         return;
     } else if (strcmp(cmd, "clients") == 0) {
         send_message(you->sock, "&cThe game does not handle the CEF plugin.");
         return;
     } else if (strncmp(cmd, "kick ", 5) == 0) {
         if (is_admin(you) == 1) {
-            send_message(you->sock, "&cPermission denied.");
+            send_message(you->sock, "&cYou are not an op!");
             return;
         }
 
@@ -39,7 +40,7 @@ void handle_command(char *cmd, Player *you, Player *players)
         }
     } else if (strncmp(cmd, "ban ", 4) == 0) {
         if (is_admin(you) == 1) {
-            send_message(you->sock, "&cPermission denied.");
+            send_message(you->sock, "&cYou are not an op!");
             return;
         }
 

@@ -5,7 +5,7 @@
 #include "player.h"
 #include "server.h"
 
-void handle_command(char *cmd, Player *you, Player *players);
+void handle_command(char *cmd, Player *you, Player *players)
 {
     printf("DEBUG: %s used command: %s\n", you->username, cmd);
     if (strcmp(cmd, "save") == 0) {

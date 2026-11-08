@@ -6,7 +6,7 @@
 #include "server.h"
 
 void handle_command(char *cmd, Player *you, Player *players);
-/*{
+{
     printf("DEBUG: %s used command: %s\n", you->username, cmd);
     if (strcmp(cmd, "save") == 0) {
         if (is_admin(you) != 0) {
@@ -57,6 +57,6 @@ void handle_command(char *cmd, Player *you, Player *players);
             }
         }
     }
-}*/
+}
 
 #endif

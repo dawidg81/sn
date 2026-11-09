@@ -115,9 +115,15 @@ void* handle_player(void* arg) {
                 return NULL;
             }
 
-            /* TODO: next time move mppass and whitelist check out
-             * of player lock because both if statements don't need
-             * to access global player table. */
+            new_player.id = slot;
+            new_player.spawned = 0;
+            new_player.x = level.sizeX / 2.0f;
+            new_player.y = level.sizeY;
+            new_player.z = level.sizeZ / 2.0f;
+            players[slot] = new_player;
+            me = &players[slot];
+            pthread_mutex_unlock(&players_lock);
+
             char mppass[100];
             snprintf(mppass, 100, "%s%s", server_salt, new_player.username);
             char mphash[64];
@@ -151,15 +157,6 @@ void* handle_player(void* arg) {
                 close(new_socket);
                 return NULL;
             }
-
-            new_player.id = slot;
-            new_player.spawned = 0;
-            new_player.x = level.sizeX / 2.0f;
-            new_player.y = level.sizeY;
-            new_player.z = level.sizeZ / 2.0f;
-            players[slot] = new_player;
-            me = &players[slot];
-            pthread_mutex_unlock(&players_lock);
 
             me->is_op = (is_admin(me) == 0);
             send_server_identification(new_socket, "Minecraft Server", "Welcome!", me->is_op ? 0x64 : 0x00);

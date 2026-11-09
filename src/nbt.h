@@ -17,6 +17,6 @@
 
 #include <stdio.h>
 
-
+int write_tag(uint8_t type);
 
 #endif

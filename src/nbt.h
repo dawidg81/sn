@@ -16,6 +16,7 @@
 #define NBT_TAG_LONG_ARRAY  0x0C
 
 #include <stdio.h>
+#include "network_utils.h"
 
 int write_tag(uint8_t type);
 

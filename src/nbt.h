@@ -18,6 +18,6 @@
 #include <stdio.h>
 #include "network_utils.h"
 
-int write_tag(uint8_t type);
+int write_tag_end(char* buffer);
 
 #endif

@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include "network_utils.h"
 
-int write_tag_end(char* buffer);
+int write_tag_end(char* buffer, int offset);
+int write_tag_compound(char* buffer, int offset);
 
 #endif

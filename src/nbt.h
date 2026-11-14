@@ -21,5 +21,6 @@
 int write_tag_end(char* buffer, int offset);
 int write_tag_compound(char* buffer, int offset);
 int write_tag_byte(char* buffer, int offset, uint8_t value);
+int write_tag_string(char* buffer, int offset, char* value);
 
 #endif

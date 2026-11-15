@@ -4,4 +4,6 @@
 char server_salt[33] = {0};
 static const char* hb_software = "sn 0.1.12-hotfix1";
 
+int config_read_name();
+
 #endif

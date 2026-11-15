@@ -11,11 +11,14 @@ software.
 	DONE   parser rather than using if statements for full
 	DONE   message content checking for potential command.
 
-    PARTIALLY DONE Moderation commands
+    DONE Moderation commands
 	          DONE   A set of useful commands such as '/kick [player] <reason>',
 	          DONE   '/ban [player] <reason>'.
 	          DONE   Requires implementation of parsing ops.txt and banned.txt
-	
+
+    Read config
+      Read server name
+
     Building commands
 	  (CHECK: building commands as a convenience for building
 	  does not fit project concept

@@ -23,6 +23,7 @@
 
 void safe_exit(){
     save_level();
+    exit(0);
     return;
 }
 

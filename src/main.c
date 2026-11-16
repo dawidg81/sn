@@ -32,9 +32,11 @@ int main() {
     signal(SIGPIPE, SIG_IGN);
     signal(SIGINT, safe_exit);
     level_init();
-    if(load_level() == 1){
+    
+    int r = load_level();
+    if(r == 1){
         printf("\bWARNING: Failed to load world data from file. The world will be empty!\n");
-    } else if(load_level() == -1){
+    } else if(r == -1){
         printf("There is no world file saved so far. The world will be empty.\n");
     }
 

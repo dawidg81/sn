@@ -9,37 +9,44 @@ char server_name[64] = "A Minecraft Server";
 char server_motd[64] = "";
 int port = 25565;
 
-/*
+
 char* trim_whitespace(char* buffer)
 {
-    while scanned char == '\0' continue
+    for (int i = 0; i < sizeof(buffer), i++) {
+        while (buffer[i] == '\t' ||
+                buffer[i] == '\n' ||
+                buffer[i] == '\r') continue;
+    }
+    /*while scanned char == '\0' continue
     copy characters to buffer
       until buffer end
     (it's without whitespaces now)
-    return buffer
+    return buffer*/
 }
 
 char* config_get(FILE* fp, const char* key)
 {
-    open FILE* fp
+    fp = fopen("what in here?", "r");
+    /*open FILE* fp
     search for const char* key
     look for '=', find value after '='
     separate key and value
     return value
     (copy to buffer as func. argument?
-    get size of buffer as arg.?)
+    get size of buffer as arg.?)*/
 }
 
 int config_get_int(FILE* fp, const char* key)
 {
-    open FILE* fp
+    fp = fopen("what in here?", "r");
+    /*open FILE* fp
     search for const char* key
     look for '=', find value after '='
     separate key and value
     change string value into int valua
-    return value
+    return value*/
 }
-*/
+
 
 int config_load(const char* path)
 {

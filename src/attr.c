@@ -26,12 +26,18 @@ char* config_get(FILE* fp, const char* key)
     look for '=', find value after '='
     separate key and value
     return value
-    (copy to buffer as func. argument?)
+    (copy to buffer as func. argument?
+    get size of buffer as arg.?)
 }
 
 int config_get_int(FILE* fp, const char* key)
 {
-
+    open FILE* fp
+    search for const char* key
+    look for '=', find value after '='
+    separate key and value
+    change string value into int valua
+    return value
 }
 */
 

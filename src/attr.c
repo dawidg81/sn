@@ -55,14 +55,15 @@ int config_get_int(char* buffer, const char* key)
 int config_load(const char* path)
 {
     FILE* fp = fopen(path, "r");
-    if (!fp) {
+    if (fp == NULL) {
         perror("config: fopen");
 	return -1;
     }
 
     /* PARSE HERE */
-    char buffer[128];
-    while(fgets(buffer, sizeof(buffer), fp)) {
+    char line[128];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        line[strcspn(line, "\r\n")] = '\0';
         server_name = config_get(buffer, "server-name");
         server_motd = config_get(buffer, "motd");
 	port = config_get_int(buffer, "port");

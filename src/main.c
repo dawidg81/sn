@@ -31,6 +31,8 @@ int main() {
     srand(time(NULL));
     signal(SIGPIPE, SIG_IGN);
     signal(SIGINT, safe_exit);
+
+    config_load("config.txt");
     level_init();
     
     int r = load_level();

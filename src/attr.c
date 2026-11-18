@@ -24,9 +24,8 @@ char* trim_whitespace(char* buffer)
     return buffer*/
 }
 
-char* config_get(FILE* fp, const char* key)
+char* config_get(char* buffer, const char* key)
 {
-    fp = fopen("what in here?", "r");
     /*open FILE* fp
     search for const char* key
     look for '=', find value after '='
@@ -34,17 +33,22 @@ char* config_get(FILE* fp, const char* key)
     return value
     (copy to buffer as func. argument?
     get size of buffer as arg.?)*/
+    char* value;
+    sscanf(buffer, "%32[^=]=%s", key, &value);
+    return value;
 }
 
-int config_get_int(FILE* fp, const char* key)
+int config_get_int(char* buffer, const char* key)
 {
-    fp = fopen("what in here?", "r");
     /*open FILE* fp
     search for const char* key
     look for '=', find value after '='
     separate key and value
     change string value into int valua
     return value*/
+    int value;
+    sscanf(buffer, "%32[^=]=%d", key, &value);
+    return value;
 }
 
 
@@ -57,6 +61,12 @@ int config_load(const char* path)
     }
 
     /* PARSE HERE */
+    char buffer[128];
+    while(fgets(buffer, sizeof(buffer), fp)) {
+        server_name = config_get(buffer, "server-name");
+        server_motd = config_get(buffer, "motd");
+	port = config_get_int(buffer, "port");
+    }
 
     fclose(fp);
     return 0;

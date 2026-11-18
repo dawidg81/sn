@@ -10,12 +10,13 @@ char server_motd[64] = "";
 int server_port = 25565;
 
 
-char* trim_whitespace(char* buffer)
+char* trim_whitespace(char* src, char* dest)
 {
-    for (int i = 0; i < sizeof(buffer), i++) {
-        while (buffer[i] == '\t' ||
-                buffer[i] == '\n' ||
-                buffer[i] == '\r') continue;
+    for (int i = 0; i < sizeof(src); i++) {
+        while (src[i] == '\t' ||
+                src[i] == '\n' ||
+                src[i] == '\r') continue;
+	dest[i] = src[i]; /* ??? */
     }
     /*while scanned char == '\0' continue
     copy characters to buffer
@@ -34,7 +35,7 @@ char* config_get(char* buffer, const char* key)
     (copy to buffer as func. argument?
     get size of buffer as arg.?)*/
     char* value;
-    sscanf(buffer, "%32[^=]=%s", key, &value);
+    sscanf(buffer, "%32s[^=]=%s", key, &value);
     return value;
 }
 
@@ -47,7 +48,7 @@ int config_get_int(char* buffer, const char* key)
     change string value into int valua
     return value*/
     int value;
-    sscanf(buffer, "%32[^=]=%d", key, &value);
+    sscanf(buffer, "%32s[^=]=%d", key, &value);
     return value;
 }
 

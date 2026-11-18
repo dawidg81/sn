@@ -9,7 +9,7 @@ extern const char* hb_software; /* = "sn 0.1.12-hotfix1" */
  * every time the server starts */
 extern char server_name[64];
 extern char server_motd[64];
-extern int port;
+extern int server_port;
 
 /* 0 = ok, -1 = file missing */
 int config_load(const char* path);

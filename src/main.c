@@ -18,8 +18,7 @@
 #include "player.h"
 #include "server.h"
 #include "socket.h"
-
-#define PORT 25568
+#include "attr.h"
 
 void safe_exit(){
     save_level();
@@ -42,13 +41,13 @@ int main() {
         printf("There is no world file saved so far. The world will be empty.\n");
     }
 
-    int server_fd = setup_server_socket(PORT);
+    int server_fd = setup_server_socket(server_port);
 
     if (server_fd < 0) {
         return EXIT_FAILURE;
     }
 
-    heartbeat_start(PORT, "Supernova Online Experimental", 128);
+    heartbeat_start(server_port, server_name, 128);
 
     printf("Server ready\n");
 

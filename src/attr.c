@@ -7,7 +7,7 @@ const char* hb_software = "sn 0.1.12-hotfix1";
 
 char server_name[64] = "A Minecraft Server";
 char server_motd[64] = "";
-int port = 25565;
+int server_port = 25565;
 
 
 char* trim_whitespace(char* buffer)
@@ -64,9 +64,9 @@ int config_load(const char* path)
     char line[128];
     while (fgets(line, sizeof(line), fp) != NULL) {
         line[strcspn(line, "\r\n")] = '\0';
-        server_name = config_get(buffer, "server-name");
-        server_motd = config_get(buffer, "motd");
-	port = config_get_int(buffer, "port");
+        server_name = config_get(line, "server-name");
+        server_motd = config_get(line, "motd");
+	server_port = config_get_int(line, "port");
     }
 
     fclose(fp);

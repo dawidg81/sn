@@ -67,8 +67,9 @@ int config_load(const char* path)
 	while (fgets(line, sizeof(line), fp) != NULL) {
 		line[strcspn(line, "\r\n")] = '\0';
 
-		/*strcpy(server_name, config_get(line, "server-name"));
-		  strcpy(server_motd, config_get(line, "motd"));*/
+		/* PARSE HERE
+		 * we already have one line to parse on the fly HERE. config_get and config_get_line are not needed at all. use something safer than sscanf()! */
+
 		snprintf(server_name, sizeof(server_name), "%s", /*value*/ config_get(line, "server-name"));
 		snprintf(server_motd, sizeof(server_name), "%s", /*value*/ config_get(line, "motd"));
 

@@ -67,9 +67,11 @@ int config_load(const char* path)
     while (fgets(line, sizeof(line), fp) != NULL) {
         line[strcspn(line, "\r\n")] = '\0';
         
-	strcpy(server_name, config_get(line, "server-name"));
-	strcpy(server_motd, config_get(line, "motd"));
-        /*server_motd = config_get(line, "motd");*/
+	/*strcpy(server_name, config_get(line, "server-name"));
+	strcpy(server_motd, config_get(line, "motd"));*/
+	snprintf(server_name, sizeof(server_name), "%s", /*value*/ config_get(line, "server-name"));
+	snprintf(server_motd, sizeof(server_name), "%s", /*value*/ config_get(line, "motd"));
+	
 	server_port = config_get_int(line, "port");
     }
 

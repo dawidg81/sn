@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "attr.h"
 
@@ -65,8 +66,10 @@ int config_load(const char* path)
     char line[128];
     while (fgets(line, sizeof(line), fp) != NULL) {
         line[strcspn(line, "\r\n")] = '\0';
-        server_name = config_get(line, "server-name");
-        server_motd = config_get(line, "motd");
+        
+	strcpy(server_name, config_get(line, "server-name"));
+	strcpy(server_motd, config_get(line, "motd"));
+        /*server_motd = config_get(line, "motd");*/
 	server_port = config_get_int(line, "port");
     }
 

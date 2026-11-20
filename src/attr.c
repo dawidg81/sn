@@ -10,20 +10,15 @@ char server_name[64] = "A Minecraft Server";
 char server_motd[64] = "";
 int server_port = 25565;
 
-
-char* trim_whitespace(char* src, char* dest)
+void trim(char* s)
 {
-	for (int i = 0; i < sizeof(src); i++) {
-		while (src[i] == '\t' ||
-				src[i] == '\n' ||
-				src[i] == '\r') continue;
-		dest[i] = src[i]; /* ??? */
-	}
-	/*while scanned char == '\0' continue
-	  copy characters to buffer
-	  until buffer end
-	  (it's without whitespaces now)
-	  return buffer*/
+    char* p = s;
+    int l = strlen(p);
+
+    while(isspace(p[l - 1])) p[--l] = 0;
+    while(* p && isspace(* p)) ++p, --l;
+
+    memmove(s, p, l + 1);
 }
 
 char* config_get(char* buffer, const char* key)
@@ -64,9 +59,15 @@ int config_load(const char* path)
 
 	/* PARSE HERE */
 	char line[128];
+	char k[32], v[64];
+
 	while (fgets(line, sizeof(line), fp) != NULL) {
 		line[strcspn(line, "\r\n")] = '\0';
 
+		if (sscanf("%31[^=]=%63[^\n]") == 2) {
+			trim(k);
+			trim(v);
+		}
 		/* PARSE HERE
 		 * we already have one line to parse on the fly HERE. config_get and config_get_line are not needed at all. use something safer than sscanf()! */
 

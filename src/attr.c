@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "attr.h"
 
@@ -67,14 +68,14 @@ int config_load(const char* path)
 		if (sscanf("%31[^=]=%63[^\n]") == 2) {
 			trim(k);
 			trim(v);
+			if (strcmp("server-name", k) == 0) {
+				snprintf(server_name, sizeof(server_name), "%s", v);
+			} else if (strcmp("server-motd", k) == 0) {
+				snprintf(server_motd, sizeof(server_motd), "%s", v);
+			} else if (strcmp("port", k) == 0) {
+				server_port = strtol(v);
+			}
 		}
-		/* PARSE HERE
-		 * we already have one line to parse on the fly HERE. config_get and config_get_line are not needed at all. use something safer than sscanf()! */
-
-		snprintf(server_name, sizeof(server_name), "%s", /*value*/ config_get(line, "server-name"));
-		snprintf(server_motd, sizeof(server_name), "%s", /*value*/ config_get(line, "motd"));
-
-		server_port = config_get_int(line, "port");
 	}
 
 	fclose(fp);

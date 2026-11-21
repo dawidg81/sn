@@ -37,7 +37,7 @@ int config_load(const char* path)
 	while (fgets(line, sizeof(line), fp) != NULL) {
 		line[strcspn(line, "\r\n")] = '\0';
 
-		if (sscanf("%31[^=]=%63[^\n]") == 2) {
+		if (sscanf("%31[^=]=%63[^\n]", k, v) == 2) {
 			trim(k);
 			trim(v);
 			if (strcmp("server-name", k) == 0) {

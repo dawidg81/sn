@@ -22,34 +22,6 @@ void trim(char* s)
     memmove(s, p, l + 1);
 }
 
-char* config_get(char* buffer, const char* key)
-{
-	/*open FILE* fp
-	  search for const char* key
-	  look for '=', find value after '='
-	  separate key and value
-	  return value
-	  (copy to buffer as func. argument?
-	  get size of buffer as arg.?)*/
-	char* value;
-	sscanf(buffer, "%32s[^=]=%s", key, &value);
-	return value;
-}
-
-int config_get_int(char* buffer, const char* key)
-{
-	/*open FILE* fp
-	  search for const char* key
-	  look for '=', find value after '='
-	  separate key and value
-	  change string value into int valua
-	  return value*/
-	int value;
-	sscanf(buffer, "%32s[^=]=%d", key, &value);
-	return value;
-}
-
-
 int config_load(const char* path)
 {
 	FILE* fp = fopen(path, "r");

@@ -6,7 +6,7 @@
 #include "attr.h"
 
 char server_salt[33] = {0};
-const char* hb_software = "sn 0.1.12-hotfix1";
+const char* hb_software = "sn 0.1.13";
 
 char server_name[64] = "A Minecraft Server";
 char server_motd[64] = "";
@@ -17,7 +17,7 @@ void trim(char* s)
     char* p = s;
     int l = strlen(p);
 
-    while(isspace(p[l - 1])) p[--l] = 0;
+    while(l > 0 && isspace(p[l - 1])) p[--l] = 0;
     while(* p && isspace(* p)) ++p, --l;
 
     memmove(s, p, l + 1);
@@ -52,12 +52,16 @@ int config_load(const char* path)
 				char* end;
 				long temp;
 				// server_port = strtol(v);
-				strtol(v, &end, temp);
-				if (temp < 1 || temp > 65535) {
-					printf("ERROR: Config: port out of valid range! (1-65535)");
+				temp = strtol(v, &end, 10);
+				
+				if (*end != '\0') {
+					printf("ERROR: Config: port must be a number\n");
 					continue;
-				} else {
+				} else if (/*end != v && *end == '\0' &&*/ temp >= 1 && temp <= 65535) {
 					server_port = temp;
+				} else {
+					printf("ERROR: Config: port out of valid range! (1-65535)\n");
+					continue;
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "attr.h"
 
@@ -37,15 +38,27 @@ int config_load(const char* path)
 	while (fgets(line, sizeof(line), fp) != NULL) {
 		line[strcspn(line, "\r\n")] = '\0';
 
-		if (sscanf("%31[^=]=%63[^\n]", k, v) == 2) {
+		if (sscanf(line, "%31[^=]=%63[^\n]", k, v) == 2) {
 			trim(k);
 			trim(v);
+
+			printf("DEBUG: Config: scanned\n  trimmed key:%s\n  trimmed value:%s\n", k, v);
+
 			if (strcmp("server-name", k) == 0) {
 				snprintf(server_name, sizeof(server_name), "%s", v);
 			} else if (strcmp("server-motd", k) == 0) {
 				snprintf(server_motd, sizeof(server_motd), "%s", v);
 			} else if (strcmp("port", k) == 0) {
-				server_port = strtol(v);
+				char* end;
+				long temp;
+				// server_port = strtol(v);
+				strtol(v, &end, temp);
+				if (temp < 1 || temp > 65535) {
+					printf("ERROR: Config: port out of valid range! (1-65535)");
+					continue;
+				} else {
+					server_port = temp;
+				}
 			}
 		}
 	}

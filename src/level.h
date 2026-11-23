@@ -7,6 +7,9 @@
 #include <string.h>
 #include <zlib.h>
 
+#define NBT_IMPLEMENTATION
+#include "nbt.h"
+
 #include "network_utils.h"
 
 pthread_mutex_t level_lock = PTHREAD_MUTEX_INITIALIZER;

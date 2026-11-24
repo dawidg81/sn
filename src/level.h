@@ -143,7 +143,7 @@ int save_level()
         fclose(file_ptr); return 1;
     }*/
 
-		nbt_tag_t cw_start = nbt_new_tag_compund();
+		nbt_tag_t cw_start = nbt_new_tag_compound();
 		nbt_tag_set_name(cw_start, "ClassicWorld", 12);
 
 		  nbt_tag_t cw_fversion = nbt_new_tag_byte(1);
@@ -158,6 +158,26 @@ int save_level()
 			nbt_tag_t cw_uuid = nbt_new_tag_byte_array(0x00, 16);
 			nbt_tag_set_name(cw_uuid, "UUID", 4);
 			nbt_tag_compound_append(cw_start, cw_uuid);
+
+			nbt_tag_t cw_sizeX = nbt_new_tag_short(level.sizeX);
+			nbt_tag_set_name(cw_sizeX, "X", 1);
+			nbt_tag_compound_append(cw_start, cw_sizeX);
+
+			nbt_tag_t cw_sizeY = nbt_new_tag_short(level.sizeY);
+			nbt_tag_set_name(cw_sizeY, "Y", 1);
+			nbt_tag_compound_append(cw_start, cw_sizeY);
+
+			nbt_tag_t cw_sizeZ = nbt_new_tag_short(level.sizeZ);
+			nbt_tag_set_name(cw_sizeZ, "Z", 1);
+			nbt_tag_compound_append(cw_start, cw_sizeZ);
+
+			nbt_tag_t cw_origin = nbt_new_tag_compound();
+			nbt_tag_set_name(cw_origin, "CreatedBy", 9);
+			nbt_tag_compound_append(cw_start, cw_origin);
+
+			  nbt_tag_t cw_origin_service = nbt_new_tag_string("sn", 2);
+				nbt_tag_set_name(cw_origin_service, "Service", 7);
+				nbt_tag_compound_append(cw_origin, cw_origin_service);
 
     pthread_mutex_unlock(&level_lock);
 

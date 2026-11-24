@@ -203,6 +203,18 @@ int save_level()
 			nbt_tag_set_name(cw_spawn, "Spawn", 5);
 			nbt_tag_compound_append(cw_start, cw_spawn);
 
+				nbt_tag_t cw_spawn_X = nbt_new_tag_short(level.sizeX/2);
+				nbt_tag_set_name(cw_spawn_X, "X", 1);
+				nbt_tag_compound_append(cw_spawn, cw_spawn_X);
+
+				nbt_tag_t cw_sizeY = nbt_new_tag_short(level.sizeY);
+				nbt_tag_set_name(cw_spawn_Y, "Y", 1);
+				nbt_tag_compound_append(cw_spawn, cw_spawn_Y);
+
+				nbt_tag_t cw_sizeZ = nbt_new_tag_short(level.sizeZ/2);
+				nbt_tag_set_name(cw_spawn_Z, "Z", 1);
+				nbt_tag_compound_append(cw_spawn, cw_spawn_Z);
+
     pthread_mutex_unlock(&level_lock);
 
     fclose(file_ptr);

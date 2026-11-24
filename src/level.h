@@ -142,7 +142,13 @@ int save_level()
         pthread_mutex_unlock(&level_lock);
         fclose(file_ptr); return 1;
     }*/
-		nbt_tag_t ClassicWorld = nbt_new_tag_compund();
+
+		nbt_tag_t cw_start = nbt_new_tag_compund();
+		nbt_tag_set_name(cw_start, "ClassicWorld", 12);
+
+		nbt_tag_t cw_fversion = nbt_new_tag_byte(1);
+		nbt_tag_set_name(cw_fversion, "FormatVersion", 13);
+		nbt_tag_compund_append(cw_start, cw_fversion);
 
     pthread_mutex_unlock(&level_lock);
 

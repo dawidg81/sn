@@ -146,9 +146,18 @@ int save_level()
 		nbt_tag_t cw_start = nbt_new_tag_compund();
 		nbt_tag_set_name(cw_start, "ClassicWorld", 12);
 
-		nbt_tag_t cw_fversion = nbt_new_tag_byte(1);
-		nbt_tag_set_name(cw_fversion, "FormatVersion", 13);
-		nbt_tag_compund_append(cw_start, cw_fversion);
+		  nbt_tag_t cw_fversion = nbt_new_tag_byte(1);
+		  nbt_tag_set_name(cw_fversion, "FormatVersion", 13);
+		  nbt_tag_compound_append(cw_start, cw_fversion);
+
+			nbt_tag_t cw_name = nbt_new_tag_string("snLevel", 7);
+			nbt_tag_set_name(cw_name, "Name", 4);
+			nbt_tag_compound_append(cw_start, cw_name);
+
+			/* TODO: Generate special UUID */
+			nbt_tag_t cw_uuid = nbt_new_tag_byte_array(0x00, 16);
+			nbt_tag_set_name(cw_uuid, "UUID", 4);
+			nbt_tag_compound_append(cw_start, cw_uuid);
 
     pthread_mutex_unlock(&level_lock);
 

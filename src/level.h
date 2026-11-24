@@ -179,6 +179,30 @@ int save_level()
 				nbt_tag_set_name(cw_origin_service, "Service", 7);
 				nbt_tag_compound_append(cw_origin, cw_origin_service);
 
+				nbt_tag_t cw_origin_author = nbt_new_tag_string("Server", 6);
+				nbt_tag_set_name(cw_origin_author, "Username", 8);
+				nbt_tag_compound_append(cw_origin, cw_origin_author);
+
+      nbt_tag_t cw_mapgen = nbt_new_tag_compound();
+			nbt_tag_set_name(cw_mapgen, "MapGenerator", 12);
+			nbt_tag_compound_append(cw_start, cw_mapgen);
+
+			  nbt_tag_t cw_mapgen_software = nbt_new_tag_string("sn", 2);
+				nbt_tag_set_name(cw_mapgen_software, "Software", 8);
+				nbt_tag_compound_append(cw_mapgen, cw_mapgen_software);
+
+			  nbt_tag_t cw_mapgen_name = nbt_new_tag_string("Undefined", 9);
+				nbt_tag_set_name(cw_mapgen_name, "MapGeneratorName", 16);
+				nbt_tag_compound_append(cw_mapgen, cw_mapgen_name);
+
+      nbt_tag_t time_created; // TODO
+      nbt_tag_t last_accessed; // TODO
+      nbt_tag_t last_modified; // TODO
+
+			nbt_tag_t cw_spawn = nbt_new_tag_compound();
+			nbt_tag_set_name(cw_spawn, "Spawn", 5);
+			nbt_tag_compound_append(cw_start, cw_spawn);
+
     pthread_mutex_unlock(&level_lock);
 
     fclose(file_ptr);

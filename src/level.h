@@ -130,15 +130,20 @@ void level_init(void) {
 int save_level()
 {
     FILE *file_ptr;
-    file_ptr = fopen("level.bin", "wb");
+    file_ptr = fopen("level.cw", "wb");
     if(file_ptr == NULL){printf("ERROR: Unable to open the file for world save\n");return 1;}
 
     pthread_mutex_lock(&level_lock);
-    if(fwrite(level.blocks, (size_t)level.sizeX * level.sizeY * level.sizeZ, 1, file_ptr) == 0){
+
+		/* Change formatting to NBT here! */
+
+    /*if(fwrite(level.blocks, (size_t)level.sizeX * level.sizeY * level.sizeZ, 1, file_ptr) == 0){
         printf("ERROR: Failed to write world data to file\n");
         pthread_mutex_unlock(&level_lock);
         fclose(file_ptr); return 1;
-    }
+    }*/
+		nbt_tag_t ClassicWorld = nbt_new_tag_compund();
+
     pthread_mutex_unlock(&level_lock);
 
     fclose(file_ptr);

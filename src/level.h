@@ -207,13 +207,29 @@ int save_level()
 				nbt_tag_set_name(cw_spawn_X, "X", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_X);
 
-				nbt_tag_t cw_sizeY = nbt_new_tag_short(level.sizeY);
+				nbt_tag_t cw_spawn_Y = nbt_new_tag_short(level.sizeY);
 				nbt_tag_set_name(cw_spawn_Y, "Y", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_Y);
 
-				nbt_tag_t cw_sizeZ = nbt_new_tag_short(level.sizeZ/2);
+				nbt_tag_t cw_spawn_Z = nbt_new_tag_short(level.sizeZ/2);
 				nbt_tag_set_name(cw_spawn_Z, "Z", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_Z);
+
+				nbt_tag_t cw_spawn_H = nbt_new_tag_byte(0x00);
+				nbt_tag_set_name(cw_spawn_H, "H", 1);
+				nbt_tag_compound_append(cw_spawn, cw_spawn_H);
+
+				nbt_tag_t cw_spawn_P = nbt_new_tag_byte(0x00);
+				nbt_tag_set_name(cw_spawn_P, "P", 1);
+				nbt_tag_compound_append(cw_spawn, cw_spawn_P);
+
+      nbt_tag_t cw_blocks = nbt_new_tag_byte_array(level.blocks, sizeof(level.blocks)); // TODO: GZIP
+      nbt_tag_set_name(cw_blocks, "BlockArray", 10);
+			nbt_tag_compound_append(cw_blocks, cw_start);
+
+			nbt_tag_t cw_metadata = nbt_new_tag_compound();
+			nbt_tag_set_name(cw_metadata, "Metadata", 8);
+			nbt_tag_compound_append(cw_metadata, cw_start);
 
     pthread_mutex_unlock(&level_lock);
 

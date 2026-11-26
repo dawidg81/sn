@@ -199,7 +199,10 @@ void* handle_player(void* arg) {
         while (true) {
             unsigned char buf[1] = {0};
             ssize_t bufsize = read(new_socket, buf, sizeof(buf));
-            if (bufsize <= 0) break;
+            if (bufsize <= 0) {
+										broadcast_message("&e%s lost connection.", me->username);
+										break;
+						}
 
             int should_exit = 0;
 

@@ -19,7 +19,7 @@ LIBPATH :=
 LIBS := -lz -lm -lpthread -lcurl $(LUA_LIBS)
 
 FLAGS := -Wall -g -O0
-CCFLAGS := $(FLAGS) -std=c99 $(LUA_CFLAGS) -DNBT_OWN_ZLIB
+CCFLAGS := $(FLAGS) -std=c99 $(LUA_CFLAGS) -DNBT_OWN_ZLIB=\"<zlib.h>\"
 CXXFLAGS := $(FLAGS)
 
 CC := gcc

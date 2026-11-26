@@ -144,55 +144,55 @@ int save_level()
     }*/
 
     nbt_tag_t* cw_start = nbt_new_tag_compound();
-    nbt_tag_set_name(cw_start, "ClassicWorld", 12);
+    nbt_set_tag_name(cw_start, "ClassicWorld", 12);
 
       nbt_tag_t* cw_fversion = nbt_new_tag_byte(1);
-      nbt_tag_set_name(cw_fversion, "FormatVersion", 13);
+      nbt_set_tag_name(cw_fversion, "FormatVersion", 13);
       nbt_tag_compound_append(cw_start, cw_fversion);
 
 	nbt_tag_t* cw_name = nbt_new_tag_string("snLevel", 7);
-	nbt_tag_set_name(cw_name, "Name", 4);
+	nbt_set_tag_name(cw_name, "Name", 4);
 	nbt_tag_compound_append(cw_start, cw_name);
 
 			/* TODO: Generate special UUID */
 			nbt_tag_t* cw_uuid = nbt_new_tag_byte_array(0x00, 16);
-			nbt_tag_set_name(cw_uuid, "UUID", 4);
+			nbt_set_tag_name(cw_uuid, "UUID", 4);
 			nbt_tag_compound_append(cw_start, cw_uuid);
 
 			nbt_tag_t* cw_sizeX = nbt_new_tag_short(level.sizeX);
-			nbt_tag_set_name(cw_sizeX, "X", 1);
+			nbt_set_tag_name(cw_sizeX, "X", 1);
 			nbt_tag_compound_append(cw_start, cw_sizeX);
 
 			nbt_tag_t* cw_sizeY = nbt_new_tag_short(level.sizeY);
-			nbt_tag_set_name(cw_sizeY, "Y", 1);
+			nbt_set_tag_name(cw_sizeY, "Y", 1);
 			nbt_tag_compound_append(cw_start, cw_sizeY);
 
 			nbt_tag_t* cw_sizeZ = nbt_new_tag_short(level.sizeZ);
-			nbt_tag_set_name(cw_sizeZ, "Z", 1);
+			nbt_set_tag_name(cw_sizeZ, "Z", 1);
 			nbt_tag_compound_append(cw_start, cw_sizeZ);
 
 			nbt_tag_t* cw_origin = nbt_new_tag_compound();
-			nbt_tag_set_name(cw_origin, "CreatedBy", 9);
+			nbt_set_tag_name(cw_origin, "CreatedBy", 9);
 			nbt_tag_compound_append(cw_start, cw_origin);
 
 			  nbt_tag_t* cw_origin_service = nbt_new_tag_string("sn", 2);
-				nbt_tag_set_name(cw_origin_service, "Service", 7);
+				nbt_set_tag_name(cw_origin_service, "Service", 7);
 				nbt_tag_compound_append(cw_origin, cw_origin_service);
 
 				nbt_tag_t* cw_origin_author = nbt_new_tag_string("Server", 6);
-				nbt_tag_set_name(cw_origin_author, "Username", 8);
+				nbt_set_tag_name(cw_origin_author, "Username", 8);
 				nbt_tag_compound_append(cw_origin, cw_origin_author);
 
       nbt_tag_t* cw_mapgen = nbt_new_tag_compound();
-			nbt_tag_set_name(cw_mapgen, "MapGenerator", 12);
+			nbt_set_tag_name(cw_mapgen, "MapGenerator", 12);
 			nbt_tag_compound_append(cw_start, cw_mapgen);
 
 			  nbt_tag_t* cw_mapgen_software = nbt_new_tag_string("sn", 2);
-				nbt_tag_set_name(cw_mapgen_software, "Software", 8);
+				nbt_set_tag_name(cw_mapgen_software, "Software", 8);
 				nbt_tag_compound_append(cw_mapgen, cw_mapgen_software);
 
 			  nbt_tag_t* cw_mapgen_name = nbt_new_tag_string("Undefined", 9);
-				nbt_tag_set_name(cw_mapgen_name, "MapGeneratorName", 16);
+				nbt_set_tag_name(cw_mapgen_name, "MapGeneratorName", 16);
 				nbt_tag_compound_append(cw_mapgen, cw_mapgen_name);
 
       nbt_tag_t* time_created; // TODO
@@ -200,35 +200,35 @@ int save_level()
       nbt_tag_t* last_modified; // TODO
 
 			nbt_tag_t* cw_spawn = nbt_new_tag_compound();
-			nbt_tag_set_name(cw_spawn, "Spawn", 5);
+			nbt_set_tag_name(cw_spawn, "Spawn", 5);
 			nbt_tag_compound_append(cw_start, cw_spawn);
 
 				nbt_tag_t* cw_spawn_X = nbt_new_tag_short(level.sizeX/2);
-				nbt_tag_set_name(cw_spawn_X, "X", 1);
+				nbt_set_tag_name(cw_spawn_X, "X", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_X);
 
 				nbt_tag_t* cw_spawn_Y = nbt_new_tag_short(level.sizeY);
-				nbt_tag_set_name(cw_spawn_Y, "Y", 1);
+				nbt_set_tag_name(cw_spawn_Y, "Y", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_Y);
 
 				nbt_tag_t* cw_spawn_Z = nbt_new_tag_short(level.sizeZ/2);
-				nbt_tag_set_name(cw_spawn_Z, "Z", 1);
+				nbt_set_tag_name(cw_spawn_Z, "Z", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_Z);
 
 				nbt_tag_t* cw_spawn_H = nbt_new_tag_byte(0x00);
-				nbt_tag_set_name(cw_spawn_H, "H", 1);
+				nbt_set_tag_name(cw_spawn_H, "H", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_H);
 
 				nbt_tag_t* cw_spawn_P = nbt_new_tag_byte(0x00);
-				nbt_tag_set_name(cw_spawn_P, "P", 1);
+				nbt_set_tag_name(cw_spawn_P, "P", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_P);
 
       nbt_tag_t* cw_blocks = nbt_new_tag_byte_array(level.blocks, sizeof(level.blocks)); // TODO: GZIP
-      nbt_tag_set_name(cw_blocks, "BlockArray", 10);
+      nbt_set_tag_name(cw_blocks, "BlockArray", 10);
 			nbt_tag_compound_append(cw_blocks, cw_start);
 
 			nbt_tag_t* cw_metadata = nbt_new_tag_compound();
-			nbt_tag_set_name(cw_metadata, "Metadata", 8);
+			nbt_set_tag_name(cw_metadata, "Metadata", 8);
 			nbt_tag_compound_append(cw_metadata, cw_start);
 
     pthread_mutex_unlock(&level_lock);

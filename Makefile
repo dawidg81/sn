@@ -11,12 +11,15 @@ TARGET := sn
 SOURCES := $(wildcard src/*.c src/*.cpp)
 OBJECTS := $(patsubst src%,obj%, $(patsubst %.c,%.o, $(patsubst %.cpp,%.o,$(SOURCES))))
 
+LUA_CFLAGS := $(shell pkg-config --cflags lua5.4)
+LUA_LIBS := $(shell pkg-config --libs lua5.4)
+
 INCLUDE := -I. -I./lib/
 LIBPATH :=
-LIBS := -lz -lm -lpthread -lcurl
+LIBS := -lz -lm -lpthread -lcurl $(LUA_LIBS)
 
 FLAGS := -Wall -g -O0
-CCFLAGS := $(FLAGS) -std=c99
+CCFLAGS := $(FLAGS) -std=c99 $(LUA_CFLAGS) -DNBT_OWN_ZLIB
 CXXFLAGS := $(FLAGS)
 
 CC := gcc

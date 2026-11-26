@@ -11,6 +11,10 @@
 #include <unistd.h>
 #include <zlib.h>
 
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+
 #include "game.h"
 #include "heartbeat.h"
 #include "level.h"
@@ -20,10 +24,35 @@
 #include "socket.h"
 #include "attr.h"
 
+lua_State *lua;
+
 void safe_exit(){
     save_level();
     exit(0);
     return;
+}
+
+int lua_say(lua_State *L){
+    const char *message = luaL_checkstring(L, 1);
+    broadcast_message("%s", message);
+    return 0;
+}
+
+void lua_init(void){
+    lua = luaL_newstate();
+
+    if (!lua) {
+        fprintf(stderr, "ERROR: Failed to initialize Lua!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    luaL_openlibs(lua);
+    lua_register(lua, "say", lua_say);
+
+    if (luaL_dofile(lua, "plugins.lua") != LUA_OK) {
+        fprintf(stderr, "ERROR: Lua error: %s\n", lua_tostring(lua, -1));
+        lua_pop(lua, 1);
+    }
 }
 
 int main() {
@@ -48,6 +77,7 @@ int main() {
     }
 
     heartbeat_start(server_port, server_name, 128);
+    lua_init();
 
     printf("Server ready\n");
 

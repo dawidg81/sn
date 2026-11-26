@@ -223,7 +223,7 @@ int save_level()
 				nbt_set_tag_name(cw_spawn_P, "P", 1);
 				nbt_tag_compound_append(cw_spawn, cw_spawn_P);
 
-      nbt_tag_t* cw_blocks = nbt_new_tag_byte_array(level.blocks, sizeof(level.blocks)); // TODO: GZIP
+      nbt_tag_t* cw_blocks = nbt_new_tag_byte_array((int8_t*)level.blocks, sizeof(level.blocks)); // TODO: GZIP
       nbt_set_tag_name(cw_blocks, "BlockArray", 10);
 			nbt_tag_compound_append(cw_blocks, cw_start);
 

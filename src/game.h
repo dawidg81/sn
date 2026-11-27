@@ -14,6 +14,7 @@
 #include "attr.h"
 #include "crypt.h"
 #include "cmds.h"
+#include "relay.h"
 #include "plugin.h"
 
 Player players[128];
@@ -22,22 +23,6 @@ The players table element should be -1 if it's empty.
 */
 
 pthread_mutex_t players_lock = PTHREAD_MUTEX_INITIALIZER;
-
-void broadcast_message(const char* fmt, ...) {
-    char msg[65];
-    va_list args;
-    va_start(args, fmt);
-    vsnprintf(msg, sizeof(msg), fmt, args);
-    va_end(args);
-
-    pthread_mutex_lock(&players_lock);
-    for (int i = 0; i < 128; i++) {
-        if (players[i].spawned && players[i].username != NULL) {
-            send_message(players[i].sock, msg);
-        }
-    }
-    pthread_mutex_unlock(&players_lock);
-}
 
 #define LIVE(p) ((p).username != NULL && (p).spawned)
 

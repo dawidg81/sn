@@ -1,6 +1,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include "relay.h"
+
 lua_State *lua;
 pthread_mutex_t lua_lock = PTHREAD_MUTEX_INITIALIZER;
 

@@ -25,12 +25,15 @@
 #include "attr.h"
 
 lua_State *lua;
+pthread_mutex_t lua_lock = PTHREAD_MUTEX_INITIALIZER;
 
 void safe_exit(){
     save_level();
     exit(0);
     return;
 }
+
+void lua_player_join();
 
 int lua_say(lua_State *L){
     const char *message = luaL_checkstring(L, 1);

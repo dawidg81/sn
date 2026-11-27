@@ -14,6 +14,7 @@
 #include "attr.h"
 #include "crypt.h"
 #include "cmds.h"
+#include "plugin.h"
 
 Player players[128];
 /*

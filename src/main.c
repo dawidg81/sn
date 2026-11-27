@@ -33,7 +33,24 @@ void safe_exit(){
     return;
 }
 
-void lua_player_join();
+void lua_player_join(const char *username){
+    pthread_mutex_lock(&lua_lock);
+
+    lua_getglobal(lua, "on_player_join");
+
+    if (lua_isfunction(lua, -1)) {
+        lua_pushstring(lua, username);
+
+        if (lua_pcall(lua, 1, 0, 0) != LUA_OK) {
+            fprintf(stderr, "Lua error: %s\n", lua_tostring(lua, -1));
+            lua_pop(lua, 1);
+        }
+    } else {
+        lua_pop(lua, 1);
+    }
+
+    pthread_mutex_unlock(&lua_lock);
+}
 
 int lua_say(lua_State *L){
     const char *message = luaL_checkstring(L, 1);

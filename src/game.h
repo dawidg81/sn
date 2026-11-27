@@ -196,6 +196,8 @@ void* handle_player(void* arg) {
         broadcast_message("&e%s", hb_software);
         broadcast_message("&e%s joined the game.", me->username);
 
+	lua_player_join(me->username);
+
         while (true) {
             unsigned char buf[1] = {0};
             ssize_t bufsize = read(new_socket, buf, sizeof(buf));
